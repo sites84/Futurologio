@@ -39,6 +39,7 @@ jobs:
           LIST="$(wrangler d1 list --json)"
           ID="$(printf '%s' "$LIST" | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{const a=JSON.parse(s);const x=a.find(x=>x.name==='futurologio');if(!x)process.exit(2);process.stdout.write(x.uuid||x.database_id||'')})")" || true
           if [ -z "$ID" ]; then
+            echo 'D1 futurologio not found; creating it.'
             wrangler d1 create futurologio
             LIST="$(wrangler d1 list --json)"
             ID="$(printf '%s' "$LIST" | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{const a=JSON.parse(s);const x=a.find(x=>x.name==='futurologio');if(!x)process.exit(2);process.stdout.write(x.uuid||x.database_id||'')})")"
@@ -51,7 +52,7 @@ jobs:
           D1_ID: ${{ steps.d1.outputs.database_id }}
         run: |
           cat > backend/wrangler.deploy.toml <<EOF
-          name = "futurologio-social-api"
+          name = "motor-invencoes"
           main = "worker.js"
           compatibility_date = "2026-09-07"
           [[d1_databases]]
@@ -67,6 +68,13 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: wrangler d1 migrations apply futurologio --remote --config wrangler.deploy.toml
+
+      - name: Seed badges
+        working-directory: backend
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: wrangler d1 execute futurologio --remote --file=seed.sql --config wrangler.deploy.toml
 
       - name: Generate and set session secret
         working-directory: backend
