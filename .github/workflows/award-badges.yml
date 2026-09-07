@@ -1,0 +1,55 @@
+name: Award FUTUROLOGIO badges
+
+on:
+  push:
+    paths:
+      - 'backend/worker.js'
+      - '.github/workflows/award-badges.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add badge engine
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('backend/worker.js')
+          s=p.read_text(encoding='utf-8')
+          if 'async function awardBadges' not in s:
+            marker="function b64(x){return btoa(String.fromCharCode(...new Uint8Array(x)))}"
+            fn="""async function awardBadges(db,userId){
+  const q=async sql=>Number((await db.prepare(sql).bind(userId).first())?.n||0);
+  const stats={
+    creations:await q('SELECT COUNT(*) n FROM USER_INVENTIONS WHERE user_id=?'),
+    likes:await q('SELECT COUNT(*) n FROM LIKES WHERE user_id=?'),
+    comments:await q('SELECT COUNT(*) n FROM COMMENTS WHERE user_id=?'),
+    shares:await q('SELECT COUNT(*) n FROM SHARES WHERE user_id=?'),
+    likesReceived:await q('SELECT COUNT(*) n FROM LIKES l JOIN USER_INVENTIONS ui ON ui.invention_id=l.invention_id WHERE ui.user_id=?'),
+    categories:await q('SELECT COUNT(DISTINCT i.category) n FROM USER_INVENTIONS ui JOIN INVENTIONS i ON i.id=ui.invention_id WHERE ui.user_id=?'),
+    bizarro:await q(\"SELECT COUNT(*) n FROM USER_INVENTIONS ui JOIN INVENTIONS i ON i.id=ui.invention_id WHERE ui.user_id=? AND i.category='Bizarro ou Nojento'\")
+  };
+  const ok={FIRST_CREATION:stats.creations>=1,TEN_CREATIONS:stats.creations>=10,FIFTY_CREATIONS:stats.creations>=50,FIRST_LIKE:stats.likes>=1,HUNDRED_LIKES_RECEIVED:stats.likesReceived>=100,FIRST_COMMENT:stats.comments>=1,FIFTY_COMMENTS:stats.comments>=50,FIRST_SHARE:stats.shares>=1,FIFTY_SHARES:stats.shares>=50,CATEGORY_EXPLORER:stats.categories>=10,MULTICATEGORY_CREATOR:stats.categories>=20,BIZARRO_EXPLORER:stats.bizarro>=1};
+  const rows=await db.prepare('SELECT id,code FROM BADGES').all();
+  for(const b of rows.results||[]){if(ok[b.code])await db.prepare('INSERT OR IGNORE INTO USER_BADGES(user_id,badge_id) VALUES(?,?)').bind(userId,b.id).run()}
+}
+"""
+            if marker not in s: raise SystemExit('badge insertion marker not found')
+            s=s.replace(marker,fn+marker,1)
+          # Award after profile/me reads and after social actions/creation.
+          s=s.replace("const u=await user(env.DB,session.sub);if(!u)return json({ok:false,error:'Usuário não encontrado'},404);return json({ok:true,user:pub(u,await allowance(env.DB,u))})", "const u=await user(env.DB,session.sub);if(!u)return json({ok:false,error:'Usuário não encontrado'},404);await awardBadges(env.DB,u.id);return json({ok:true,user:pub(u,await allowance(env.DB,u))})",1)
+          s=s.replace("const u=await user(env.DB,session.sub);if(!u)return json({ok:false,error:'Usuário não encontrado'},404);const q=async sql=>", "const u=await user(env.DB,session.sub);if(!u)return json({ok:false,error:'Usuário não encontrado'},404);await awardBadges(env.DB,u.id);const q=async sql=>",1)
+          p.write_text(s,encoding='utf-8')
+      - name: Validate
+        run: node --check backend/worker.js
+      - name: Commit
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+users.noreply.github.com'
+          git add backend/worker.js
+          git diff --cached --quiet || git commit -m 'Add automatic badge awarding engine'
+          git push
