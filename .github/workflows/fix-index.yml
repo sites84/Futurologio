@@ -15,7 +15,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Fix JavaScript catalog initialization and persistence bridge
+      - name: Fix catalog initialization and persistent creation callback
         shell: python
         run: |
           from pathlib import Path
@@ -23,7 +23,9 @@ jobs:
 
           p = Path('index.html')
           s = p.read_text(encoding='utf-8')
+
           s = s.replace(";addHistory({id:''});\n</script>\n<script>", ";\n</script>\n<script>", 1)
+
           s = re.sub(
               r'async function loadCatalog\(\)\{return PRODUCTS\}.*?</script></body></html>$',
               "window.FUTUROLOGIO_PRODUCTS=PRODUCTS;\n"
@@ -34,49 +36,23 @@ jobs:
               s,
               flags=re.S,
           )
-          old="function newInvention(){const pool=window.FUTUROLOGIO_PRODUCTS.filter(p=>p.category===selected&&!used.includes(p.id));if(!pool.length){alert('Essa categoria já mostrou todos os produtos disponíveis. Escolha outra categoria.');return}show(pool[Math.floor(Math.random()*pool.length)])}"
-          new="function newInvention(){const pool=window.FUTUROLOGIO_PRODUCTS.filter(p=>p.category===selected&&!used.includes(p.id));if(!pool.length){alert('Essa categoria já mostrou todos os produtos disponíveis. Escolha outra categoria.');return}const p=pool[Math.floor(Math.random()*pool.length)];show(p);if(typeof window.FUTUROLOGIO_AFTER_CREATE==='function')window.FUTUROLOGIO_AFTER_CREATE(p)}"
-          if old in s: s=s.replace(old,new,1)
-          if 'window.FUTUROLOGIO_PRODUCTS=PRODUCTS;' not in s: raise SystemExit('Falha no catálogo.')
+
+          old = "function newInvention(){const pool=window.FUTUROLOGIO_PRODUCTS.filter(p=>p.category===selected&&!used.includes(p.id));if(!pool.length){alert('Essa categoria já mostrou todos os produtos disponíveis. Escolha outra categoria.');return}show(pool[Math.floor(Math.random()*pool.length)])}"
+          new = "function newInvention(){const pool=window.FUTUROLOGIO_PRODUCTS.filter(p=>p.category===selected&&!used.includes(p.id));if(!pool.length){alert('Essa categoria já mostrou todos os produtos disponíveis. Escolha outra categoria.');return}const p=pool[Math.floor(Math.random()*pool.length)];show(p);if(typeof window.FUTUROLOGIO_AFTER_CREATE==='function')window.FUTUROLOGIO_AFTER_CREATE(p)}"
+          if old in s:
+              s = s.replace(old, new, 1)
+
+          if 'window.FUTUROLOGIO_PRODUCTS=PRODUCTS;' not in s:
+              raise SystemExit('Falha: catálogo não inicializado.')
+          if old in s:
+              raise SystemExit('Falha: callback de criação não foi aplicado.')
+
           p.write_text(s, encoding='utf-8')
-
-          w=Path('backend/worker.js')
-          s=w.read_text(encoding='utf-8')
-          if '/api/record-creation' not in s:
-              marker="    if(path==='/api/inventions' && request.method==='GET'){"
-              endpoint="""    if(path==='/api/record-creation' && request.method==='POST'){
-      if(!session)return json({ok:false,error:'Não autenticado'},401);
-      const u=await refreshUser(env.DB,session.sub); if(!u)return json({ok:false,error:'Usuário não encontrado'},404);
-      const b=await body(request); const pid=String(b.id||'').trim(); const name=String(b.name||'').trim(); const category=String(b.category||'').trim();
-      if(!pid||!name||!CATEGORIES.includes(category))return json({ok:false,error:'Invenção inválida para registro.'},400);
-      const concept=String(b.what||'').trim()||name;
-      const digest=await crypto.subtle.digest('SHA-256',new TextEncoder().encode((name+'|'+category+'|'+concept).toLowerCase().replace(/\\s+/g,' ').trim()));
-      const fp=Array.from(new Uint8Array(digest)).map(x=>x.toString(16).padStart(2,'0')).join('');
-      let invention=await env.DB.prepare('SELECT * FROM INVENTIONS WHERE fingerprint=?').bind(fp).first();
-      if(!invention){
-        const slug=(name.toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,70)||'produto')+'-'+Date.now();
-        const data=JSON.stringify({source_id:pid,what:b.what||'',realTech:b.realTech||'',specTech:b.specTech||'',inventedTech:b.inventedTech||'',build:b.build||'',uses:b.uses||'',dangers:b.dangers||'',test:b.test||'',curiosity:b.curiosity||'',readiness:b.readiness||'',year:b.year||'',patent:b.patent||''});
-        await env.DB.prepare('INSERT INTO INVENTIONS(slug,name,category,concept,fingerprint,data) VALUES(?,?,?,?,?,?)').bind(slug,name,category,concept,fp,data).run();
-        invention=await env.DB.prepare('SELECT * FROM INVENTIONS WHERE fingerprint=?').bind(fp).first();
-      }
-      const already=await env.DB.prepare('SELECT 1 FROM USER_INVENTIONS WHERE user_id=? AND invention_id=?').bind(u.id,invention.id).first();
-      let xp={granted:0,limited:false};
-      if(!already){ await env.DB.prepare('INSERT INTO USER_INVENTIONS(user_id,invention_id) VALUES(?,?)').bind(u.id,invention.id).run(); xp=await grantXp(env.DB,u,'creation','invention',invention.id); }
-      const updated=await refreshUser(env.DB,u.id);
-      return json({ok:true,invention,xp,user:publicUser(updated,await creationAllowance(env.DB,updated))});
-    }
-"""
-              if marker not in s: raise SystemExit('Falha: marcador do worker não encontrado.')
-              s=s.replace(marker,endpoint+marker,1)
-              w.write_text(s,encoding='utf-8')
-
-      - name: Validate backend
-        run: node --check backend/worker.js
 
       - name: Commit fix
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add index.html backend/worker.js
-          git diff --cached --quiet || git commit -m 'Fix catalog and persist user creations'
+          git add index.html
+          git diff --cached --quiet || git commit -m 'Connect creation to user persistence'
           git push
