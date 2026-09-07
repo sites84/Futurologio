@@ -1,0 +1,56 @@
+name: Finish FUTUROLOGIO E2E hardening
+
+on:
+  push:
+    paths:
+      - '.github/workflows/finish-e2e-hardening.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  finish:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Apply and validate E2E fixes
+        run: |
+          node <<'NODE'
+          const fs=require('fs');
+          const auth='frontend/auth-gate.js';
+          let a=fs.readFileSync(auth,'utf8');
+          a=a.replace("if(!token()||!user()){openAuth('register');return false}\n    try{","if(!token()||!user()){openAuth('register');return false}\n    const selected=document.getElementById('selectedCat')?.textContent?.trim();\n    const used=JSON.parse(localStorage.getItem('futuro_used_v3')||'[]');\n    const products=window.FUTUROLOGIO_PRODUCTS||[];\n    if(selected&&products.length&&!products.some(p=>p.category===selected&&!used.includes(p.id))){alert('Essa categoria já mostrou todos os produtos disponíveis. Escolha outra categoria.');return false}\n    try{");
+          a=a.replace('test:product.test,','test:product.test||product.tests,');
+          fs.writeFileSync(auth,a);
+          const social='frontend/social.js';
+          let s=fs.readFileSync(social,'utf8');
+          s=s.replace("function resolveDbId(){const p=state.currentProduct||findCurrentProduct();state.currentProduct=p;if(!p)return 0;const direct=window.FUTUROLOGIO_DB_ID_FOR?.(p.id)||Number(dbMap()[p.id]||0);state.currentId=Number(direct)||0;return state.currentId}","function resolveDbId(){const p=state.currentProduct||findCurrentProduct();state.currentProduct=p;if(!p)return 0;const direct=window.FUTUROLOGIO_DB_ID_FOR?.(p.id)||Number(dbMap()[p.id]||0);state.currentId=Number(direct)||0;return state.currentId}\n  async function waitForDbId(){for(let i=0;i<20;i++){const id=resolveDbId();if(id)return id;await new Promise(r=>setTimeout(r,100))}return 0}");
+          s=s.replace(/const id=resolveDbId\(\);/g,'const id=await waitForDbId();');
+          s=s.replace("const name=document.getElementById('name')?.textContent||'Invenção FUTUROLOGIO™',url=location.href.split('#')[0],text=","const name=document.getElementById('name')?.textContent||'Invenção FUTUROLOGIO™',url=location.origin+location.pathname+'?invention='+encodeURIComponent(state.currentProduct?.id||''),text=");
+          s=s.replace("function findCurrentProduct(){\n    try{const raw=JSON.parse(localStorage.getItem('futuro_used_v3')||'null');","function findCurrentProduct(){\n    try{const shared=new URLSearchParams(location.search).get('invention');const list=window.FUTUROLOGIO_PRODUCTS||window.PRODUCTS||[];if(shared){const p=list.find(x=>String(x.id)===String(shared));if(p)return p}}catch{}\n    try{const raw=JSON.parse(localStorage.getItem('futuro_used_v3')||'null');");
+          fs.writeFileSync(social,s);
+          const index='index.html';
+          let h=fs.readFileSync(index,'utf8');
+          h=h.replace("p[k==='intro'?'what':k]","p[k==='intro'?'what':k==='test'?'tests':k]");
+          h=h.replace("addHistory({id:''});","addHistory({id:''});const sharedId=new URLSearchParams(location.search).get('invention');if(sharedId){const shared=PRODUCTS.find(x=>String(x.id)===String(sharedId));if(shared)show(shared)}");
+          fs.writeFileSync(index,h);
+          NODE
+          node --check frontend/auth-gate.js
+          node --check frontend/social.js
+          grep -q 'product.test||product.tests' frontend/auth-gate.js
+          grep -q 'waitForDbId' frontend/social.js
+          grep -q '?invention=' frontend/social.js
+          grep -q 'sharedId' index.html
+          grep -q "k==='test'?'tests'" index.html
+          ! grep -q 'frontend/auth-social-bridge.js' index.html
+      - name: Commit fixes and remove temporary workflows
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html frontend/auth-gate.js frontend/social.js .github/workflows/finish-e2e-hardening.yml .github/workflows/harden-e2e-flow.yml
+          git rm -f .github/workflows/finish-e2e-hardening.yml .github/workflows/harden-e2e-flow.yml
+          git diff --cached --quiet || git commit -m 'Harden FUTUROLOGIO creation and sharing flow'
+          git push
