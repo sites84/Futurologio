@@ -27,6 +27,10 @@
   }
   async function canCreate(){
     if(!token()||!user()){openAuth('register');return false}
+    const selected=document.getElementById('selectedCat')?.textContent?.trim();
+    const used=JSON.parse(localStorage.getItem('futuro_used_v3')||'[]');
+    const products=window.FUTUROLOGIO_PRODUCTS||[];
+    if(selected&&products.length&&!products.some(p=>p.category===selected&&!used.includes(p.id))){alert('Essa categoria já mostrou todos os produtos disponíveis. Escolha outra categoria.');return false}
     try{
       const r=await oldFetch(API+'/api/consume-creation',{method:'POST',headers:{'content-type':'application/json'}});
       const d=await r.json();
@@ -37,7 +41,7 @@
   }
   async function recordCreated(product){
     if(!product||!token())return;
-    try{const r=await oldFetch(API+'/api/record-creation',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({id:product.id,name:product.name,category:product.category,what:product.what,realTech:product.realTech,specTech:product.specTech,inventedTech:product.inventedTech,build:product.build,uses:product.uses,dangers:product.dangers||product.danger,test:product.test,curiosity:product.curiosity,readiness:product.readiness,year:product.year,patent:product.patent})});const d=await r.json();if(!r.ok){alert(d.error||'A invenção foi exibida, mas não foi registrada no seu perfil.');return;}if(d.invention?.id){const m=map();m[product.id]=Number(d.invention.id);localStorage.setItem(MAP_KEY,JSON.stringify(m));}if(d.user){localStorage.setItem(USER_KEY,JSON.stringify(d.user));}}catch(e){alert('A invenção foi exibida, mas não foi possível registrá-la no seu perfil agora.');}
+    try{const r=await oldFetch(API+'/api/record-creation',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({id:product.id,name:product.name,category:product.category,what:product.what,realTech:product.realTech,specTech:product.specTech,inventedTech:product.inventedTech,build:product.build,uses:product.uses,dangers:product.dangers||product.danger,test:product.test||product.tests,curiosity:product.curiosity,readiness:product.readiness,year:product.year,patent:product.patent})});const d=await r.json();if(!r.ok){alert(d.error||'A invenção foi exibida, mas não foi registrada no seu perfil.');return;}if(d.invention?.id){const m=map();m[product.id]=Number(d.invention.id);localStorage.setItem(MAP_KEY,JSON.stringify(m));}if(d.user){localStorage.setItem(USER_KEY,JSON.stringify(d.user));}}catch(e){alert('A invenção foi exibida, mas não foi possível registrá-la no seu perfil agora.');}
   }
   window.FUTUROLOGIO_AFTER_CREATE=recordCreated;
   window.FUTUROLOGIO_DB_ID_FOR=productId=>Number(map()[productId]||0);
