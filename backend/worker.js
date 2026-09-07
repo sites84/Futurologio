@@ -1,0 +1,72 @@
+import { PLAN_LIMITS, XP_RULES, DAILY_XP_LIMITS, levelFromXp, roleFromLevel } from './roles.js';
+
+const CATEGORIES = ['Casa','Comida & Cozinha','Transporte','Moda','Animais','Tecnologia','Mente & Comportamento','Meio Ambiente','Escola & Trabalho','Espaço','Sem sentido','Tecnologia do futuro','Indústria','Esportes','Entretenimento','Dinheiro & Negócios','Cidade','Agricultura','Viagem','Comunicação','Energia','Tempo & Clima','Objetos pessoais','Lazer','Museu','Bizarro ou Nojento'];
+const GOOGLE_TOKENINFO = 'https://oauth2.googleapis.com/tokeninfo?id_token=';
+
+function json(data, status=200, extra={}) {
+  return new Response(JSON.stringify(data), { status, headers: { 'content-type':'application/json; charset=utf-8', 'access-control-allow-origin':'*', 'access-control-allow-headers':'content-type, authorization', 'access-control-allow-methods':'GET,POST,OPTIONS', ...extra }});
+}
+function today(){ return new Date().toISOString().slice(0,10); }
+function id(){ return crypto.randomUUID(); }
+async function sign(value, secret){ const key=await crypto.subtle.importKey('raw',new TextEncoder().encode(secret),{name:'HMAC',hash:'SHA-256'},false,['sign']); const sig=await crypto.subtle.sign('HMAC',key,new TextEncoder().encode(value)); return btoa(String.fromCharCode(...new Uint8Array(sig))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,''); }
+async function makeToken(userId, env){ const body=btoa(JSON.stringify({sub:userId,iat:Date.now()})).replace(/=+$/,''); return body+'.'+await sign(body,env.SESSION_SECRET); }
+async function auth(request, env){ const h=request.headers.get('authorization')||''; if(!h.startsWith('Bearer ')) return null; const [body,sig]=h.slice(7).split('.'); if(!body||!sig||sig!==await sign(body,env.SESSION_SECRET)) return null; try{return JSON.parse(atob(body));}catch{return null;} }
+async function body(request){ try{return await request.json();}catch{return {};} }
+function roleData(xp){ const level=levelFromXp(xp); return {xp,level,role:roleFromLevel(level),medal: level>=5&&level%5===0}; }
+async function refreshUser(db,userId){ const u=await db.prepare('SELECT * FROM USERS WHERE id=?').bind(userId).first(); if(!u)return null; const level=levelFromXp(u.xp); if(level!==u.level){await db.prepare('UPDATE USERS SET level=?,updated_at=CURRENT_TIMESTAMP WHERE id=?').bind(level,userId).run();u.level=level;} return u; }
+async function grantXp(db,user,eventType,refType,refId){
+  const date=today(); const limit=DAILY_XP_LIMITS[eventType];
+  if(limit){ const row=await db.prepare('SELECT COUNT(*) n FROM XP_EVENTS WHERE user_id=? AND event_type=? AND event_date=?').bind(user.id,eventType,date).first(); if(Number(row?.n||0)>=limit)return {granted:0,limited:true}; }
+  const amount=Number(XP_RULES[eventType]||0); if(!amount)return {granted:0,limited:false};
+  await db.prepare('INSERT INTO XP_EVENTS(user_id,event_type,reference_type,reference_id,xp,event_date) VALUES(?,?,?,?,?,?)').bind(user.id,eventType,refType||null,refId?String(refId):null,amount,date).run();
+  await db.prepare('UPDATE USERS SET xp=xp+?,updated_at=CURRENT_TIMESTAMP WHERE id=?').bind(amount,user.id).run();
+  const updated=await refreshUser(db,user.id); return {granted:amount,limited:false,user:roleData(updated.xp)};
+}
+async function creationAllowance(db,user){ const date=today(); let used=Number(user.daily_creations||0); if(user.daily_creation_date!==date){used=0;await db.prepare('UPDATE USERS SET daily_creations=0,daily_creation_date=? WHERE id=?').bind(date,user.id).run();} const base=PLAN_LIMITS[user.plan]??PLAN_LIMITS.free; return {used,base,credits:Number(user.extra_credits||0),remaining:Math.max(0,base-used)+Number(user.extra_credits||0)}; }
+
+export default {
+  async fetch(request, env){
+    if(request.method==='OPTIONS')return json({ok:true});
+    const url=new URL(request.url); const path=url.pathname;
+    try{
+      if(path==='/api/health')return json({ok:true,service:'FUTUROLOGIO™ social API',version:'1.0'});
+      if(path==='/api/categories')return json({ok:true,categories:CATEGORIES});
+
+      if(path==='/api/auth/google' && request.method==='POST'){
+        const {id_token}=await body(request); if(!id_token)return json({ok:false,error:'id_token obrigatório'},400);
+        const r=await fetch(GOOGLE_TOKENINFO+encodeURIComponent(id_token)); if(!r.ok)return json({ok:false,error:'Token Google inválido'},401); const g=await r.json();
+        if(env.GOOGLE_CLIENT_ID && g.aud!==env.GOOGLE_CLIENT_ID)return json({ok:false,error:'Cliente Google inválido'},401);
+        const googleId=g.sub,email=g.email||null,name=(g.name||g.email||'criador').trim();
+        let u=await env.DB.prepare('SELECT * FROM USERS WHERE google_id=?').bind(googleId).first();
+        if(!u && email)u=await env.DB.prepare('SELECT * FROM USERS WHERE email=?').bind(email).first();
+        if(!u){let username=name.replace(/[^a-zA-Z0-9_]+/g,'').slice(0,20)||'criador'; const base=username; let n=1; while(await env.DB.prepare('SELECT id FROM USERS WHERE username=?').bind(username).first())username=base+(n++); u={id:id(),username,email,google_id:googleId,avatar:g.picture||null,xp:0,level:1,plan:'free',daily_creations:0,daily_creation_date:today(),extra_credits:0}; await env.DB.prepare('INSERT INTO USERS(id,username,email,google_id,avatar,xp,level,plan,daily_creations,daily_creation_date,extra_credits) VALUES(?,?,?,?,?,?,?,?,?,?,?)').bind(u.id,u.username,u.email,u.google_id,u.avatar,u.xp,u.level,u.plan,0,today(),0).run();}
+        const token=await makeToken(u.id,env); return json({ok:true,token,user:{id:u.id,username:u.username,avatar:u.avatar,...roleData(Number(u.xp||0)),plan:u.plan,allowance:await creationAllowance(env.DB,u)}});
+      }
+
+      const session=await auth(request,env);
+      if(path==='/api/me' && request.method==='GET'){ if(!session)return json({ok:false,error:'Não autenticado'},401); const u=await refreshUser(env.DB,session.sub); if(!u)return json({ok:false,error:'Usuário não encontrado'},404); return json({ok:true,user:{id:u.id,username:u.username,email:u.email,avatar:u.avatar,...roleData(Number(u.xp||0)),plan:u.plan,allowance:await creationAllowance(env.DB,u)}}); }
+
+      if(path==='/api/inventions' && request.method==='GET'){
+        const cat=url.searchParams.get('category'); const limit=Math.min(100,Math.max(1,Number(url.searchParams.get('limit')||50))); const q=cat?await env.DB.prepare('SELECT id,name,category,concept,data FROM INVENTIONS WHERE category=? ORDER BY id DESC LIMIT ?').bind(cat,limit).all():await env.DB.prepare('SELECT id,name,category,concept,data FROM INVENTIONS ORDER BY id DESC LIMIT ?').bind(limit).all(); return json({ok:true,items:q.results||[]});
+      }
+
+      if(path==='/api/create' && request.method==='POST'){
+        if(!session)return json({ok:false,error:'Não autenticado'},401); const u=await refreshUser(env.DB,session.sub); if(!u)return json({ok:false,error:'Usuário não encontrado'},404); const {category}=await body(request); if(!CATEGORIES.includes(category))return json({ok:false,error:'Categoria inválida'},400);
+        const a=await creationAllowance(env.DB,u); if(a.remaining<=0)return json({ok:false,error:'Limite diário atingido',allowance:a},429);
+        const seen=await env.DB.prepare('SELECT invention_id FROM USER_INVENTIONS WHERE user_id=?').bind(u.id).all(); const ids=(seen.results||[]).map(x=>x.invention_id);
+        let sql='SELECT * FROM INVENTIONS WHERE category=?'; const args=[category]; if(ids.length){sql+=' AND id NOT IN ('+ids.map(()=>'?').join(',')+')';args.push(...ids);} sql+=' ORDER BY RANDOM() LIMIT 1'; const p=await env.DB.prepare(sql).bind(...args).first(); if(!p)return json({ok:false,error:'Nenhuma invenção nova disponível nesta categoria para este usuário.'},404);
+        if(a.used<a.base){await env.DB.prepare('UPDATE USERS SET daily_creations=daily_creations+1,daily_creation_date=?,updated_at=CURRENT_TIMESTAMP WHERE id=?').bind(today(),u.id).run();}else{await env.DB.prepare('UPDATE USERS SET extra_credits=extra_credits-1,updated_at=CURRENT_TIMESTAMP WHERE id=?').bind(u.id).run();}
+        await env.DB.prepare('INSERT INTO USER_INVENTIONS(user_id,invention_id) VALUES(?,?)').bind(u.id,p.id).run(); const xp=await grantXp(env.DB,u,'creation','invention',p.id); return json({ok:true,invention:p,xp,allowance:await creationAllowance(env.DB,await refreshUser(env.DB,u.id))});
+      }
+
+      const m=path.match(/^\/api\/inventions\/(\d+)\/(like|comment|share)$/); if(m && request.method==='POST'){
+        if(!session)return json({ok:false,error:'Não autenticado'},401); const u=await refreshUser(env.DB,session.sub); if(!u)return json({ok:false,error:'Usuário não encontrado'},404); const inventionId=Number(m[1]); const action=m[2]; if(!(await env.DB.prepare('SELECT id FROM INVENTIONS WHERE id=?').bind(inventionId).first()))return json({ok:false,error:'Invenção não encontrada'},404);
+        if(action==='like'){const exists=await env.DB.prepare('SELECT 1 FROM LIKES WHERE user_id=? AND invention_id=?').bind(u.id,inventionId).first(); if(exists){await env.DB.prepare('DELETE FROM LIKES WHERE user_id=? AND invention_id=?').bind(u.id,inventionId).run(); return json({ok:true,liked:false,xp:{granted:0}});} await env.DB.prepare('INSERT INTO LIKES(user_id,invention_id) VALUES(?,?)').bind(u.id,inventionId).run(); const xp=await grantXp(env.DB,u,'like','invention',inventionId); return json({ok:true,liked:true,xp});}
+        if(action==='comment'){const b=await body(request); const text=String(b.text||'').trim(); if(!text||text.length>2000)return json({ok:false,error:'Comentário inválido'},400); const r=await env.DB.prepare('INSERT INTO COMMENTS(user_id,invention_id,text) VALUES(?,?,?)').bind(u.id,inventionId,text).run(); const xp=await grantXp(env.DB,u,'comment','comment',r.meta?.last_row_id); return json({ok:true,id:r.meta?.last_row_id,xp});}
+        const b=await body(request); const platform=String(b.platform||'other').slice(0,40); const r=await env.DB.prepare('INSERT INTO SHARES(user_id,invention_id,platform) VALUES(?,?,?)').bind(u.id,inventionId,platform).run(); const xp=await grantXp(env.DB,u,'share','share',r.meta?.last_row_id); return json({ok:true,id:r.meta?.last_row_id,platform,xp});
+      }
+      if(path.startsWith('/api/inventions/') && request.method==='GET'){const inventionId=Number(path.split('/').pop()); const p=await env.DB.prepare('SELECT id,name,category,concept,data FROM INVENTIONS WHERE id=?').bind(inventionId).first(); if(!p)return json({ok:false,error:'Invenção não encontrada'},404); const likes=await env.DB.prepare('SELECT COUNT(*) n FROM LIKES WHERE invention_id=?').bind(inventionId).first(); const comments=await env.DB.prepare('SELECT c.id,c.text,c.created_at,u.username,u.avatar FROM COMMENTS c JOIN USERS u ON u.id=c.user_id WHERE c.invention_id=? ORDER BY c.id DESC LIMIT 100').bind(inventionId).all(); return json({ok:true,invention:p,likes:Number(likes?.n||0),comments:comments.results||[]});}
+      return json({ok:false,error:'Endpoint não encontrado'},404);
+    }catch(e){return json({ok:false,error:'Erro interno',detail:String(e?.message||e)},500);}
+  }
+};
