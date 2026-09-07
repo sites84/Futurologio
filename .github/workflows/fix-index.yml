@@ -25,14 +25,14 @@ jobs:
           let s = fs.readFileSync(p, 'utf8');
 
           const keep = [
+            '<script src="./frontend/social.js"></script>',
+            '<script src="frontend/profile-panel.js"></script>',
             '<script src="frontend/auth-gate.js"></script>',
             '<script src="frontend/auth-social-bridge.js"></script>'
           ];
           const remove = [
             '<script src="frontend/social-actions.js"></script>',
-            '<script src="frontend/gamification.js"></script>',
-            '<script src="./frontend/social.js"></script>',
-            '<script src="frontend/profile-panel.js"></script>'
+            '<script src="frontend/gamification.js"></script>'
           ];
           for (const tag of [...keep, ...remove]) s = s.split(tag).join('');
 
@@ -57,6 +57,8 @@ jobs:
           node --check frontend/auth-gate.js
           node --check frontend/auth-social-bridge.js
           grep -q 'window.FUTUROLOGIO_PRODUCTS=PRODUCTS;' index.html
+          grep -q 'frontend/social.js' index.html
+          grep -q 'frontend/profile-panel.js' index.html
           grep -q 'frontend/auth-gate.js' index.html
           grep -q 'frontend/auth-social-bridge.js' index.html
           ! grep -q 'frontend/social-actions.js' index.html
