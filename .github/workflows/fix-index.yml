@@ -1,0 +1,57 @@
+name: Fix FUTUROLOGIO index
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Fix JavaScript catalog initialization
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+
+          # The first script called addHistory before PRODUCTS existed.
+          s = s.replace(";addHistory({id:''});\n</script>\n<script>", ";\n</script>\n<script>", 1)
+
+          # Replace the malformed loader appended after the 139-product array.
+          s = re.sub(
+              r'async function loadCatalog\(\)\{return PRODUCTS\}.*?</script></body></html>$',
+              "window.FUTUROLOGIO_PRODUCTS=PRODUCTS;\n"
+              "document.getElementById('createBtn').disabled=false;\n"
+              "document.getElementById('createBtn').textContent='CRIAR MEU PRODUTO';\n"
+              "addHistory({id:''});\n"
+              "</script></body></html>",
+              s,
+              flags=re.S,
+          )
+
+          if 'window.FUTUROLOGIO_PRODUCTS=PRODUCTS;' not in s:
+              raise SystemExit('Falha: não encontrei o ponto de inicialização do catálogo.')
+          if "addHistory({id:''});" not in s:
+              raise SystemExit('Falha: inicialização do histórico não foi restaurada.')
+          if 'async function loadCatalog(){return PRODUCTS}' in s:
+              raise SystemExit('Falha: loader quebrado ainda presente.')
+
+          p.write_text(s, encoding='utf-8')
+
+      - name: Commit fix
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git diff --cached --quiet || git commit -m 'Fix catalog initialization in FUTUROLOGIO'
+          git push
