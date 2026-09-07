@@ -1,0 +1,38 @@
+name: Validate frontend
+
+on:
+  push:
+    paths:
+      - 'index.html'
+      - 'frontend/**'
+      - '.github/workflows/validate-frontend.yml'
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'frontend/**'
+      - '.github/workflows/validate-frontend.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  syntax:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate external JavaScript files
+        run: |
+          node --check frontend/auth-gate.js
+          node --check frontend/auth-social-bridge.js
+          node --check frontend/social.js
+          node --check frontend/profile-panel.js
+          node --check frontend/gamification.js
+      - name: Validate critical integration hooks
+        run: |
+          grep -q 'window.openAuth=openAuth' frontend/auth-gate.js
+          grep -q 'FUTUROLOGIO_AFTER_CREATE' frontend/auth-gate.js
+          grep -q 'FUTUROLOGIO_DB_ID_FOR' frontend/auth-gate.js
+          grep -q 'waitForDbId' frontend/social.js
+          grep -q "'?invention='" frontend/social.js
+          grep -q "sharedId" index.html
+          ! grep -q 'frontend/auth-social-bridge.js' index.html
