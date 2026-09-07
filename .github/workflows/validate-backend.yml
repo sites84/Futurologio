@@ -1,0 +1,23 @@
+name: Validate FUTUROLOGIO backend
+
+on:
+  push:
+    paths:
+      - 'backend/**'
+      - '.github/workflows/validate-backend.yml'
+  pull_request:
+    paths:
+      - 'backend/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate JavaScript syntax
+        run: node --check backend/worker.js && node --check backend/roles.js
+      - name: Validate D1 SQL
+        run: |
+          sqlite3 /tmp/futurologio.sqlite < backend/migrations/0001_social.sql
+          sqlite3 /tmp/futurologio.sqlite < backend/seed.sql
+          sqlite3 /tmp/futurologio.sqlite '.tables'
