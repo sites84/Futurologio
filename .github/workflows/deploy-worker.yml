@@ -39,7 +39,7 @@ jobs:
           LIST="$(wrangler d1 list --json)"
           ID="$(printf '%s' "$LIST" | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{const a=JSON.parse(s);const x=a.find(x=>x.name==='futurologio');if(!x)process.exit(2);process.stdout.write(x.uuid||x.database_id||'')})")" || true
           if [ -z "$ID" ]; then
-            wrangler d1 create futurologio --experimental-backend
+            wrangler d1 create futurologio
             LIST="$(wrangler d1 list --json)"
             ID="$(printf '%s' "$LIST" | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{const a=JSON.parse(s);const x=a.find(x=>x.name==='futurologio');if(!x)process.exit(2);process.stdout.write(x.uuid||x.database_id||'')})")"
           fi
