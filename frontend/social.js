@@ -39,14 +39,14 @@
     header.insertAdjacentElement('afterend',prof);
 
     const modal=document.createElement('div'); modal.className='ft-modal'; modal.id='ftModal';
-    modal.innerHTML=`<div class="ft-modal-card"><h2>Entrar no FUTUROLOGIO™</h2><p>Crie seu perfil para registrar invenções, ganhar XP, receber medalhas e interagir com outras criações.</p><label style="font-size:11px;font-weight:900">Nome de usuário</label><input class="ft-input" id="ftNameInput" maxlength="40" placeholder="Ex.: InventorDoCaos"><div class="ft-modal-actions"><button class="ft-btn lime" id="ftDemoLogin">Criar perfil local</button><button class="ft-btn" id="ftCloseModal">Cancelar</button></div><button class="ft-btn ft-google" id="ftGoogle" style="width:100%;margin-top:8px">Continuar com Google</button><div class="ft-status" id="ftAuthStatus">Google Sign-In fica ativo assim que o Client ID do projeto for configurado.</div></div>`;
+    modal.innerHTML=`<div class="ft-modal-card"><h2>Entrar no FUTUROLOGIO™</h2><p>Crie seu perfil para registrar invenções, ganhar XP, receber medalhas e interagir com outras criações.</p><label style="font-size:11px;font-weight:900">Nome de usuário</label><input class="ft-input" id="ftNameInput" maxlength="40" placeholder="Ex.: InventorDoCaos"><div class="ft-modal-actions"><button class="ft-btn lime" id="ftDemoLogin">Criar conta</button><button class="ft-btn" id="ftCloseModal">Cancelar</button></div><button class="ft-btn ft-google" id="ftGoogle" style="width:100%;margin-top:8px">Continuar com Google</button><div class="ft-status" id="ftAuthStatus">Google Sign-In fica ativo assim que o Client ID do projeto for configurado.</div></div>`;
     document.body.appendChild(modal);
 
     document.getElementById('ftLoginBtn').onclick=()=>modal.classList.add('open');
     document.getElementById('ftCloseModal').onclick=()=>modal.classList.remove('open');
     document.getElementById('ftProfileBtn').onclick=()=>prof.classList.toggle('open');
     document.getElementById('ftCloseProfile').onclick=()=>prof.classList.remove('open');
-    document.getElementById('ftDemoLogin').onclick=()=>{const name=document.getElementById('ftNameInput').value.trim()||'Inventor Curioso';const u={id:'local-'+Date.now(),username:name,xp:0,level:1,role:'Curioso Iniciante',creations:0,badges:[]};saveLocal(u);state.user=u;modal.classList.remove('open');renderUser()};
+    document.getElementById('ftDemoLogin').onclick=()=>{document.getElementById('ftAuthStatus').textContent='O cadastro local foi desativado. Use o cadastro oficial para criar sua conta.';document.getElementById('ftLoginBtn')?.click()};
     document.getElementById('ftGoogle').onclick=()=>{document.getElementById('ftAuthStatus').textContent=GOOGLE_CLIENT_ID?'Inicializando Google Sign-In…':'Configuração pendente: falta o Google Client ID do projeto.'; if(GOOGLE_CLIENT_ID) loadGoogle();};
 
     state.user=getLocal(); renderUser(); attachResultObserver();
