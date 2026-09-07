@@ -61,3 +61,5 @@ jobs:
           git add index.html backend/worker.js
           git diff --cached --quiet || git commit -m 'Persist local catalog creations'
           git push
+
+# Triggered intentionally to apply the persistence bridge.
