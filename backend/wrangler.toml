@@ -1,12 +1,12 @@
-name = "futurologio-social-api"
+name = "motor-invencoes"
 main = "worker.js"
 compatibility_date = "2026-09-07"
 
 [[d1_databases]]
 binding = "DB"
 database_name = "futurologio"
-database_id = "COLOQUE-O-DATABASE-ID-AQUI"
+database_id = "da4de59f-2f02-434c-a10f-d9d1a5262e95"
 migrations_dir = "migrations"
 
 [vars]
-# Set GOOGLE_CLIENT_ID and SESSION_SECRET in Cloudflare, not in this file.
+# GOOGLE_CLIENT_ID is optional until Google Sign-In is configured.
