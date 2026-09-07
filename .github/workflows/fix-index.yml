@@ -1,4 +1,4 @@
-name: Fix FUTUROLOGIO index
+name: Fix FUTUROLOGIO index and social backend
 
 on:
   push:
@@ -15,44 +15,63 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Fix catalog initialization and persistent creation callback
+      - name: Consolidate frontend and backend
         shell: python
         run: |
           from pathlib import Path
           import re
 
+          # Keep the 139-product catalog intact while fixing initialization.
           p = Path('index.html')
           s = p.read_text(encoding='utf-8')
-
           s = s.replace(";addHistory({id:''});\n</script>\n<script>", ";\n</script>\n<script>", 1)
-
-          s = re.sub(
-              r'async function loadCatalog\(\)\{return PRODUCTS\}.*?</script></body></html>$',
-              "window.FUTUROLOGIO_PRODUCTS=PRODUCTS;\n"
-              "document.getElementById('createBtn').disabled=false;\n"
-              "document.getElementById('createBtn').textContent='CRIAR MEU PRODUTO';\n"
-              "addHistory({id:''});\n"
-              "</script></body></html>",
-              s,
-              flags=re.S,
-          )
-
+          s = re.sub(r'async function loadCatalog\(\)\{return PRODUCTS\}.*?</script></body></html>$', "window.FUTUROLOGIO_PRODUCTS=PRODUCTS;\ndocument.getElementById('createBtn').disabled=false;\ndocument.getElementById('createBtn').textContent='CRIAR MEU PRODUTO';\naddHistory({id:''});\n</script></body></html>", s, flags=re.S)
           old = "function newInvention(){const pool=window.FUTUROLOGIO_PRODUCTS.filter(p=>p.category===selected&&!used.includes(p.id));if(!pool.length){alert('Essa categoria já mostrou todos os produtos disponíveis. Escolha outra categoria.');return}show(pool[Math.floor(Math.random()*pool.length)])}"
           new = "function newInvention(){const pool=window.FUTUROLOGIO_PRODUCTS.filter(p=>p.category===selected&&!used.includes(p.id));if(!pool.length){alert('Essa categoria já mostrou todos os produtos disponíveis. Escolha outra categoria.');return}const p=pool[Math.floor(Math.random()*pool.length)];show(p);if(typeof window.FUTUROLOGIO_AFTER_CREATE==='function')window.FUTUROLOGIO_AFTER_CREATE(p)}"
-          if old in s:
-              s = s.replace(old, new, 1)
+          if old in s: s=s.replace(old,new,1)
+          # Install the three social/account modules exactly once.
+          tags=['<script src="frontend/auth-gate.js"></script>','<script src="frontend/social-actions.js"></script>','<script src="frontend/gamification.js"></script>']
+          for tag in tags: s=s.replace(tag,'')
+          s=s.replace('</body>','\n'+'\n'.join(tags)+'\n</body>',1)
+          if 'window.FUTUROLOGIO_PRODUCTS=PRODUCTS;' not in s: raise SystemExit('catalog initialization failed')
+          p.write_text(s,encoding='utf-8')
 
-          if 'window.FUTUROLOGIO_PRODUCTS=PRODUCTS;' not in s:
-              raise SystemExit('Falha: catálogo não inicializado.')
-          if old in s:
-              raise SystemExit('Falha: callback de criação não foi aplicado.')
+          # Backend: medals every 5 levels + automatic achievement badges.
+          p=Path('backend/worker.js')
+          w=p.read_text(encoding='utf-8')
+          w=w.replace("import { PLAN_LIMITS, XP_RULES, DAILY_XP_LIMITS, levelFromXp, roleFromLevel } from './roles.js';", "import { PLAN_LIMITS, XP_RULES, DAILY_XP_LIMITS, levelFromXp, roleFromLevel, medalLevels } from './roles.js';", 1)
+          w=w.replace("function roleData(xp){const level=levelFromXp(xp);return {xp,level,role:roleFromLevel(level),medal:level>=5&&level%5===0}}", "function roleData(xp){const level=levelFromXp(xp);return {xp,level,role:roleFromLevel(level),medal:level>=5&&level%5===0,medals:medalLevels(level)}}", 1)
+          if 'async function awardBadges' not in w:
+              marker="function b64(x){return btoa(String.fromCharCode(...new Uint8Array(x)))}"
+              fn="""async function awardBadges(db,userId){
+  const q=async sql=>Number((await db.prepare(sql).bind(userId).first())?.n||0);
+  const stats={creations:await q('SELECT COUNT(*) n FROM USER_INVENTIONS WHERE user_id=?'),likes:await q('SELECT COUNT(*) n FROM LIKES WHERE user_id=?'),comments:await q('SELECT COUNT(*) n FROM COMMENTS WHERE user_id=?'),shares:await q('SELECT COUNT(*) n FROM SHARES WHERE user_id=?'),likesReceived:await q('SELECT COUNT(*) n FROM LIKES l JOIN USER_INVENTIONS ui ON ui.invention_id=l.invention_id WHERE ui.user_id=?'),categories:await q('SELECT COUNT(DISTINCT i.category) n FROM USER_INVENTIONS ui JOIN INVENTIONS i ON i.id=ui.invention_id WHERE ui.user_id=?'),bizarro:await q(\"SELECT COUNT(*) n FROM USER_INVENTIONS ui JOIN INVENTIONS i ON i.id=ui.invention_id WHERE ui.user_id=? AND i.category='Bizarro ou Nojento'\")};
+  const ok={FIRST_CREATION:stats.creations>=1,TEN_CREATIONS:stats.creations>=10,FIFTY_CREATIONS:stats.creations>=50,FIRST_LIKE:stats.likes>=1,HUNDRED_LIKES_RECEIVED:stats.likesReceived>=100,FIRST_COMMENT:stats.comments>=1,FIFTY_COMMENTS:stats.comments>=50,FIRST_SHARE:stats.shares>=1,FIFTY_SHARES:stats.shares>=50,CATEGORY_EXPLORER:stats.categories>=10,MULTICATEGORY_CREATOR:stats.categories>=20,BIZARRO_EXPLORER:stats.bizarro>=1};
+  const rows=await db.prepare('SELECT id,code FROM BADGES').all();
+  for(const b of rows.results||[]){if(ok[b.code])await db.prepare('INSERT OR IGNORE INTO USER_BADGES(user_id,badge_id) VALUES(?,?)').bind(userId,b.id).run()}
+}
+"""
+              if marker not in w: raise SystemExit('badge insertion marker not found')
+              w=w.replace(marker,fn+marker,1)
+          needle="const v=await user(db,u.id);return {granted:amount,limited:false,user:roleData(v.xp)}}"
+          repl="const v=await user(db,u.id);try{await awardBadges(db,u.id)}catch{}return {granted:amount,limited:false,user:roleData(v.xp)}}"
+          w=w.replace(needle,repl,1)
+          p.write_text(w,encoding='utf-8')
 
-          p.write_text(s, encoding='utf-8')
+      - name: Validate
+        run: |
+          node --check backend/worker.js
+          node --check backend/roles.js
+          grep -q 'frontend/auth-gate.js' index.html
+          grep -q 'frontend/social-actions.js' index.html
+          grep -q 'frontend/gamification.js' index.html
+          grep -q 'medalLevels' backend/worker.js
+          grep -q 'awardBadges' backend/worker.js
 
       - name: Commit fix
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add index.html
-          git diff --cached --quiet || git commit -m 'Connect creation to user persistence'
+          git add index.html backend/worker.js
+          git diff --cached --quiet || git commit -m 'Repair gamification and social installation'
           git push
