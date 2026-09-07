@@ -10,6 +10,7 @@
   function setSession(data){if(data.token)localStorage.setItem(TOKEN_KEY,data.token);if(data.user)localStorage.setItem(USER_KEY,JSON.stringify(data.user));}
   function clearSession(){localStorage.removeItem(TOKEN_KEY);localStorage.removeItem(USER_KEY)}
   const oldFetch=window.fetch;
+async function authFetch(url,init={}){const headers={...(init.headers||{})};const t=token();if(t)headers.Authorization='Bearer '+t;return oldFetch(url,{...init,headers})}
   window.fetch=async(...args)=>{let [input,init]=args;const url=typeof input==='string'?input:(input&&input.url)||'';if(url.startsWith(API)&&token()){init={...(init||{}),headers:{...((init&&init.headers)||{}),Authorization:'Bearer '+token()}}}return oldFetch(input,init)};
   function openAuth(mode='register'){
     let modal=$('ftGateModal'); if(!modal){
@@ -32,7 +33,7 @@
     const products=window.FUTUROLOGIO_PRODUCTS||[];
     if(selected&&products.length&&!products.some(p=>p.category===selected&&!used.includes(p.id))){alert('Essa categoria já mostrou todos os produtos disponíveis. Escolha outra categoria.');return false}
     try{
-      const r=await oldFetch(API+'/api/consume-creation',{method:'POST',headers:{'content-type':'application/json'}});
+      const r=await authFetch(API+'/api/consume-creation',{method:'POST',headers:{'content-type':'application/json'}});
       const d=await r.json();
       if(!r.ok){if(r.status===401){clearSession();openAuth('login');return false}alert(d.error||'Seu limite diário de criações foi atingido.');return false}
       const u=user(); if(u&&d.allowance){u.allowance=d.allowance;localStorage.setItem(USER_KEY,JSON.stringify(u));}
@@ -41,7 +42,7 @@
   }
   async function recordCreated(product){
     if(!product||!token())return;
-    try{const r=await oldFetch(API+'/api/record-creation',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({id:product.id,name:product.name,category:product.category,what:product.what,realTech:product.realTech,specTech:product.specTech,inventedTech:product.inventedTech,build:product.build,uses:product.uses,dangers:product.dangers||product.danger,test:product.test||product.tests,curiosity:product.curiosity,readiness:product.readiness,year:product.year,patent:product.patent})});const d=await r.json();if(!r.ok){alert(d.error||'A invenção foi exibida, mas não foi registrada no seu perfil.');return;}if(d.invention?.id){const m=map();m[product.id]=Number(d.invention.id);localStorage.setItem(MAP_KEY,JSON.stringify(m));}if(d.user){localStorage.setItem(USER_KEY,JSON.stringify(d.user));}}catch(e){alert('A invenção foi exibida, mas não foi possível registrá-la no seu perfil agora.');}
+    try{const r=await authFetch(API+'/api/record-creation',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({id:product.id,name:product.name,category:product.category,what:product.what,realTech:product.realTech,specTech:product.specTech,inventedTech:product.inventedTech,build:product.build,uses:product.uses,dangers:product.dangers||product.danger,test:product.test||product.tests,curiosity:product.curiosity,readiness:product.readiness,year:product.year,patent:product.patent})});const d=await r.json();if(!r.ok){alert(d.error||'A invenção foi exibida, mas não foi registrada no seu perfil.');return;}if(d.invention?.id){const m=map();m[product.id]=Number(d.invention.id);localStorage.setItem(MAP_KEY,JSON.stringify(m));}if(d.user){localStorage.setItem(USER_KEY,JSON.stringify(d.user));}}catch(e){alert('A invenção foi exibida, mas não foi possível registrá-la no seu perfil agora.');}
   }
   window.FUTUROLOGIO_AFTER_CREATE=recordCreated;
   window.FUTUROLOGIO_DB_ID_FOR=productId=>Number(map()[productId]||0);
