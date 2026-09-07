@@ -1,0 +1,88 @@
+name: Secure creation and profile API
+
+on:
+  push:
+    paths:
+      - 'backend/worker.js'
+      - 'frontend/auth-gate.js'
+      - '.github/workflows/secure-creation-and-profile.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch server-side creation consumption and profile
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('backend/worker.js')
+          s=p.read_text(encoding='utf-8')
+          marker="      if(path==='/api/create' && request.method==='POST'){"
+          block="""      if(path==='/api/consume-creation' && request.method==='POST'){
+        if(!session)return json({ok:false,error:'Não autenticado'},401);
+        const u=await refreshUser(env.DB,session.sub); if(!u)return json({ok:false,error:'Usuário não encontrado'},404);
+        const a=await creationAllowance(env.DB,u); if(a.remaining<=0)return json({ok:false,error:'Limite diário de criações atingido',allowance:a},429);
+        if(a.used<a.base){
+          await env.DB.prepare('UPDATE USERS SET daily_creations=daily_creations+1,daily_creation_date=?,updated_at=CURRENT_TIMESTAMP WHERE id=?').bind(today(),u.id).run();
+        }else{
+          await env.DB.prepare('UPDATE USERS SET extra_credits=extra_credits-1,updated_at=CURRENT_TIMESTAMP WHERE id=? AND extra_credits>0').bind(u.id).run();
+        }
+        const updated=await refreshUser(env.DB,u.id);
+        return json({ok:true,allowance:await creationAllowance(env.DB,updated)});
+      }
+
+      if(path==='/api/profile' && request.method==='GET'){
+        if(!session)return json({ok:false,error:'Não autenticado'},401);
+        const u=await refreshUser(env.DB,session.sub); if(!u)return json({ok:false,error:'Usuário não encontrado'},404);
+        const creations=await env.DB.prepare('SELECT COUNT(*) n FROM USER_INVENTIONS WHERE user_id=?').bind(u.id).first();
+        const categories=await env.DB.prepare('SELECT COUNT(DISTINCT i.category) n FROM USER_INVENTIONS ui JOIN INVENTIONS i ON i.id=ui.invention_id WHERE ui.user_id=?').bind(u.id).first();
+        const likes=await env.DB.prepare('SELECT COUNT(*) n FROM LIKES WHERE user_id=?').bind(u.id).first();
+        const comments=await env.DB.prepare('SELECT COUNT(*) n FROM COMMENTS WHERE user_id=?').bind(u.id).first();
+        const shares=await env.DB.prepare('SELECT COUNT(*) n FROM SHARES WHERE user_id=?').bind(u.id).first();
+        const received=await env.DB.prepare('SELECT COUNT(*) n FROM LIKES l JOIN USER_INVENTIONS ui ON ui.invention_id=l.invention_id WHERE ui.user_id=?').bind(u.id).first();
+        const badges=await env.DB.prepare('SELECT b.code,b.name,b.description,ub.earned_at FROM USER_BADGES ub JOIN BADGES b ON b.id=ub.badge_id WHERE ub.user_id=? ORDER BY ub.earned_at DESC').bind(u.id).all();
+        return json({ok:true,profile:{...publicUser(u,await creationAllowance(env.DB,u)),creations:Number(creations?.n||0),categories:Number(categories?.n||0),likes:Number(likes?.n||0),comments:Number(comments?.n||0),shares:Number(shares?.n||0),likesReceived:Number(received?.n||0),badges:badges.results||[]}});
+      }
+
+"""
+          if '/api/consume-creation' not in s:
+            s=s.replace(marker,block+marker,1)
+          p.write_text(s,encoding='utf-8')
+
+          p=Path('frontend/auth-gate.js')
+          s=p.read_text(encoding='utf-8')
+          old="""  async function canCreate(){
+    if(!token()||!user()){openAuth('register');return false}
+    try{const r=await oldFetch(API+'/api/me',{headers:{Authorization:'Bearer '+token()}});if(!r.ok){clearSession();openAuth('login');return false}const d=await r.json();if(d.user)localStorage.setItem(USER_KEY,JSON.stringify(d.user));const a=d.user?.allowance;if(a&&a.remaining<=0){alert('Seu limite diário de criações foi atingido.');return false}return true}catch(e){alert('Não foi possível validar sua conta agora. A criação fica bloqueada até o servidor confirmar sua sessão.');return false}
+  }
+"""
+          new="""  async function canCreate(){
+    if(!token()||!user()){openAuth('register');return false}
+    try{
+      const r=await oldFetch(API+'/api/consume-creation',{method:'POST',headers:{'content-type':'application/json',Authorization:'Bearer '+token()}});
+      const d=await r.json();
+      if(!r.ok){if(r.status===401){clearSession();openAuth('login');return false}alert(d.error||'Seu limite diário de criações foi atingido.');return false}
+      const u=user();if(u&&d.allowance){u.allowance=d.allowance;localStorage.setItem(USER_KEY,JSON.stringify(u))}
+      return true;
+    }catch(e){alert('Não foi possível validar sua conta no servidor. A criação permanece bloqueada.');return false}
+  }
+"""
+          if old not in s: raise SystemExit('auth-gate canCreate block not found')
+          s=s.replace(old,new,1)
+          p.write_text(s,encoding='utf-8')
+      - name: Validate
+        run: |
+          node --check backend/worker.js
+          node --check frontend/auth-gate.js
+      - name: Commit changes
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add backend/worker.js frontend/auth-gate.js
+          git diff --cached --quiet || git commit -m 'Enforce server-side creation allowance'
+          git push
