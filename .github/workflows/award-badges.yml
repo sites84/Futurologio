@@ -76,3 +76,5 @@ jobs:
           git add backend/worker.js index.html .github/workflows/award-badges.yml
           git diff --cached --quiet || git commit -m 'Consolidate gamification and automatic medals'
           git push
+
+# Stable consolidated installer; no catalog changes.
