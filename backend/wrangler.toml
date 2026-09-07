@@ -6,6 +6,7 @@ compatibility_date = "2026-09-07"
 binding = "DB"
 database_name = "futurologio"
 database_id = "COLOQUE-O-DATABASE-ID-AQUI"
+migrations_dir = "migrations"
 
 [vars]
 # Set GOOGLE_CLIENT_ID and SESSION_SECRET in Cloudflare, not in this file.
