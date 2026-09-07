@@ -34,6 +34,16 @@
       return true;
     }catch(e){alert('Não foi possível validar sua conta no servidor. A criação permanece bloqueada.');return false}
   }
+  async function recordCreated(product){
+    if(!product||!token())return;
+    try{
+      const r=await oldFetch(API+'/api/record-creation',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({id:product.id,name:product.name,category:product.category,what:product.what,realTech:product.realTech,specTech:product.specTech,inventedTech:product.inventedTech,build:product.build,uses:product.uses,dangers:product.dangers||product.danger,test:product.test,curiosity:product.curiosity,readiness:product.readiness,year:product.year,patent:product.patent})});
+      const d=await r.json();
+      if(!r.ok){alert(d.error||'A invenção foi exibida, mas não foi registrada no seu perfil.');return;}
+      if(d.user){localStorage.setItem(USER_KEY,JSON.stringify(d.user));}
+    }catch(e){alert('A invenção foi exibida, mas não foi possível registrá-la no seu perfil agora.');}
+  }
+  window.FUTUROLOGIO_AFTER_CREATE=recordCreated;
   function install(){
     const create=$('createBtn'),another=$('anotherBtn'); if(!create)return;
     create.onclick=async()=>{if(await canCreate())window.newInvention()};
