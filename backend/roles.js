@@ -17,6 +17,7 @@ export const DAILY_XP_LIMITS = Object.freeze({
   share: 10
 });
 
+// Cargo evolves every 5 levels. XP amounts remain configurable here.
 export const ROLES = Object.freeze([
   { level: 1, role: 'Curioso Iniciante' },
   { level: 5, role: 'Criança Curiosa' },
@@ -42,6 +43,11 @@ export function roleFromLevel(level) {
     else break;
   }
   return current.role;
+}
+
+export function medalLevels(level) {
+  const n = Math.max(0, Math.floor(level / 5));
+  return Array.from({ length: n }, (_, i) => (i + 1) * 5);
 }
 
 export function medalLevel(level) {
