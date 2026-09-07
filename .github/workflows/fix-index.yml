@@ -2,7 +2,8 @@ name: Install FUTUROLOGIO modules
 
 on:
   push:
-    branches: [main]
+    paths:
+      - '.github/workflows/fix-index.yml'
   workflow_dispatch:
 
 permissions:
