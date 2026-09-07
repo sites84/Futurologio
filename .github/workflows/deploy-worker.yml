@@ -22,13 +22,9 @@ jobs:
         env:
           CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CF_ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          SESSION: ${{ secrets.SESSION_SECRET }}
-          GOOGLE: ${{ secrets.GOOGLE_CLIENT_ID }}
         run: |
           test -n "$CF_TOKEN" || { echo 'Missing CLOUDFLARE_API_TOKEN'; exit 1; }
           test -n "$CF_ACCOUNT" || { echo 'Missing CLOUDFLARE_ACCOUNT_ID'; exit 1; }
-          test -n "$SESSION" || { echo 'Missing SESSION_SECRET'; exit 1; }
-          test -n "$GOOGLE" || { echo 'Missing GOOGLE_CLIENT_ID'; exit 1; }
 
       - name: Install Wrangler
         run: npm install --global wrangler@latest
@@ -72,18 +68,18 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: wrangler d1 migrations apply futurologio --remote --config wrangler.deploy.toml
 
-      - name: Set session secret
+      - name: Generate and set session secret
         working-directory: backend
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
-        run: printf '%s' "$SESSION_SECRET" | wrangler secret put SESSION_SECRET --config wrangler.deploy.toml
+        run: |
+          SESSION_SECRET="$(openssl rand -hex 32)"
+          printf '%s' "$SESSION_SECRET" | wrangler secret put SESSION_SECRET --config wrangler.deploy.toml
 
       - name: Deploy Worker
         working-directory: backend
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-        run: wrangler deploy --config wrangler.deploy.toml --var "GOOGLE_CLIENT_ID:$GOOGLE_CLIENT_ID"
+        run: wrangler deploy --config wrangler.deploy.toml
