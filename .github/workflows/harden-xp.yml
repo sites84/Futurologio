@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'backend/worker.js'
+      - 'frontend/gamification.js'
       - '.github/workflows/harden-xp.yml'
 
 permissions:
@@ -22,16 +23,28 @@ jobs:
           s=p.read_text(encoding='utf-8')
           old="async function xp(db,u,type,refType,refId){const lim=DAILY_XP_LIMITS[type];if(lim){const n=await db.prepare('SELECT COUNT(*) n FROM XP_EVENTS WHERE user_id=? AND event_type=? AND event_date=?').bind(u.id,type,today()).first();if(Number(n?.n||0)>=lim)return {granted:0,limited:true}}const amount=Number(XP_RULES[type]||0);if(!amount)return {granted:0,limited:false};await db.prepare('INSERT INTO XP_EVENTS(user_id,event_type,reference_type,reference_id,xp,event_date) VALUES(?,?,?,?,?,?)').bind(u.id,type,refType||null,refId?String(refId):null,amount,today()).run();await db.prepare('UPDATE USERS SET xp=xp+?,updated_at=CURRENT_TIMESTAMP WHERE id=?').bind(amount,u.id).run();const v=await user(db,u.id);return {granted:amount,limited:false,user:roleData(v.xp)}}"
           new="async function xp(db,u,type,refType,refId){const lim=DAILY_XP_LIMITS[type];if(lim){const n=await db.prepare('SELECT COUNT(*) n FROM XP_EVENTS WHERE user_id=? AND event_type=? AND event_date=?').bind(u.id,type,today()).first();if(Number(n?.n||0)>=lim)return {granted:0,limited:true}}if((type==='like'||type==='share')&&refType&&refId){const prior=await db.prepare('SELECT 1 FROM XP_EVENTS WHERE user_id=? AND event_type=? AND reference_type=? AND reference_id=? LIMIT 1').bind(u.id,type,refType,String(refId)).first();if(prior)return {granted:0,limited:true}}const amount=Number(XP_RULES[type]||0);if(!amount)return {granted:0,limited:false};await db.prepare('INSERT INTO XP_EVENTS(user_id,event_type,reference_type,reference_id,xp,event_date) VALUES(?,?,?,?,?,?)').bind(u.id,type,refType||null,refId?String(refId):null,amount,today()).run();await db.prepare('UPDATE USERS SET xp=xp+?,updated_at=CURRENT_TIMESTAMP WHERE id=?').bind(amount,u.id).run();const v=await user(db,u.id);return {granted:amount,limited:false,user:roleData(v.xp)}}"
-          if old not in s:
-              raise SystemExit('XP function pattern not found; refusing unsafe patch')
-          s=s.replace(old,new,1)
-          p.write_text(s,encoding='utf-8')
+          if old in s:
+              s=s.replace(old,new,1)
+              p.write_text(s,encoding='utf-8')
+          else:
+              print('XP hardening already applied; continuing')
+      - name: Install gamification profile
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          tag='<script src="frontend/gamification.js"></script>'
+          if tag not in s:
+              if '</body>' not in s: raise SystemExit('index.html has no closing body tag')
+              s=s.replace('</body>',tag+'</body>',1)
+              p.write_text(s,encoding='utf-8')
       - name: Validate
         run: node --check backend/worker.js
       - name: Commit
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+users.noreply.github.com'
-          git add backend/worker.js
-          git diff --cached --quiet || git commit -m 'Harden XP against repeated like and share farming'
+          git add backend/worker.js index.html
+          git diff --cached --quiet || git commit -m 'Harden XP and install gamification profile'
           git push
