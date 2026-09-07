@@ -1,0 +1,11 @@
+name = "futurologio-social-api"
+main = "worker.js"
+compatibility_date = "2026-09-07"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "futurologio"
+database_id = "COLOQUE-O-DATABASE-ID-AQUI"
+
+[vars]
+# Set GOOGLE_CLIENT_ID and SESSION_SECRET in Cloudflare, not in this file.
