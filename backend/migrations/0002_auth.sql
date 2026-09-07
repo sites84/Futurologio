@@ -1,0 +1,2 @@
+ALTER TABLE USERS ADD COLUMN password_hash TEXT;
+CREATE INDEX IF NOT EXISTS idx_users_email ON USERS(email);
