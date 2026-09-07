@@ -36,15 +36,10 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
           set -e
+          EXPECTED='da4de59f-2f02-434c-a10f-d9d1a5262e95'
           LIST="$(wrangler d1 list --json)"
-          ID="$(printf '%s' "$LIST" | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{const a=JSON.parse(s);const x=a.find(x=>x.name==='futurologio');if(!x)process.exit(2);process.stdout.write(x.uuid||x.database_id||'')})")" || true
-          if [ -z "$ID" ]; then
-            echo 'D1 futurologio not found; creating it.'
-            wrangler d1 create futurologio
-            LIST="$(wrangler d1 list --json)"
-            ID="$(printf '%s' "$LIST" | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{const a=JSON.parse(s);const x=a.find(x=>x.name==='futurologio');if(!x)process.exit(2);process.stdout.write(x.uuid||x.database_id||'')})")"
-          fi
-          test -n "$ID"
+          ID="$(printf '%s' "$LIST" | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{const a=JSON.parse(s);const x=a.find(x=>x.name==='futurologio');if(!x)process.exit(2);process.stdout.write(x.uuid||x.database_id||'')})")"
+          test "$ID" = "$EXPECTED" || { echo "Unexpected futurologio D1 id: $ID"; exit 1; }
           echo "database_id=$ID" >> "$GITHUB_OUTPUT"
 
       - name: Write deployment config
@@ -76,14 +71,18 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: wrangler d1 execute futurologio --remote --file=seed.sql --config wrangler.deploy.toml
 
-      - name: Generate and set session secret
+      - name: Preserve session secret
         working-directory: backend
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
-          SESSION_SECRET="$(openssl rand -hex 32)"
-          printf '%s' "$SESSION_SECRET" | wrangler secret put SESSION_SECRET --config wrangler.deploy.toml
+          if wrangler secret list --config wrangler.deploy.toml | grep -q 'SESSION_SECRET'; then
+            echo 'SESSION_SECRET already exists; preserving it.'
+          else
+            echo 'SESSION_SECRET missing; generating it once.'
+            openssl rand -hex 32 | wrangler secret put SESSION_SECRET --config wrangler.deploy.toml
+          fi
 
       - name: Deploy Worker
         working-directory: backend
@@ -91,3 +90,11 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: wrangler deploy --config wrangler.deploy.toml
+
+      - name: Verify live Worker
+        run: |
+          set -e
+          curl --fail --silent --show-error --retry 8 --retry-delay 3 https://motor-invencoes.edsonfernandesvet.workers.dev/api/health
+          echo
+          curl --fail --silent --show-error --retry 8 --retry-delay 3 https://motor-invencoes.edsonfernandesvet.workers.dev/api/categories
+          echo
