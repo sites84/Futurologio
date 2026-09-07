@@ -1,10 +1,16 @@
-name: Award FUTUROLOGIO badges
+name: Consolidate FUTUROLOGIO gamification
 
 on:
   push:
     paths:
       - 'backend/worker.js'
+      - 'backend/roles.js'
+      - 'index.html'
+      - 'frontend/auth-gate.js'
+      - 'frontend/social-actions.js'
+      - 'frontend/gamification.js'
       - '.github/workflows/award-badges.yml'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -14,12 +20,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Add badge engine
+      - name: Consolidate backend and frontend
         shell: python
         run: |
           from pathlib import Path
+
+          # Backend: expose every 5-level medal and automatic achievement badges.
           p=Path('backend/worker.js')
           s=p.read_text(encoding='utf-8')
+          s=s.replace("import { PLAN_LIMITS, XP_RULES, DAILY_XP_LIMITS, levelFromXp, roleFromLevel } from './roles.js';", "import { PLAN_LIMITS, XP_RULES, DAILY_XP_LIMITS, levelFromXp, roleFromLevel, medalLevels } from './roles.js';", 1)
+          old="function roleData(xp){const level=levelFromXp(xp);return {xp,level,role:roleFromLevel(level),medal:level>=5&&level%5===0}}"
+          new="function roleData(xp){const level=levelFromXp(xp);return {xp,level,role:roleFromLevel(level),medal:level>=5&&level%5===0,medals:medalLevels(level)}}"
+          s=s.replace(old,new,1)
           if 'async function awardBadges' not in s:
             marker="function b64(x){return btoa(String.fromCharCode(...new Uint8Array(x)))}"
             fn="""async function awardBadges(db,userId){
@@ -32,13 +44,35 @@ jobs:
 """
             if marker not in s: raise SystemExit('badge insertion marker not found')
             s=s.replace(marker,fn+marker,1)
+          # Award badges whenever XP is successfully granted.
+          needle="const v=await user(db,u.id);return {granted:amount,limited:false,user:roleData(v.xp)}}"
+          repl="const v=await user(db,u.id);try{await awardBadges(db,u.id)}catch{}return {granted:amount,limited:false,user:roleData(v.xp)}}"
+          s=s.replace(needle,repl,1)
+          p.write_text(s,encoding='utf-8')
+
+          # Frontend: install modules once, without disturbing the embedded catalog.
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          tags=['<script src="frontend/auth-gate.js"></script>','<script src="frontend/social-actions.js"></script>','<script src="frontend/gamification.js"></script>']
+          insertion='\n'+'\n'.join(tags)+'\n'
+          for tag in tags:
+            s=s.replace(tag,'')
+          s=s.replace('</body>',insertion+'</body>',1)
           p.write_text(s,encoding='utf-8')
       - name: Validate
-        run: node --check backend/worker.js
+        run: |
+          node --check backend/worker.js
+          node --check backend/roles.js
+          test -f frontend/auth-gate.js
+          test -f frontend/social-actions.js
+          test -f frontend/gamification.js
+          grep -q 'frontend/auth-gate.js' index.html
+          grep -q 'frontend/social-actions.js' index.html
+          grep -q 'frontend/gamification.js' index.html
       - name: Commit
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+users.noreply.github.com'
-          git add backend/worker.js
-          git diff --cached --quiet || git commit -m 'Add automatic badge awarding engine'
+          git add backend/worker.js index.html .github/workflows/award-badges.yml
+          git diff --cached --quiet || git commit -m 'Consolidate gamification and automatic medals'
           git push
