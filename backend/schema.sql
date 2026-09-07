@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS USERS (
   username TEXT NOT NULL UNIQUE,
   email TEXT UNIQUE,
   google_id TEXT UNIQUE,
+  password_hash TEXT,
   avatar TEXT,
   xp INTEGER NOT NULL DEFAULT 0,
   level INTEGER NOT NULL DEFAULT 1,
