@@ -24,9 +24,14 @@ jobs:
           p=Path('index.html')
           s=p.read_text(encoding='utf-8')
           tag='<script src="frontend/auth-gate.js"></script>'
-          if tag not in s:
-              s=s.replace('</body>', tag+'</body>', 1)
+          if tag not in s: s=s.replace('</body>',tag+'</body>',1)
           p.write_text(s,encoding='utf-8')
+          a=Path('frontend/auth-gate.js')
+          s=a.read_text(encoding='utf-8')
+          old="""if(await canCreate())window.newInvention()"""
+          new="""if(await canCreate()){try{const r=await oldFetch(API+'/api/consume-creation',{method:'POST',headers:{Authorization:'Bearer '+token(),'content-type':'application/json'}});const d=await r.json();if(!r.ok)throw new Error(d.error||'Limite de criação atingido.');if(d.user){localStorage.setItem(USER_KEY,JSON.stringify(d.user))}window.newInvention()}catch(e){alert(e.message||'Não foi possível liberar esta criação agora.')}}"""
+          s=s.replace(old,new)
+          a.write_text(s,encoding='utf-8')
           w=Path('backend/worker.js')
           s=w.read_text(encoding='utf-8').replace('INSERT INTO SHARES(user_id,inventionId,platform)','INSERT INTO SHARES(user_id,invention_id,platform)')
           marker="      if(path==='/api/create' && request.method==='POST'){"
@@ -38,8 +43,7 @@ jobs:
       }
 
 """
-          if "'/api/consume-creation'" not in s:
-              s=s.replace(marker,endpoint+marker,1)
+          if "'/api/consume-creation'" not in s:s=s.replace(marker,endpoint+marker,1)
           w.write_text(s,encoding='utf-8')
           sc=Path('backend/schema.sql')
           s=sc.read_text(encoding='utf-8').replace('google_id TEXT UNIQUE,','google_id TEXT UNIQUE,\n  password_hash TEXT,')
@@ -48,6 +52,6 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add index.html backend/worker.js backend/schema.sql
+          git add index.html frontend/auth-gate.js backend/worker.js backend/schema.sql
           git diff --cached --quiet || git commit -m 'Enforce authenticated creation limits'
           git push
