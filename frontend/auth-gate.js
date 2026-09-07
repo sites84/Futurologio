@@ -1,12 +1,12 @@
 (() => {
   'use strict';
   const API='https://motor-invencoes.edsonfernandesvet.workers.dev';
-  const TOKEN_KEY='futuro_auth_token';
-  const USER_KEY='futuro_social_user';
+  const TOKEN_KEY='futuro_auth_token', USER_KEY='futuro_social_user', MAP_KEY='futuro_db_invention_ids';
   let busy=false;
   const $=id=>document.getElementById(id);
   function token(){return localStorage.getItem(TOKEN_KEY)||''}
   function user(){try{return JSON.parse(localStorage.getItem(USER_KEY)||'null')}catch{return null}}
+  function map(){try{return JSON.parse(localStorage.getItem(MAP_KEY)||'{}')}catch{return {}}}
   function setSession(data){if(data.token)localStorage.setItem(TOKEN_KEY,data.token);if(data.user)localStorage.setItem(USER_KEY,JSON.stringify(data.user));}
   function clearSession(){localStorage.removeItem(TOKEN_KEY);localStorage.removeItem(USER_KEY)}
   const oldFetch=window.fetch;
@@ -40,10 +40,12 @@
       const r=await oldFetch(API+'/api/record-creation',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({id:product.id,name:product.name,category:product.category,what:product.what,realTech:product.realTech,specTech:product.specTech,inventedTech:product.inventedTech,build:product.build,uses:product.uses,dangers:product.dangers||product.danger,test:product.test,curiosity:product.curiosity,readiness:product.readiness,year:product.year,patent:product.patent})});
       const d=await r.json();
       if(!r.ok){alert(d.error||'A invenção foi exibida, mas não foi registrada no seu perfil.');return;}
+      if(d.invention?.id){const m=map();m[product.id]=Number(d.invention.id);localStorage.setItem(MAP_KEY,JSON.stringify(m));}
       if(d.user){localStorage.setItem(USER_KEY,JSON.stringify(d.user));}
     }catch(e){alert('A invenção foi exibida, mas não foi possível registrá-la no seu perfil agora.');}
   }
   window.FUTUROLOGIO_AFTER_CREATE=recordCreated;
+  window.FUTUROLOGIO_DB_ID_FOR=productId=>Number(map()[productId]||0);
   function install(){
     const create=$('createBtn'),another=$('anotherBtn'); if(!create)return;
     create.onclick=async()=>{if(await canCreate())window.newInvention()};
