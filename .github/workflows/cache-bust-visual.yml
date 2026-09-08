@@ -1,0 +1,36 @@
+name: Refresh visual scripts
+on:
+  push:
+    paths:
+      - 'frontend/game-ui.js'
+      - 'frontend/profile-panel.js'
+      - 'frontend/social.js'
+      - '.github/workflows/cache-bust-visual.yml'
+
+jobs:
+  bust:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Refresh visual script cache keys
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text()
+          for name,key in [('frontend/game-ui.js','20260908d'),('frontend/profile-panel.js','20260908e'),('frontend/social.js','20260908f')]:
+              base=name
+              if base in s:
+                  import re
+                  s=re.sub(re.escape(base)+r'(?:\?v=[^"\']*)?',base+'?v='+key,s,count=1)
+          p.write_text(s)
+          PY
+      - name: Commit cache refresh and remove workflow
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add index.html
+          git commit -m 'Refresh visual script cache' || true
+          git rm .github/workflows/cache-bust-visual.yml
+          git commit -m 'Remove temporary visual cache workflow'
+          git push
