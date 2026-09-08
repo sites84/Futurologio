@@ -1,6 +1,8 @@
 name: Add game UI layer
 on:
-  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/add-game-ui.yml'
 permissions:
   contents: write
 jobs:
@@ -24,8 +26,8 @@ jobs:
           node --check frontend/game-ui.js
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add index.html frontend/game-ui.js docs/IMAGE_GENERATION.md
-          git diff --cached --quiet || git commit -m 'Add game-style UI and product image slot'
+          git add index.html
+          git diff --cached --quiet || git commit -m 'Attach game-style UI layer'
           git push
       - name: Remove one-time workflow
         run: |
