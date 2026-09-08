@@ -1,3 +1,4 @@
+// FUTUROLOGIO community discovery gallery
 (() => {
   'use strict';
   const API='https://motor-invencoes.edsonfernandesvet.workers.dev';
