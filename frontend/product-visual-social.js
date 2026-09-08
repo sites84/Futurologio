@@ -5,32 +5,21 @@
   const TOKEN_KEY = 'futuro_auth_token';
   const USER_KEY = 'futuro_social_user';
 
-  const esc = s => String(s ?? '').replace(/[&<>\"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[m]));
   const token = () => localStorage.getItem(TOKEN_KEY) || '';
   const user = () => { try { return JSON.parse(localStorage.getItem(USER_KEY) || 'null'); } catch { return null; } };
-
-  function dbId() {
-    try {
-      const p = window.FUTUROLOGIO_DB_ID_FOR?.(window.FUTUROLOGIO_CURRENT_PRODUCT?.id);
-      if (p) return Number(p);
-    } catch {}
-    try {
-      const q = new URLSearchParams(location.search).get('db_invention');
-      if (q) return Number(q);
-    } catch {}
-    try {
-      const p = window.FUTUROLOGIO_CURRENT_PRODUCT;
-      const id = p && window.FUTUROLOGIO_DB_ID_FOR?.(p.id);
-      if (id) return Number(id);
-    } catch {}
-    return 0;
-  }
 
   function currentProduct() {
     if (window.FUTUROLOGIO_CURRENT_PRODUCT) return window.FUTUROLOGIO_CURRENT_PRODUCT;
     const name = document.getElementById('name')?.textContent?.trim();
     const list = window.FUTUROLOGIO_PRODUCTS || [];
     return name ? list.find(p => String(p.name).trim() === name) || null : null;
+  }
+
+  function dbId() {
+    const p = currentProduct();
+    try { const id = p && window.FUTUROLOGIO_DB_ID_FOR?.(p.id); if (id) return Number(id); } catch {}
+    try { const q = new URLSearchParams(location.search).get('db_invention'); if (q) return Number(q); } catch {}
+    return 0;
   }
 
   function imageUrl(p) {
@@ -64,8 +53,7 @@
     .futuro-fullscreen.open{display:flex}
     .futuro-fullscreen img{max-width:96vw;max-height:90vh;width:auto;height:auto;object-fit:contain;border-radius:10px;box-shadow:0 0 0 2px #30415f,0 20px 70px rgba(0,0,0,.65)}
     .futuro-fullscreen-close{position:absolute;right:18px;top:16px;width:44px;height:44px;border:1px solid #58709b;border-radius:50%;background:#101a2e;color:#fff;font-size:25px;cursor:pointer}
-    .ft-social{display:none!important}
-    .ft-social.ft-share-open{display:block!important}
+    .ft-social{display:none!important}.ft-social.ft-share-open{display:block!important}
     .ft-social .ft-social-row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
     .ft-social .ft-social-row .ft-btn[data-platform]{display:flex;align-items:center;justify-content:center;gap:7px;min-height:42px;color:#fff;border-color:transparent;font-weight:1000}
     .ft-social .ft-social-row .ft-btn[data-platform] svg{width:19px;height:19px;flex:none}
@@ -77,102 +65,64 @@
   function fullscreen(src, alt) {
     let overlay = document.getElementById('futuroImageFullscreen');
     if (!overlay) {
-      overlay = document.createElement('div');
-      overlay.id = 'futuroImageFullscreen';
-      overlay.className = 'futuro-fullscreen';
-      overlay.innerHTML = '<button class="futuro-fullscreen-close" aria-label="Fechar imagem">×</button><img alt="">';
-      document.body.appendChild(overlay);
-      overlay.addEventListener('click', e => { if (e.target === overlay || e.target.classList.contains('futuro-fullscreen-close')) overlay.classList.remove('open'); });
+      overlay = document.createElement('div'); overlay.id='futuroImageFullscreen'; overlay.className='futuro-fullscreen';
+      overlay.innerHTML='<button class="futuro-fullscreen-close" aria-label="Fechar imagem">×</button><img alt="">'; document.body.appendChild(overlay);
+      overlay.addEventListener('click',e=>{if(e.target===overlay||e.target.classList.contains('futuro-fullscreen-close'))overlay.classList.remove('open')});
+      document.addEventListener('keydown',e=>{if(e.key==='Escape')overlay.classList.remove('open')});
     }
-    const img = overlay.querySelector('img');
-    img.src = src; img.alt = alt || 'Imagem da invenção';
-    overlay.classList.add('open');
+    const img=overlay.querySelector('img'); img.src=src; img.alt=alt||'Imagem da invenção'; overlay.classList.add('open');
   }
 
-  async function upload(file, button, status) {
-    if (!file) return;
-    const id = dbId();
-    if (!id) { status.textContent = 'Esta invenção ainda não foi registrada no servidor.'; status.className = 'game-upload-status err'; return; }
-    if (!user()) { if (window.openAuth) window.openAuth('register'); else alert('Entre ou cadastre-se para enviar uma imagem.'); return; }
-    if (!/^image\/(jpeg|png|webp|gif)$/i.test(file.type)) { status.textContent = 'Use JPG, PNG, WebP ou GIF.'; status.className = 'game-upload-status err'; return; }
-    if (file.size > 8 * 1024 * 1024) { status.textContent = 'A imagem deve ter no máximo 8 MB.'; status.className = 'game-upload-status err'; return; }
-    button.disabled = true; status.textContent = 'ENVIANDO IMAGEM…'; status.className = 'game-upload-status';
-    try {
-      const fd = new FormData(); fd.append('image', file, file.name); fd.append('invention_id', String(id));
-      const r = await fetch(`${API}/api/invention-image`, {method:'POST', headers:{Authorization:'Bearer '+token()}, body:fd});
-      const d = await r.json().catch(() => ({}));
-      if (!r.ok) throw new Error(d.error || 'Não foi possível enviar a imagem.');
-      const p = currentProduct(); if (p) p.image_url = d.image_url || `${API}/api/invention-image/${id}`;
-      status.textContent = 'IMAGEM SALVA. +5 XP POR UPLOAD VÁLIDO.'; status.className = 'game-upload-status ok';
-      renderImageCard(true);
-    } catch (e) { status.textContent = e.message || 'Falha no upload.'; status.className = 'game-upload-status err'; }
-    finally { button.disabled = false; }
+  async function upload(file,button,status) {
+    if(!file)return;
+    const id=dbId();
+    if(!id){status.textContent='Esta invenção ainda não foi registrada no servidor.';status.className='game-upload-status err';return;}
+    if(!user()){if(window.openAuth)window.openAuth('register');else alert('Entre ou cadastre-se para enviar uma imagem.');return;}
+    if(!/^image\/(jpeg|png|webp|gif)$/i.test(file.type)){status.textContent='Use JPG, PNG, WebP ou GIF.';status.className='game-upload-status err';return;}
+    if(file.size>8*1024*1024){status.textContent='A imagem deve ter no máximo 8 MB.';status.className='game-upload-status err';return;}
+    button.disabled=true;status.textContent='ENVIANDO IMAGEM…';status.className='game-upload-status';
+    try{
+      const fd=new FormData();fd.append('image',file,file.name);fd.append('invention_id',String(id));
+      const r=await fetch(`${API}/api/invention-image`,{method:'POST',headers:{Authorization:'Bearer '+token()},body:fd});
+      const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||'Não foi possível enviar a imagem.');
+      const p=currentProduct();if(p)p.image_url=d.image_url||`${API}/api/invention-image/${id}`;
+      status.textContent='IMAGEM SALVA. +5 XP POR UPLOAD VÁLIDO.';status.className='game-upload-status ok';renderImageCard(true);
+    }catch(e){status.textContent=e.message||'Falha no upload.';status.className='game-upload-status err'}finally{button.disabled=false}
   }
 
-  function addUploadControls(card, hasImage) {
-    let actions = card.querySelector('.futuro-image-actions');
-    if (!actions) {
-      actions = document.createElement('div'); actions.className = 'futuro-image-actions';
-      const input = document.createElement('input'); input.type='file'; input.accept='image/jpeg,image/png,image/webp,image/gif'; input.hidden=true;
-      const button = document.createElement('button'); button.type='button'; button.className='futuro-image-action primary';
-      const status = document.createElement('div'); status.className='game-upload-status';
-      button.onclick = () => input.click(); input.onchange = () => upload(input.files?.[0], button, status);
-      actions.append(button, input, status); card.appendChild(actions);
+  function addUploadControls(card,hasImage){
+    let actions=card.querySelector('.futuro-image-actions');
+    if(!actions){
+      actions=document.createElement('div');actions.className='futuro-image-actions';
+      const input=document.createElement('input');input.type='file';input.accept='image/jpeg,image/png,image/webp,image/gif';input.hidden=true;
+      const button=document.createElement('button');button.type='button';button.className='futuro-image-action primary';
+      const status=document.createElement('div');status.className='game-upload-status';
+      button.onclick=()=>input.click();input.onchange=()=>upload(input.files?.[0],button,status);actions.append(button,input,status);card.appendChild(actions);
     }
-    const button = actions.querySelector('button'); button.textContent = hasImage ? 'Trocar imagem' : 'Enviar minha imagem';
+    actions.querySelector('button').textContent=hasImage?'Trocar imagem':'Enviar minha imagem';
   }
 
-  function renderImageCard(force) {
-    const card = document.querySelector('.game-image-card'); if (!card) return;
-    const p = currentProduct(); if (!p) return;
-    const src = imageUrl(p);
-    const existing = card.querySelector('img');
-    if (src && (!existing || force || existing.dataset.src !== src)) {
-      const img = existing || document.createElement('img');
-      img.alt = p.name || 'Imagem da invenção'; img.dataset.src = src; img.src = src;
-      if (!existing) card.querySelector('.game-image-placeholder')?.replaceWith(img);
-      card.classList.add('has-image');
-      img.onclick = () => fullscreen(img.currentSrc || img.src, img.alt);
-      img.onerror = () => {
-        img.remove(); card.classList.remove('has-image');
-        let err = card.querySelector('.futuro-image-error');
-        if (!err) { err=document.createElement('div');err.className='futuro-image-error';err.innerHTML='<div><strong>IMAGEM AINDA NÃO DISPONÍVEL</strong><span>Envie uma imagem para esta invenção ou tente trocar a imagem salva.</span></div>';card.querySelector('.game-image-placeholder')?.replaceWith(err); }
-      };
-      const meta=card.querySelector('.game-image-meta b'); if(meta)meta.textContent='CLIQUE PARA AMPLIAR';
-      addUploadControls(card,true);
-    } else if (!src) {
-      addUploadControls(card,false);
-    } else if (existing) {
-      existing.onclick = () => fullscreen(existing.currentSrc || existing.src, existing.alt);
-      addUploadControls(card,true);
-    } else addUploadControls(card,false);
+  function renderImageCard(force){
+    const card=document.querySelector('.game-image-card');if(!card)return;const p=currentProduct();if(!p)return;const src=imageUrl(p);const existing=card.querySelector('img');
+    if(src&&(!existing||force||existing.dataset.src!==src)){
+      const img=existing||document.createElement('img');img.alt=p.name||'Imagem da invenção';img.dataset.src=src;img.src=src;
+      if(!existing)card.querySelector('.game-image-placeholder,.futuro-image-error')?.replaceWith(img);card.classList.add('has-image');
+      img.onclick=()=>fullscreen(img.currentSrc||img.src,img.alt);
+      img.onerror=()=>{img.remove();card.classList.remove('has-image');let err=card.querySelector('.futuro-image-error');if(!err){err=document.createElement('div');err.className='futuro-image-error';err.innerHTML='<div><strong>IMAGEM AINDA NÃO DISPONÍVEL</strong><span>Envie uma imagem para esta invenção ou troque a imagem salva.</span></div>';card.querySelector('.game-image-placeholder')?.replaceWith(err)}addUploadControls(card,false)};
+      const meta=card.querySelector('.game-image-meta b');if(meta)meta.textContent='CLIQUE PARA AMPLIAR';addUploadControls(card,true);
+    }else if(!src){addUploadControls(card,false)}else if(existing){existing.onclick=()=>fullscreen(existing.currentSrc||existing.src,existing.alt);addUploadControls(card,true)}else addUploadControls(card,false);
   }
 
-  function enhanceShare() {
-    const btn = document.getElementById('shareBtn'); if (!btn || btn.dataset.visualSocial) return;
-    btn.dataset.visualSocial='1';
-    btn.addEventListener('click', e => {
-      e.preventDefault(); e.stopImmediatePropagation();
-      const social = document.querySelector('#result .ft-social');
-      if (!social) return;
-      social.classList.add('ft-share-open');
-      social.scrollIntoView({behavior:'smooth',block:'center'});
-    }, true);
+  function enhanceShare(){
+    const btn=document.getElementById('shareBtn');if(!btn||btn.dataset.visualSocial)return;btn.dataset.visualSocial='1';
+    btn.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();const social=document.querySelector('#result .ft-social');if(!social)return;social.classList.add('ft-share-open');social.scrollIntoView({behavior:'smooth',block:'center'})},true);
   }
 
-  function decorateSocial() {
-    const social = document.querySelector('#result .ft-social'); if (!social) return;
-    const labels = {whatsapp:'WhatsApp',facebook:'Facebook',x:'X',instagram:'Instagram',threads:'Threads'};
-    Object.entries(labels).forEach(([platform,label]) => {
-      const b=social.querySelector(`[data-platform="${platform}"]`); if(b && !b.querySelector('svg')) b.innerHTML=icons[platform]+'<span>'+label+'</span>';
-    });
+  function decorateSocial(){
+    const social=document.querySelector('#result .ft-social');if(!social)return;const labels={whatsapp:'WhatsApp',facebook:'Facebook',x:'X',instagram:'Instagram',threads:'Threads'};
+    Object.entries(labels).forEach(([platform,label])=>{const b=social.querySelector(`[data-platform="${platform}"]`);if(b&&!b.querySelector('svg'))b.innerHTML=icons[platform]+'<span>'+label+'</span>'});
   }
 
-  function scan() {
-    renderImageCard(false); enhanceShare(); decorateSocial();
-  }
-
-  const obs = new MutationObserver(() => setTimeout(scan, 30));
-  obs.observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
-  scan();
+  function scan(){renderImageCard(false);enhanceShare();decorateSocial()}
+  const obs=new MutationObserver(()=>setTimeout(scan,30));obs.observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});scan();
 })();
