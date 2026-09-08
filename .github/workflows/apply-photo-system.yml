@@ -1,0 +1,89 @@
+name: Apply photo upload system
+on:
+  push:
+    paths:
+      - 'backend/roles.js'
+      - 'backend/migrations/0006_photo_upload_badges.sql'
+      - '.github/workflows/apply-photo-system.yml'
+
+jobs:
+  patch:
+    if: ${{ !contains(github.event.head_commit.message, 'Apply photo upload system') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch backend and UI
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          # Backend: restore global invention ownership enforcement that must coexist with image uploads.
+          p=Path('backend/worker.js')
+          s=p.read_text()
+          old="""let inv=await env.DB.prepare('SELECT * FROM INVENTIONS WHERE fingerprint=?').bind(fp).first();if(!inv){const slug=(name.toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,70)||'produto')+'-'+Date.now();const data=JSON.stringify({source_id:pid,what:b.what||'',realTech:b.realTech||'',specTech:b.specTech||'',inventedTech:b.inventedTech||'',build:b.build||'',uses:b.uses||'',dangers:b.dangers||'',test:b.test||'',curiosity:b.curiosity||'',readiness:b.readiness||'',year:b.year||'',patent:b.patent||''});await env.DB.prepare('INSERT INTO INVENTIONS(slug,name,category,concept,fingerprint,data) VALUES(?,?,?,?,?,?)').bind(slug,name,category,concept,fp,data).run();inv=await env.DB.prepare('SELECT * FROM INVENTIONS WHERE fingerprint=?').bind(fp).first()}const already=await env.DB.prepare('SELECT 1 FROM USER_INVENTIONS WHERE user_id=? AND invention_id=?').bind(u.id,inv.id).first();let gain={granted:0,limited:false};if(!already){await env.DB.prepare('INSERT INTO USER_INVENTIONS(user_id,invention_id) VALUES(?,?)').bind(u.id,inv.id).run();gain=await xp(env.DB,u,'creation','invention',inv.id)}"""
+          new="""let inv=await env.DB.prepare('SELECT * FROM INVENTIONS WHERE fingerprint=?').bind(fp).first();if(!inv){const slug=(name.toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,70)||'produto')+'-'+Date.now();const data=JSON.stringify({source_id:pid,what:b.what||'',realTech:b.realTech||'',specTech:b.specTech||'',inventedTech:b.inventedTech||'',build:b.build||'',uses:b.uses||'',dangers:b.dangers||'',test:b.test||'',curiosity:b.curiosity||'',readiness:b.readiness||'',year:b.year||'',patent:b.patent||''});await env.DB.prepare('INSERT OR IGNORE INTO INVENTIONS(slug,name,category,concept,fingerprint,data) VALUES(?,?,?,?,?,?)').bind(slug,name,category,concept,fp,data).run();inv=await env.DB.prepare('SELECT * FROM INVENTIONS WHERE fingerprint=?').bind(fp).first()}const owner=await env.DB.prepare('SELECT user_id FROM INVENTION_OWNERS WHERE invention_id=?').bind(inv.id).first();if(owner&&String(owner.user_id)!==String(u.id))return json({ok:false,error:'Esta criação já pertence a outro criador. Cada invenção é única.'},409);if(!owner)await env.DB.prepare('INSERT OR IGNORE INTO INVENTION_OWNERS(invention_id,user_id) VALUES(?,?)').bind(inv.id,u.id).run();const claimed=await env.DB.prepare('SELECT user_id FROM INVENTION_OWNERS WHERE invention_id=?').bind(inv.id).first();if(!claimed||String(claimed.user_id)!==String(u.id))return json({ok:false,error:'Esta criação acabou de ser reservada por outro criador.'},409);const already=await env.DB.prepare('SELECT 1 FROM USER_INVENTIONS WHERE user_id=? AND invention_id=?').bind(u.id,inv.id).first();let gain={granted:0,limited:false};if(!already){await env.DB.prepare('INSERT INTO USER_INVENTIONS(user_id,invention_id) VALUES(?,?)').bind(u.id,inv.id).run();gain=await xp(env.DB,u,'creation','invention',inv.id)}"""
+          if old in s:
+              s=s.replace(old,new,1)
+          old2="""let sql='SELECT * FROM INVENTIONS WHERE category=?',args=[c];if(ids.length){sql+=' AND id NOT IN ('+ids.map(()=>'?').join(',')+')';args.push(...ids)}sql+=' ORDER BY RANDOM() LIMIT 1';const inv=await env.DB.prepare(sql).bind(...args).first();if(!inv)return json({ok:false,error:'Nenhuma invenção nova disponível nesta categoria.'},404);if(a.used<a.base)await env.DB.prepare('UPDATE USERS SET daily_creations=daily_creations+1,daily_creation_date=? WHERE id=?').bind(today(),u.id).run();else await env.DB.prepare('UPDATE USERS SET extra_credits=extra_credits-1 WHERE id=? AND extra_credits>0').bind(u.id).run();await env.DB.prepare('INSERT INTO USER_INVENTIONS(user_id,invention_id) VALUES(?,?)').bind(u.id,inv.id).run();const gain=await xp(env.DB,u,'creation','invention',inv.id);"""
+          new2="""let sql='SELECT i.* FROM INVENTIONS i LEFT JOIN INVENTION_OWNERS io ON io.invention_id=i.id WHERE i.category=? AND io.invention_id IS NULL',args=[c];if(ids.length){sql+=' AND i.id NOT IN ('+ids.map(()=>'?').join(',')+')';args.push(...ids)}sql+=' ORDER BY RANDOM() LIMIT 1';const inv=await env.DB.prepare(sql).bind(...args).first();if(!inv)return json({ok:false,error:'Nenhuma invenção nova disponível nesta categoria.'},404);await env.DB.prepare('INSERT OR IGNORE INTO INVENTION_OWNERS(invention_id,user_id) VALUES(?,?)').bind(inv.id,u.id).run();const owner=await env.DB.prepare('SELECT user_id FROM INVENTION_OWNERS WHERE invention_id=?').bind(inv.id).first();if(!owner||String(owner.user_id)!==String(u.id))return json({ok:false,error:'Esta criação acabou de ser reservada por outro criador.'},409);if(a.used<a.base)await env.DB.prepare('UPDATE USERS SET daily_creations=daily_creations+1,daily_creation_date=? WHERE id=?').bind(today(),u.id).run();else await env.DB.prepare('UPDATE USERS SET extra_credits=extra_credits-1 WHERE id=? AND extra_credits>0').bind(u.id).run();await env.DB.prepare('INSERT OR IGNORE INTO USER_INVENTIONS(user_id,invention_id) VALUES(?,?)').bind(u.id,inv.id).run();const gain=await xp(env.DB,u,'creation','invention',inv.id);"""
+          if old2 in s:
+              s=s.replace(old2,new2,1)
+
+          # Upload XP and photo achievement stats.
+          old3="""async function awardBadges(db,userId){const q=async sql=>Number((await db.prepare(sql).bind(userId).first())?.n||0);const stats={creations:await q('SELECT COUNT(*) n FROM USER_INVENTIONS WHERE user_id=?'),likes:await q('SELECT COUNT(*) n FROM LIKES WHERE user_id=?'),comments:await q('SELECT COUNT(*) n FROM COMMENTS WHERE user_id=?'),shares:await q('SELECT COUNT(*) n FROM SHARES WHERE user_id=?'),likesReceived:await q('SELECT COUNT(*) n FROM LIKES l JOIN USER_INVENTIONS ui ON ui.invention_id=l.invention_id WHERE ui.user_id=?'),categories:await q('SELECT COUNT(DISTINCT i.category) n FROM USER_INVENTIONS ui JOIN INVENTIONS i ON i.id=ui.invention_id WHERE ui.user_id=?'),bizarro:await q(\"SELECT COUNT(*) n FROM USER_INVENTIONS ui JOIN INVENTIONS i ON i.id=ui.invention_id WHERE ui.user_id=? AND i.category='Bizarro ou Nojento'\")};const ok={FIRST_CREATION:stats.creations>=1,TEN_CREATIONS:stats.creations>=10,FIFTY_CREATIONS:stats.creations>=50,FIRST_LIKE:stats.likes>=1,FIRST_COMMENT:stats.comments>=1,FIFTY_COMMENTS:stats.comments>=50,FIRST_SHARE:stats.shares>=1,FIFTY_SHARES:stats.shares>=50,CATEGORY_EXPLORER:stats.categories>=10,MULTICATEGORY_CREATOR:stats.categories>=20,BIZARRO_EXPLORER:stats.bizarro>=1};"""
+          new3="""async function awardBadges(db,userId){const q=async sql=>Number((await db.prepare(sql).bind(userId).first())?.n||0);const stats={creations:await q('SELECT COUNT(*) n FROM USER_INVENTIONS WHERE user_id=?'),uploads:await q(\"SELECT COUNT(*) n FROM INVENTIONS i JOIN INVENTION_OWNERS o ON o.invention_id=i.id WHERE o.user_id=? AND i.image_source='upload'\"),likes:await q('SELECT COUNT(*) n FROM LIKES WHERE user_id=?'),comments:await q('SELECT COUNT(*) n FROM COMMENTS WHERE user_id=?'),shares:await q('SELECT COUNT(*) n FROM SHARES WHERE user_id=?'),likesReceived:await q('SELECT COUNT(*) n FROM LIKES l JOIN USER_INVENTIONS ui ON ui.invention_id=l.invention_id WHERE ui.user_id=?'),categories:await q('SELECT COUNT(DISTINCT i.category) n FROM USER_INVENTIONS ui JOIN INVENTIONS i ON i.id=ui.invention_id WHERE ui.user_id=?'),bizarro:await q(\"SELECT COUNT(*) n FROM USER_INVENTIONS ui JOIN INVENTIONS i ON i.id=ui.invention_id WHERE ui.user_id=? AND i.category='Bizarro ou Nojento'\")};const ok={FIRST_CREATION:stats.creations>=1,TEN_CREATIONS:stats.creations>=10,FIFTY_CREATIONS:stats.creations>=50,FIRST_PHOTO_UPLOAD:stats.uploads>=1,FIVE_PHOTO_UPLOADS:stats.uploads>=5,TEN_PHOTO_UPLOADS:stats.uploads>=10,TWENTY_FIVE_PHOTO_UPLOADS:stats.uploads>=25,FIFTY_PHOTO_UPLOADS:stats.uploads>=50,HUNDRED_PHOTO_UPLOADS:stats.uploads>=100,TWO_HUNDRED_FIFTY_PHOTO_UPLOADS:stats.uploads>=250,FIRST_LIKE:stats.likes>=1,FIRST_COMMENT:stats.comments>=1,FIFTY_COMMENTS:stats.comments>=50,FIRST_SHARE:stats.shares>=1,FIFTY_SHARES:stats.shares>=50,CATEGORY_EXPLORER:stats.categories>=10,MULTICATEGORY_CREATOR:stats.categories>=20,BIZARRO_EXPLORER:stats.bizarro>=1};"""
+          if old3 not in s: raise SystemExit('awardBadges pattern not found')
+          s=s.replace(old3,new3,1)
+
+          old4="""if((type==='like'||type==='share')&&refType&&refId){"""
+          new4="""if((type==='like'||type==='share'||type==='upload')&&refType&&refId){"""
+          if old4 not in s: raise SystemExit('xp duplicate guard not found')
+          s=s.replace(old4,new4,1)
+
+          old5="""await env.DB.prepare(\"UPDATE INVENTIONS SET image_key=?,image_content_type=?,image_source='upload' WHERE id=?\").bind(key,file.type,inventionId).run();return json({ok:true,invention_id:inventionId,image_url:`/api/invention-image/${inventionId}`,source:'upload'});}"""
+          new5="""await env.DB.prepare(\"UPDATE INVENTIONS SET image_key=?,image_content_type=?,image_source='upload' WHERE id=?\").bind(key,file.type,inventionId).run();const current=await user(env.DB,u.sub);const reward=current?await xp(env.DB,current,'upload','invention',inventionId):{granted:0};return json({ok:true,invention_id:inventionId,image_url:`/api/invention-image/${inventionId}`,source:'upload',xp:reward.granted||0});}"""
+          if old5 not in s: raise SystemExit('image upload return pattern not found')
+          s=s.replace(old5,new5,1)
+
+          old6="""creations:await q('SELECT COUNT(*) n FROM USER_INVENTIONS WHERE user_id=?'),categories:"""
+          new6="""creations:await q('SELECT COUNT(*) n FROM USER_INVENTIONS WHERE user_id=?'),uploads:await q(\"SELECT COUNT(*) n FROM INVENTIONS i JOIN INVENTION_OWNERS o ON o.invention_id=i.id WHERE o.user_id=? AND i.image_source='upload'\"),categories:"""
+          if old6 not in s: raise SystemExit('profile stats pattern not found')
+          s=s.replace(old6,new6,1)
+          p.write_text(s)
+
+          # Frontend: make image generation explicitly external-only and add the policy notice.
+          p=Path('frontend/game-ui.js')
+          s=p.read_text()
+          s=s.replace('A imagem do produto será criada automaticamente por IA.<br>O espaço já está reservado para o render oficial.','Crie a imagem na IA de sua preferência usando o prompt abaixo e envie o arquivo aqui.<br>O FUTUROLOGIO não gera a imagem automaticamente.')
+          s=s.replace('RENDER DO PRODUTO</span><b>IA // EM BREVE','IMAGEM DO CRIADOR</span><b>AGUARDANDO UPLOAD')
+          s=s.replace('RENDER DISPONÍVEL','UPLOAD DISPONÍVEL')
+          marker='  @media(max-width:760px){'
+          css="""  .game-mode .ft-profile-card,.game-mode .ft-rp-card{color:#171717!important;background:#fff!important}.game-mode .ft-profile-card h2,.game-mode .ft-profile-card h3,.game-mode .ft-profile-card p,.game-mode .ft-profile-card span,.game-mode .ft-profile-card strong,.game-mode .ft-rp-card h2,.game-mode .ft-rp-card h3,.game-mode .ft-rp-card p,.game-mode .ft-rp-card span,.game-mode .ft-rp-card strong,.game-mode .ft-rp-card small{color:#171717!important}.game-mode .game-image-upload:after{content:\"ATENÇÃO: o uso incorreto do prompt, a remoção da marca INVENÇÕES FUTUROLOGIO™ ou o envio de conteúdo incompatível com estas regras pode fazer com que a imagem seja removida do site.\";display:block;margin-top:10px;padding:10px;border:1px solid #8a314f;border-radius:10px;background:#24101a;color:#ffb4ca;font-size:10px;line-height:1.45;font-weight:800}.game-mode .game-image-upload input{accent-color:#d8ff55}\n"""
+          if marker not in s: raise SystemExit('game css marker not found')
+          s=s.replace(marker,css+marker,1)
+          p.write_text(s)
+          PY
+          node --check backend/worker.js
+          node --check backend/roles.js
+          node --check frontend/game-ui.js
+      - name: Update validation hooks
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('.github/workflows/validate-frontend.yml')
+          s=p.read_text()
+          if 'node --check frontend/game-ui.js' not in s:
+              s=s.replace('node --check frontend/profile-panel.js','node --check frontend/profile-panel.js\n      node --check frontend/game-ui.js')
+          if 'game-prompt-card' not in s:
+              s=s.replace("grep -q \"FUTUROLOGIO_DB_ID_FOR\" frontend/auth-gate.js", "grep -q \"FUTUROLOGIO_DB_ID_FOR\" frontend/auth-gate.js\n      grep -q \"game-prompt-card\" frontend/game-ui.js\n      grep -q \"FUTUROLOGIO\" frontend/game-ui.js")
+          p.write_text(s)
+          PY
+      - name: Commit changes and remove this workflow
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add backend/worker.js backend/roles.js frontend/game-ui.js .github/workflows/validate-frontend.yml
+          git commit -m 'Apply photo upload XP and moderation rules'
+          git rm .github/workflows/apply-photo-system.yml
+          git commit -m 'Remove temporary photo system workflow'
+          git push
