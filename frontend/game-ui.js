@@ -35,3 +35,5 @@
   function refreshAll(){refreshImageCard();ensurePromptCard();updatePrompt()}
   const name=document.getElementById('name');if(name)new MutationObserver(refreshAll).observe(name,{childList:true,characterData:true,subtree:true});document.addEventListener('DOMContentLoaded',refreshAll);setTimeout(refreshAll,500);
 })();
+
+/* final image gallery patch trigger */
