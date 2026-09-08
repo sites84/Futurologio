@@ -17,6 +17,10 @@
     const ai=document.createElement('div');ai.className='game-ai-links';ai.innerHTML='<div class="game-ai-links-title">IAS INDICADAS PARA CRIAÇÃO</div><div class="game-ai-links-sub">Abra uma das ferramentas, cole o prompt e gere a imagem no estilo oficial FUTUROLOGIO.</div><div class="game-ai-links-row">'+links.map(x=>`<a class="game-ai-link" href="${x[1]}" target="_blank" rel="noopener noreferrer">${x[2]}</a>`).join('')+'</div>';actions.insertAdjacentElement('afterend',ai);
     if(!card.querySelector('.game-xp-note')){const note=document.createElement('div');note.className='game-xp-note';note.innerHTML='GANHE XP: <b>crie a imagem na IA, faça o upload aqui e receba +5 XP por upload válido</b>. A criação da invenção também concede XP. Respeite os limites e as regras do FUTUROLOGIO.';ai.insertAdjacentElement('afterend',note)}
   }
-  function scan(){document.querySelectorAll('.game-prompt-card').forEach(mount)}
+  function loadVisualSocial(){
+    if(document.getElementById('futuro-product-visual-social-loader')||document.querySelector('script[src$="/frontend/product-visual-social.js"]'))return;
+    const s=document.createElement('script');s.id='futuro-product-visual-social-loader';s.src='frontend/product-visual-social.js?v=2';s.defer=true;document.body.appendChild(s);
+  }
+  function scan(){document.querySelectorAll('.game-prompt-card').forEach(mount);loadVisualSocial()}
   const obs=new MutationObserver(scan);obs.observe(document.body,{childList:true,subtree:true});scan();
 })();
