@@ -1,0 +1,34 @@
+name: Add game UI layer
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add visual layer without changing app logic
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text()
+          tag='<script src="frontend/game-ui.js?v=20260908a"></script>'
+          if tag not in s:
+              marker='</body>'
+              if marker not in s: raise SystemExit('index.html: </body> not found')
+              s=s.replace(marker,tag+marker,1)
+              p.write_text(s)
+          PY
+          node --check frontend/game-ui.js
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html frontend/game-ui.js docs/IMAGE_GENERATION.md
+          git diff --cached --quiet || git commit -m 'Add game-style UI and product image slot'
+          git push
+      - name: Remove one-time workflow
+        run: |
+          git rm .github/workflows/add-game-ui.yml
+          git commit -m 'Remove one-time game UI patch workflow'
+          git push
