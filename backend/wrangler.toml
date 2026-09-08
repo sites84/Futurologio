@@ -8,5 +8,9 @@ database_name = "futurologio"
 database_id = "da4de59f-2f02-434c-a10f-d9d1a5262e95"
 migrations_dir = "migrations"
 
+[[r2_buckets]]
+binding = "IMAGES"
+bucket_name = "futurologio-images"
+
 [vars]
 # GOOGLE_CLIENT_ID is optional until Google Sign-In is configured.
