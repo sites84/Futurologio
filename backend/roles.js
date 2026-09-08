@@ -17,6 +17,14 @@ export const DAILY_XP_LIMITS = Object.freeze({
   share: 10
 });
 
+// XP needed per transition grows by 10 XP each level:
+// 1→2 = 50, 2→3 = 60, 3→4 = 70, ...
+// This keeps early progression fast while making high levels meaningful.
+export function xpForLevel(level) {
+  const n = Math.max(0, Math.floor(Number(level || 1)) - 1);
+  return 5 * n * (n + 9);
+}
+
 // Cargo evolves every 5 levels. XP amounts remain configurable here.
 export const ROLES = Object.freeze([
   { level: 1, role: 'Curioso Iniciante' },
@@ -33,7 +41,10 @@ export const ROLES = Object.freeze([
 ]);
 
 export function levelFromXp(xp) {
-  return Math.max(1, Math.floor(Math.max(0, xp) / 100) + 1);
+  let level = 1;
+  const value = Math.max(0, Number(xp || 0));
+  while (value >= xpForLevel(level + 1)) level++;
+  return level;
 }
 
 export function roleFromLevel(level) {
