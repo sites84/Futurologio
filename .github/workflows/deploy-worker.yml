@@ -50,9 +50,7 @@ jobs:
         run: |
           set -e
           BUCKET='futurologio-images'
-          LIST="$(wrangler r2 bucket list --json)"
-          EXISTS="$(printf '%s' "$LIST" | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{const a=JSON.parse(s);process.stdout.write(a.some(x=>(x.name||x.bucketName)==='futurologio-images')?'yes':'no')})")"
-          if [ "$EXISTS" = "yes" ]; then
+          if wrangler r2 bucket list | grep -Fq "$BUCKET"; then
             echo "R2 bucket $BUCKET already exists."
           else
             echo "Creating R2 bucket $BUCKET..."
