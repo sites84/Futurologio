@@ -8,13 +8,15 @@ export const XP_RULES = Object.freeze({
   creation: 10,
   like: 2,
   comment: 3,
-  share: 2
+  share: 2,
+  upload: 5
 });
 
 export const DAILY_XP_LIMITS = Object.freeze({
   like: 5,
   comment: 5,
-  share: 10
+  share: 10,
+  upload: 10
 });
 
 // XP needed per transition grows by 10 XP each level:
