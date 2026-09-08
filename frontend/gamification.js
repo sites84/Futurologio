@@ -1,12 +1,13 @@
 (()=>{
  const API='https://motor-invencoes.edsonfernandesvet.workers.dev';
  const token=()=>localStorage.getItem('futuro_auth_token')||'';
+ const xpForLevel=l=>{const n=Math.max(0,Math.floor(Number(l||1))-1);return 5*n*(n+9)};
  async function load(){
   const el=document.querySelector('.profile'); if(!el||!token())return;
   try{
    const r=await fetch(API+'/api/profile',{headers:{Authorization:'Bearer '+token()}}); if(!r.ok)return;
    const d=await r.json(),p=d.profile;if(!p)return;
-   const level=Number(p.level||1), xp=Number(p.xp||0), current=(level-1)*100, next=level*100, pct=Math.max(0,Math.min(100,Math.round((xp-current)/100*100)));
+   const level=Number(p.level||1), xp=Number(p.xp||0), current=xpForLevel(level), next=xpForLevel(level+1), span=Math.max(1,next-current), pct=Math.max(0,Math.min(100,Math.round((xp-current)/span*100)));
    const medal=p.medal?'<div class="gm-current-medal"><span class="gm-medal-icon">'+medalIcon(level)+'</span><div><b>Medalha do nível '+level+'</b><small>'+esc(p.role)+'</small></div></div>':'';
    const badges=(p.badges||[]).map(b=>'<div class="gm-badge" title="'+esc(b.description||'')+'"><span class="gm-badge-icon">'+badgeIcon(b.code)+'</span><div><b>'+esc(b.name)+'</b><small>'+esc(b.description||'Conquista desbloqueada')+'</small></div></div>').join('')||'<div class="gm-empty">Continue criando para desbloquear sua primeira medalha.</div>';
    const milestones=[5,10,15,20,25,30,35,40,45,50].map(l=>'<div class="gm-milestone '+(level>=l?'is-earned':'')+'"><span>'+medalIcon(l)+'</span><small>Nível '+l+'</small></div>').join('');
