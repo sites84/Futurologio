@@ -1,6 +1,7 @@
 (() => {
   'use strict';
   const API='https://motor-invencoes.edsonfernandesvet.workers.dev';
+  const mediaUrl=v=>{const s=String(v||'').trim();return s?(s.startsWith('http://')||s.startsWith('https://')?s:API+(s.startsWith('/')?s:'/'+s)):''};
   async function load(){
     const id=new URLSearchParams(location.search).get('db_invention');if(!id)return;
     try{
@@ -12,7 +13,7 @@
         const data=d.data||{};
         p={id:d.source_id||('db-'+d.id),name:d.name,category:d.category,subtitle:data.subtitle||'',what:data.what||d.concept||'',realTech:data.realTech||'',specTech:data.specTech||'',inventedTech:data.inventedTech||'',build:data.build||'',uses:data.uses||'',dangers:data.dangers||'',test:data.test||'',tests:data.test||'',curiosity:data.curiosity||'',readiness:data.readiness||'',year:data.year||'',patent:data.patent||''};
       }else p={...p};
-      p.image_url=d.image_url||p.image_url||'';
+      p.image_url=mediaUrl(d.image_url||p.image_url);
       window.FUTUROLOGIO_DB_ID_FOR=()=>Number(d.id);
       if(typeof window.show==='function'){
         window.show(p);
