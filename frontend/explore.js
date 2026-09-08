@@ -9,10 +9,35 @@
   `;
   const style=document.createElement('style');style.id='futuro-explore-ui';style.textContent=css;document.head.appendChild(style);
   async function get(path){const h={};if(token())h.Authorization='Bearer '+token();const r=await fetch(API+path,{headers:h});if(!r.ok)throw new Error('Falha ao carregar');return r.json()}
-  function card(x){const src=x.image_url||'';return `<article class="ft-explore-card" data-db-id="${x.id}"><div class="ft-explore-img">${src?`<img src="${esc(src)}" alt="${esc(x.name)}">`:'IMAGEM AINDA NÃO ENVIADA'}</div><div class="ft-explore-body"><span class="ft-explore-cat">${esc(x.category)}</span><div class="ft-explore-name">${esc(x.name)}</div><div class="ft-explore-creator">Criado por <b>${esc(x.username)}</b></div><div class="ft-explore-meta"><span>♥ <b>${x.likes||0}</b></span><span>✎ <b>${x.comments||0}</b></span></div></div></article>`}
-  function mount(){if(document.getElementById('ftExplore'))return;const hero=document.querySelector('.hero');if(!hero)return;const section=document.createElement('section');section.className='ft-explore';section.id='ftExplore';section.innerHTML=`<div class="ft-explore-head"><div><div class="ft-explore-kicker">GALERIA DA COMUNIDADE</div><h2>Descubra as invenções</h2><p>Veja o que a comunidade está inventando e entre no perfil de cada criador.</p></div><div class="ft-explore-tabs"><button class="ft-explore-tab on" data-mode="recent">Últimas criações</button><button class="ft-explore-tab" data-mode="week">Mais curtidas da semana</button></div></div><div id="ftExploreGrid" class="ft-explore-grid"><div class="ft-explore-loading">Carregando invenções…</div></div><div class="ft-my" id="ftMy"><div class="ft-my-title"><h3>Meu laboratório</h3></div><div id="ftMyGrid" class="ft-explore-grid"></div></div>`;hero.insertAdjacentElement('afterend',section);section.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{section.querySelectorAll('[data-mode]').forEach(x=>x.classList.remove('on'));b.classList.add('on');load(b.dataset.mode)});load('recent');loadMine()}
+  function card(x){const src=x.image_url||'';return `<article class="ft-explore-card" data-db-id="${x.id}" role="button" tabindex="0"><div class="ft-explore-img">${src?`<img src="${esc(src)}" alt="${esc(x.name)}">`:'IMAGEM AINDA NÃO ENVIADA'}</div><div class="ft-explore-body"><span class="ft-explore-cat">${esc(x.category)}</span><div class="ft-explore-name">${esc(x.name)}</div><div class="ft-explore-creator">Criado por <b>${esc(x.username)}</b></div><div class="ft-explore-meta"><span>♥ <b>${x.likes||0}</b></span><span>✎ <b>${x.comments||0}</b></span></div></div></article>`}
+  async function openInvention(id){
+    const dbId=Number(id);if(!dbId)return;
+    try{
+      const d=await get('/api/invention/'+encodeURIComponent(dbId));
+      const list=window.FUTUROLOGIO_PRODUCTS||window.PRODUCTS||[];
+      let p=d.source_id!=null?list.find(x=>String(x.id)===String(d.source_id)):null;
+      if(!p){
+        const data=d.data||{};
+        p={id:d.source_id||('db-'+d.id),name:d.name,category:d.category,subtitle:data.subtitle||'',what:data.what||d.concept||'',realTech:data.realTech||'',specTech:data.specTech||'',inventedTech:data.inventedTech||'',build:data.build||'',uses:data.uses||'',dangers:data.dangers||'',test:data.test||'',tests:data.test||'',curiosity:data.curiosity||'',readiness:data.readiness||'',year:data.year||'',patent:data.patent||''};
+      } else {
+        p={...p};
+      }
+      p.image_url=d.image_url||p.image_url||'';
+      window.FUTUROLOGIO_DB_ID_FOR=()=>dbId;
+      if(typeof window.show==='function'){
+        window.show(p);
+        const result=document.getElementById('result');if(result)result.scrollIntoView({behavior:'smooth',block:'start'});
+      } else {
+        throw new Error('Tela de invenção ainda não carregada');
+      }
+    }catch(e){
+      const msg=e?.message||'Não foi possível abrir esta invenção.';
+      alert(msg==='Tela de invenção ainda não carregada'?'Aguarde o carregamento da página e tente novamente.':msg);
+    }
+  }
+  function bindCards(root){root.querySelectorAll('.ft-explore-card').forEach(c=>{const open=()=>{const id=c.dataset.dbId;if(id){history.replaceState(null,'','?db_invention='+encodeURIComponent(id));openInvention(id)}};c.onclick=open;c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}}})}
   async function load(mode){const grid=document.getElementById('ftExploreGrid');if(!grid)return;grid.innerHTML='<div class="ft-explore-loading">Carregando…</div>';try{const d=await get('/api/explore?mode='+encodeURIComponent(mode)+'&limit=12');grid.innerHTML=d.items?.length?d.items.map(card).join(''):'<div class="ft-explore-empty">Ainda não há invenções nesta seleção.</div>';bindCards(grid)}catch{grid.innerHTML='<div class="ft-explore-empty">A galeria estará disponível assim que o catálogo social estiver conectado.</div>'}}
   async function loadMine(){const wrap=document.getElementById('ftMy');if(!wrap||!token()){wrap?.remove();return}try{const d=await get('/api/my-inventions?limit=12');const grid=document.getElementById('ftMyGrid');if(!grid)return;grid.innerHTML=d.items?.length?d.items.map(card).join(''):'<div class="ft-explore-empty">Você ainda não tem invenções registradas.</div>';bindCards(grid)}catch{wrap.remove()}}
-  function bindCards(root){root.querySelectorAll('.ft-explore-card').forEach(c=>c.onclick=()=>{location.href='?db_invention='+encodeURIComponent(c.dataset.dbId)})}
-  const timer=setInterval(()=>{if(document.body&&document.querySelector('.hero')){clearInterval(timer);mount()}},80);
+  function mount(){if(document.getElementById('ftExplore'))return;const hero=document.querySelector('.hero');if(!hero)return;const section=document.createElement('section');section.className='ft-explore';section.id='ftExplore';section.innerHTML=`<div class="ft-explore-head"><div><div class="ft-explore-kicker">GALERIA DA COMUNIDADE</div><h2>Descubra as invenções</h2><p>Veja o que a comunidade está inventando e entre no perfil de cada criador.</p></div><div class="ft-explore-tabs"><button class="ft-explore-tab on" data-mode="recent">Últimas criações</button><button class="ft-explore-tab" data-mode="week">Mais curtidas da semana</button></div></div><div id="ftExploreGrid" class="ft-explore-grid"><div class="ft-explore-loading">Carregando invenções…</div></div><div class="ft-my" id="ftMy"><div class="ft-my-title"><h3>Meu laboratório</h3></div><div id="ftMyGrid" class="ft-explore-grid"></div></div>`;hero.insertAdjacentElement('afterend',section);section.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{section.querySelectorAll('[data-mode]').forEach(x=>x.classList.remove('on'));b.classList.add('on');load(b.dataset.mode)});load('recent');loadMine()}
+  const timer=setInterval(()=>{if(document.body&&document.querySelector('.hero')){clearInterval(timer);mount();const id=new URLSearchParams(location.search).get('db_invention');if(id){const wait=setInterval(()=>{if(window.FUTUROLOGIO_PRODUCTS||window.PRODUCTS){clearInterval(wait);openInvention(id)}},100)}}},80);
 })();
