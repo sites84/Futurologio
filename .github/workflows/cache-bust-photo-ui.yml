@@ -1,0 +1,32 @@
+name: Cache bust photo UI
+on:
+  push:
+    paths:
+      - '.github/workflows/cache-bust-photo-ui.yml'
+permissions:
+  contents: write
+jobs:
+  bust:
+    if: ${{ !contains(github.event.head_commit.message, 'Cache bust photo UI') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update game UI cache key
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text()
+          s=s.replace('frontend/game-ui.js?v=20260908a','frontend/game-ui.js?v=20260908d')
+          p.write_text(s)
+          PY
+          grep -q 'frontend/game-ui.js?v=20260908d' index.html
+      - name: Commit and remove workflow
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add index.html
+          git commit -m 'Cache bust photo UI'
+          git rm .github/workflows/cache-bust-photo-ui.yml
+          git commit -m 'Remove temporary cache bust workflow'
+          git push
