@@ -4,12 +4,13 @@
   const API='https://motor-invencoes.edsonfernandesvet.workers.dev';
   const token=()=>localStorage.getItem('futuro_auth_token')||'';
   const esc=s=>String(s??'').replace(/[&<>\"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[m]));
+  const mediaUrl=v=>{const s=String(v||'').trim();return s?(s.startsWith('http://')||s.startsWith('https://')?s:API+(s.startsWith('/')?s:'/'+s)):''};
   const css=`
   .ft-explore{max-width:1120px;margin:26px auto 34px;padding:0 20px}.ft-explore-head{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin-bottom:14px}.ft-explore-kicker{font-size:10px;font-weight:1000;letter-spacing:.16em;color:#62e6ff}.ft-explore h2{margin:4px 0;color:#fff;font-size:28px}.ft-explore p{margin:0;color:#9aa7c2;font-size:12px}.ft-explore-tabs{display:flex;gap:7px;flex-wrap:wrap}.ft-explore-tab{border:1px solid #405476;border-radius:10px;background:#0b1427;color:#dce6ff;padding:8px 11px;font-weight:900;font-size:10px;cursor:pointer}.ft-explore-tab.on{background:#d8ff55;color:#091007;border-color:#fff}.ft-explore-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}.ft-explore-card{background:linear-gradient(145deg,#10172a,#151e35);border:2px solid #2a3858;border-radius:16px;overflow:hidden;box-shadow:0 8px 0 #050710;cursor:pointer;transition:transform .15s,border-color .15s}.ft-explore-card:hover{transform:translateY(-3px);border-color:#62e6ff}.ft-explore-img{aspect-ratio:16/9;background:radial-gradient(circle,#24395c,#0b1120 70%);display:grid;place-items:center;color:#9eb1d0;font-size:10px;text-align:center;padding:10px}.ft-explore-img img{width:100%;height:100%;object-fit:cover}.ft-explore-body{padding:12px}.ft-explore-cat{display:inline-block;font-size:8px;font-weight:1000;letter-spacing:.1em;text-transform:uppercase;color:#07101a;background:#62e6ff;border-radius:99px;padding:4px 7px}.ft-explore-name{margin:8px 0 4px;color:#fff;font-size:16px;font-weight:1000}.ft-explore-creator{color:#aebbd2;font-size:10px}.ft-explore-creator b{color:#d8ff55}.ft-explore-meta{display:flex;gap:10px;margin-top:9px;color:#7f91af;font-size:9px;font-weight:900}.ft-explore-meta b{color:#fff}.ft-my{margin-top:24px}.ft-my-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px}.ft-my-title h3{margin:0;color:#fff;font-size:17px}.ft-explore-empty{padding:18px;border:1px dashed #3b537a;border-radius:13px;color:#9eb1d0;font-size:11px;background:#0b1222}.ft-explore-loading{color:#9eb1d0;font-size:11px;padding:18px 0}@media(max-width:850px){.ft-explore-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:560px){.ft-explore{padding:0 12px}.ft-explore-grid{grid-template-columns:1fr}}
   `;
   const style=document.createElement('style');style.id='futuro-explore-ui';style.textContent=css;document.head.appendChild(style);
   async function get(path){const h={};if(token())h.Authorization='Bearer '+token();const r=await fetch(API+path,{headers:h});if(!r.ok)throw new Error('Falha ao carregar');return r.json()}
-  function card(x){const src=x.image_url||'';return `<article class="ft-explore-card" data-db-id="${x.id}" role="button" tabindex="0"><div class="ft-explore-img">${src?`<img src="${esc(src)}" alt="${esc(x.name)}">`:'IMAGEM AINDA NÃO ENVIADA'}</div><div class="ft-explore-body"><span class="ft-explore-cat">${esc(x.category)}</span><div class="ft-explore-name">${esc(x.name)}</div><div class="ft-explore-creator">Criado por <b>${esc(x.username)}</b></div><div class="ft-explore-meta"><span>♥ <b>${x.likes||0}</b></span><span>✎ <b>${x.comments||0}</b></span></div></div></article>`}
+  function card(x){const src=mediaUrl(x.image_url);return `<article class="ft-explore-card" data-db-id="${x.id}" role="button" tabindex="0"><div class="ft-explore-img">${src?`<img src="${esc(src)}" alt="${esc(x.name)}">`:'IMAGEM AINDA NÃO ENVIADA'}</div><div class="ft-explore-body"><span class="ft-explore-cat">${esc(x.category)}</span><div class="ft-explore-name">${esc(x.name)}</div><div class="ft-explore-creator">Criado por <b>${esc(x.username)}</b></div><div class="ft-explore-meta"><span>♥ <b>${x.likes||0}</b></span><span>✎ <b>${x.comments||0}</b></span></div></div></article>`}
   async function openInvention(id){
     const dbId=Number(id);if(!dbId)return;
     try{
@@ -22,7 +23,7 @@
       } else {
         p={...p};
       }
-      p.image_url=d.image_url||p.image_url||'';
+      p.image_url=mediaUrl(d.image_url||p.image_url);
       window.FUTUROLOGIO_DB_ID_FOR=()=>dbId;
       if(typeof window.show==='function'){
         window.show(p);
