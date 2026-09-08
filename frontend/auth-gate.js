@@ -13,8 +13,50 @@
   async function authFetch(url,init={}){const headers={...(init.headers||{})};const t=token();if(t)headers.Authorization='Bearer '+t;return oldFetch(url,{...init,headers})}
   window.fetch=async(...args)=>{let [input,init]=args;const url=typeof input==='string'?input:(input&&input.url)||'';if(url.startsWith(API)&&token()){init={...(init||{}),headers:{...((init&&init.headers)||{}),Authorization:'Bearer '+token()}}}return oldFetch(input,init)};
   function openAuth(mode='register'){
-    let modal=$('ftGateModal');if(!modal){modal=document.createElement('div');modal.id='ftGateModal';modal.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;padding:18px;z-index:10001';modal.innerHTML=`<div style="width:min(440px,100%);background:#fffdf8;border:2px solid #171717;border-radius:20px;padding:22px;box-shadow:7px 7px 0 #171717"><h2 id="ftGateTitle" style="margin:0 0 7px">Crie sua conta</h2><p id="ftGateIntro" style="color:#6f6b63;font-size:13px;line-height:1.45">Para criar invenções, primeiro registre seu perfil.</p><label style="font-size:11px;font-weight:900">Nome de usuário</label><input id="ftGateUser" autocomplete="username" maxlength="40" style="width:100%;border:1.5px solid #171717;border-radius:10px;padding:11px;margin:5px 0 9px;font:inherit"><div><label style="font-size:11px;font-weight:900">E-mail</label><input id="ftGateEmail" type="email" autocomplete="email" style="width:100%;border:1.5px solid #171717;border-radius:10px;padding:11px;margin:5px 0 9px;font:inherit"></div><div><label style="font-size:11px;font-weight:900">Senha</label><input id="ftGatePass" type="password" autocomplete="new-password" placeholder="mínimo de 8 caracteres" style="width:100%;border:1.5px solid #171717;border-radius:10px;padding:11px;margin:5px 0 9px;font:inherit"></div><div id="ftGatePass2Wrap"><label style="font-size:11px;font-weight:900">Confirmar senha</label><input id="ftGatePass2" type="password" autocomplete="new-password" style="width:100%;border:1.5px solid #171717;border-radius:10px;padding:11px;margin:5px 0 9px;font:inherit"></div><div style="display:flex;gap:8px"><button id="ftGateSubmit" style="flex:1;background:#d8ff55;color:#171717;border:1.5px solid #171717;padding:12px;border-radius:11px;font-weight:900">Criar conta</button><button id="ftGateClose" style="flex:1;background:white;color:#171717;border:1.5px solid #171717;padding:12px;border-radius:11px;font-weight:900">Cancelar</button></div><button id="ftGateSwitch" style="width:100%;margin-top:8px;background:white;color:#171717;border:1.5px solid #171717;padding:10px;border-radius:11px;font-weight:800">Já tenho conta</button><div id="ftGateStatus" style="font-size:11px;margin-top:10px;padding:8px;border:1px solid #ded8ca;border-radius:9px;background:#fff"></div></div>`;document.body.appendChild(modal);$('ftGateClose').onclick=()=>modal.remove();$('ftGateSwitch').onclick=()=>openAuth(modal.dataset.mode==='register'?'login':'register');$('ftGateSubmit').onclick=submitAuth}
-    modal.dataset.mode=mode;const reg=mode==='register';$('ftGateTitle').textContent=reg?'Crie sua conta':'Entrar no FUTUROLOGIO™';$('ftGateIntro').textContent=reg?'Para criar invenções, primeiro registre seu perfil.':'Entre para continuar criando e acessar seu progresso.';$('ftGateSubmit').textContent=reg?'Criar conta':'Entrar';$('ftGateSwitch').textContent=reg?'Já tenho conta':'Criar uma conta';$('ftGatePass').autocomplete=reg?'new-password':'current-password';$('ftGatePass2Wrap').style.display=reg?'block':'none';$('ftGateStatus').textContent='';modal.style.display='flex';
+    let modal=$('ftGateModal');
+    if(!modal){
+      modal=document.createElement('div');modal.id='ftGateModal';
+      modal.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.62);display:flex;align-items:center;justify-content:center;padding:18px;z-index:10001';
+      modal.innerHTML=`<style>
+        #ftGateModal .ft-gate-box{width:min(440px,100%);background:#fffdf8;color:#171717;border:2px solid #171717;border-radius:20px;padding:22px;box-shadow:7px 7px 0 #171717}
+        #ftGateModal .ft-gate-box h2{margin:0 0 7px;color:#171717!important;font-size:26px}
+        #ftGateModal .ft-gate-box p{color:#6f6b63!important;font-size:13px;line-height:1.45}
+        #ftGateModal .ft-gate-field{display:block;margin:0 0 9px}
+        #ftGateModal .ft-gate-field label{display:block!important;color:#171717!important;font-size:12px!important;font-weight:900!important;margin-bottom:5px!important;opacity:1!important}
+        #ftGateModal .ft-gate-field input{box-sizing:border-box;width:100%;height:48px;background:#fff!important;color:#171717!important;border:1.5px solid #171717!important;border-radius:10px;padding:11px 13px;margin:0!important;font:inherit;font-size:16px;outline:none;opacity:1!important;-webkit-text-fill-color:#171717}
+        #ftGateModal .ft-gate-field input::placeholder{color:#777!important;opacity:1!important}
+        #ftGateModal .ft-gate-field input:focus{border-color:#171717!important;box-shadow:0 0 0 2px #d8ff55}
+        #ftGateModal .ft-gate-actions{display:flex;gap:8px}
+        #ftGateModal button{font:inherit;cursor:pointer;color:#171717!important;opacity:1!important}
+        #ftGateModal .ft-gate-primary{flex:1;background:#d8ff55!important;border:1.5px solid #171717;border-radius:11px;padding:12px;font-weight:900}
+        #ftGateModal .ft-gate-secondary{flex:1;background:#fff!important;border:1.5px solid #171717;border-radius:11px;padding:12px;font-weight:900}
+        #ftGateModal #ftGateSwitch{width:100%;margin-top:8px;background:#fff!important;border:1.5px solid #171717;border-radius:11px;padding:10px;font-weight:800}
+        #ftGateModal #ftGateStatus{color:#171717!important;font-size:11px;margin-top:10px;padding:8px;border:1px solid #ded8ca;border-radius:9px;background:#fff}
+      </style><div class="ft-gate-box">
+        <h2 id="ftGateTitle">Crie sua conta</h2>
+        <p id="ftGateIntro">Para criar invenções, primeiro registre seu perfil.</p>
+        <div class="ft-gate-field"><label for="ftGateUser">Nome de usuário</label><input id="ftGateUser" autocomplete="username" maxlength="40" placeholder="Digite seu nome de usuário"></div>
+        <div class="ft-gate-field"><label for="ftGateEmail">E-mail</label><input id="ftGateEmail" type="email" autocomplete="email" placeholder="Digite seu e-mail"></div>
+        <div class="ft-gate-field"><label for="ftGatePass">Senha</label><input id="ftGatePass" type="password" autocomplete="new-password" placeholder="Digite sua senha (mínimo de 8 caracteres)"></div>
+        <div class="ft-gate-field" id="ftGatePass2Wrap"><label for="ftGatePass2">Confirmar senha</label><input id="ftGatePass2" type="password" autocomplete="new-password" placeholder="Digite novamente sua senha"></div>
+        <div class="ft-gate-actions"><button id="ftGateSubmit" class="ft-gate-primary">Criar conta</button><button id="ftGateClose" class="ft-gate-secondary">Cancelar</button></div>
+        <button id="ftGateSwitch">Já tenho conta</button>
+        <div id="ftGateStatus"></div>
+      </div>`;
+      document.body.appendChild(modal);
+      $('ftGateClose').onclick=()=>modal.remove();
+      $('ftGateSwitch').onclick=()=>openAuth(modal.dataset.mode==='register'?'login':'register');
+      $('ftGateSubmit').onclick=submitAuth;
+    }
+    modal.dataset.mode=mode;const reg=mode==='register';
+    $('ftGateTitle').textContent=reg?'Crie sua conta':'Entrar no FUTUROLOGIO™';
+    $('ftGateIntro').textContent=reg?'Para criar invenções, primeiro registre seu perfil.':'Entre para continuar criando e acessar seu progresso.';
+    $('ftGateSubmit').textContent=reg?'Criar conta':'Entrar';
+    $('ftGateSwitch').textContent=reg?'Já tenho conta':'Criar uma conta';
+    $('ftGatePass').autocomplete=reg?'new-password':'current-password';
+    $('ftGatePass').placeholder=reg?'Digite sua senha (mínimo de 8 caracteres)':'Digite sua senha';
+    $('ftGatePass2Wrap').style.display=reg?'block':'none';
+    $('ftGateStatus').textContent='';modal.style.display='flex';
   }
   window.openAuth=openAuth;
   async function submitAuth(){
