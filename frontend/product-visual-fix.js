@@ -2,125 +2,32 @@
   'use strict';
   if (window.__FUTUROLOGIO_PRODUCT_VISUAL_FIX) return;
   window.__FUTUROLOGIO_PRODUCT_VISUAL_FIX = true;
-
   const API='https://motor-invencoes.edsonfernandesvet.workers.dev';
-  const MAP_KEY='futuro_db_invention_ids';
-  const TOKEN_KEY='futuro_auth_token';
-  const USER_KEY='futuro_social_user';
+  const MAP_KEY='futuro_db_invention_ids',TOKEN_KEY='futuro_auth_token',USER_KEY='futuro_social_user';
   const token=()=>localStorage.getItem(TOKEN_KEY)||'';
   const user=()=>{try{return JSON.parse(localStorage.getItem(USER_KEY)||'null')}catch{return null}};
   const map=()=>{try{return JSON.parse(localStorage.getItem(MAP_KEY)||'{}')}catch{return {}}};
   const name=()=>document.getElementById('name')?.textContent?.trim()||'';
   const products=()=>window.FUTUROLOGIO_PRODUCTS||[];
-
-  function product(){
-    const n=name(), c=window.FUTUROLOGIO_CURRENT_PRODUCT;
-    if(c&&(!n||String(c.name).trim()===n)) return c;
-    return n?products().find(p=>String(p.name).trim()===n)||null:null;
-  }
-  function dbId(p){
-    if(!p)return 0;
-    if(Number(p.__dbId))return Number(p.__dbId);
-    return Number(map()[p.id]||0);
-  }
+  function product(){const n=name(),c=window.FUTUROLOGIO_CURRENT_PRODUCT;if(c&&(!n||String(c.name).trim()===n))return c;return n?products().find(p=>String(p.name).trim()===n)||null:null}
+  function dbId(p){if(!p)return 0;if(Number(p.__dbId))return Number(p.__dbId);return Number(map()[p.id]||0)}
   const media=v=>{const s=String(v||'').trim();return s?(s.startsWith('http://')||s.startsWith('https://')?s:API+(s.startsWith('/')?s:'/'+s)):''};
-
-  const css=document.createElement('style');
-  css.id='futuro-product-visual-fix-css';
-  css.textContent=`
-    .game-image-card{position:relative!important;overflow:hidden!important}
+  const css=document.createElement('style');css.id='futuro-product-visual-fix-css';css.textContent=`
+    .game-image-card{position:relative!important;overflow:hidden!important}.game-image-card:after{display:none!important;content:none!important}
     .game-image-card .ft-fix-stage{position:relative!important;width:100%!important;aspect-ratio:16/9!important;min-height:180px!important;border-radius:10px!important;overflow:hidden!important;background:radial-gradient(circle at 50% 40%,#24395c,#0b1120 70%)!important;border:1px solid #30415f!important;display:flex!important;align-items:center!important;justify-content:center!important}
-    .game-image-card .ft-fix-stage>img{display:block!important;width:100%!important;height:100%!important;object-fit:cover!important;cursor:zoom-in!important}
-    .ft-fix-empty{width:100%;height:100%;min-height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;box-sizing:border-box;color:#9eb1d0}
-    .ft-fix-empty strong{display:block;color:#d8ff55;font-size:14px;margin-bottom:7px}.ft-fix-empty span{font-size:11px;line-height:1.45;max-width:480px}
-    .ft-fix-actions{display:flex!important;flex-wrap:wrap!important;align-items:center!important;justify-content:center!important;gap:8px!important;margin-top:10px!important}
-    .ft-fix-actions button{border:1.5px solid #fff!important;border-radius:10px!important;background:#d8ff55!important;color:#091007!important;padding:10px 14px!important;font-size:10px!important;font-weight:1000!important;cursor:pointer!important;text-transform:uppercase!important}
-    .ft-fix-actions button:disabled{opacity:.55!important;cursor:wait!important}.ft-fix-status{width:100%;text-align:center;font-size:10px;color:#9eb1d0}.ft-fix-status.ok{color:#d8ff55}.ft-fix-status.err{color:#ff8da7}
-    .game-image-card .ft-fix-meta{display:block!important;margin-top:7px!important;color:#9eb1d0!important;font-size:10px!important;font-weight:900!important;text-align:center!important;letter-spacing:.05em!important}
-    .game-image-card .ft-fix-old-label{display:none!important}.game-image-card:after{display:none!important;content:none!important}
+    .game-image-card .ft-fix-stage>img{display:block!important;width:100%!important;height:100%!important;object-fit:cover!important;cursor:zoom-in!important}.ft-fix-empty{width:100%;height:100%;min-height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;box-sizing:border-box;color:#9eb1d0}.ft-fix-empty strong{display:block;color:#d8ff55;font-size:14px;margin-bottom:7px}.ft-fix-empty span{font-size:11px;line-height:1.45;max-width:480px}
+    .ft-fix-actions{display:flex!important;flex-wrap:wrap!important;align-items:center!important;justify-content:center!important;gap:8px!important;margin-top:10px!important}.ft-fix-actions button{border:1.5px solid #fff!important;border-radius:10px!important;background:#d8ff55!important;color:#091007!important;padding:10px 14px!important;font-size:10px!important;font-weight:1000!important;cursor:pointer!important;text-transform:uppercase!important}.ft-fix-actions button:disabled{opacity:.55!important;cursor:wait!important}.ft-fix-status{width:100%;text-align:center;font-size:10px;color:#9eb1d0}.ft-fix-status.ok{color:#d8ff55}.ft-fix-status.err{color:#ff8da7}
+    .game-image-card .ft-fix-meta{display:block!important;margin-top:7px!important;color:#9eb1d0!important;font-size:10px!important;font-weight:900!important;text-align:center!important;letter-spacing:.05em!important}.game-image-card .ft-fix-old-label{display:none!important}
     .ft-fix-full{position:fixed;inset:0;z-index:100000;background:rgba(2,5,12,.97);display:none;align-items:center;justify-content:center;padding:20px}.ft-fix-full.open{display:flex}.ft-fix-full img{max-width:96vw;max-height:92vh;width:auto;height:auto;object-fit:contain;border-radius:10px}.ft-fix-full button{position:absolute;right:16px;top:14px;width:44px;height:44px;border:1px solid #6b82ab;border-radius:50%;background:#101a2e;color:#fff;font-size:26px;cursor:pointer}
-  `;
-  document.head.appendChild(css);
-
-  function full(src,alt){
-    let o=document.getElementById('futuroProductVisualFixFull');
-    if(!o){o=document.createElement('div');o.id='futuroProductVisualFixFull';o.className='ft-fix-full';o.innerHTML='<button type="button" aria-label="Fechar imagem">×</button><img alt="">';document.body.appendChild(o);o.addEventListener('click',e=>{if(e.target===o||e.target.tagName==='BUTTON')o.classList.remove('open')});document.addEventListener('keydown',e=>{if(e.key==='Escape')o.classList.remove('open')})}
-    const img=o.querySelector('img');img.src=src;img.alt=alt||'Imagem da invenção';o.classList.add('open');
-  }
-
-  async function serverImage(id){
-    if(!id)return '';
-    try{const r=await fetch(API+'/api/invention/'+encodeURIComponent(id));if(!r.ok)return '';const d=await r.json();return media(d.image_url)}catch{return ''}
-  }
-
-  function actions(card,hasImage,p,id){
-    const box=document.createElement('div');box.className='ft-fix-actions';
-    const input=document.createElement('input');input.type='file';input.accept='image/jpeg,image/png,image/webp,image/gif';input.hidden=true;
-    const b=document.createElement('button');b.type='button';b.textContent=hasImage?'Trocar imagem':'Enviar minha imagem';
-    const s=document.createElement('div');s.className='ft-fix-status';
-    b.onclick=()=>{if(!user()){window.openAuth?.('register');return}input.click()};
-    input.onchange=()=>{const f=input.files?.[0];input.value='';send(f,b,s,p,id)};
-    box.append(b,input,s);card.appendChild(box);
-  }
-
-  async function send(file,b,s,p,id){
-    if(!file)return;
-    if(!id){s.textContent='Esta invenção ainda não foi registrada no servidor.';s.className='ft-fix-status err';return}
-    if(!/^image\/(jpeg|png|webp|gif)$/i.test(file.type)){s.textContent='Use JPG, PNG, WebP ou GIF.';s.className='ft-fix-status err';return}
-    if(file.size>8*1024*1024){s.textContent='A imagem deve ter no máximo 8 MB.';s.className='ft-fix-status err';return}
-    b.disabled=true;s.textContent='ENVIANDO IMAGEM…';
-    try{const fd=new FormData();fd.append('image',file,file.name||'invention-image');fd.append('invention_id',String(id));const r=await fetch(API+'/api/invention-image',{method:'POST',headers:{Authorization:'Bearer '+token()},body:fd});const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||'Não foi possível enviar a imagem.');p.__dbId=id;p.image_url=media(d.image_url||API+'/api/invention-image/'+id);window.FUTUROLOGIO_CURRENT_PRODUCT=p;window.FUTUROLOGIO_CURRENT_DB_ID=id;s.textContent='IMAGEM SALVA. +5 XP POR UPLOAD VÁLIDO.';s.className='ft-fix-status ok';await paint(true)}catch(e){s.textContent=e.message||'Falha no upload.';s.className='ft-fix-status err'}finally{b.disabled=false}
-  }
-
-  let expectedKey='';let expectedSrc='';let seq=0;
-  async function paint(force){
-    const card=document.querySelector('.game-image-card');const p=product();if(!card||!p)return;
-    const id=dbId(p),key=String(p.id)+'|'+String(id)+'|'+String(p.name);if(!force&&expectedKey===key&&card.dataset.ftFixPainted===key)return;
-    expectedKey=key;const my=++seq;
-    let src=await serverImage(id);
-    if(!src&&id===dbId(product())&&p.image_url)src=media(p.image_url);
-    if(my!==seq||product()?.id!==p.id)return;
-    expectedSrc=src;
-    card.querySelectorAll(':scope > *').forEach(x=>x.remove());
-    const stage=document.createElement('div');stage.className='ft-fix-stage';
-    if(src){
-      p.image_url=src;
-      const img=document.createElement('img');img.src=src;img.alt=p.name||'Imagem da invenção';img.onclick=()=>full(img.currentSrc||img.src,img.alt);stage.appendChild(img);
-      const meta=document.createElement('div');meta.className='ft-fix-meta';meta.textContent='CLIQUE PARA AMPLIAR';card.append(stage,meta);actions(card,true,p,id);
-    }else{
-      stage.innerHTML='<div class="ft-fix-empty"><strong>IMAGEM DO CRIADOR</strong><span>Esta invenção ainda não possui uma imagem. Envie sua foto abaixo.</span></div>';
-      const meta=document.createElement('div');meta.className='ft-fix-meta';meta.textContent='AGUARDANDO UPLOAD';card.append(stage,meta);actions(card,false,p,id);
-    }
-    card.dataset.ftFixPainted=key;
-  }
-
-  function wrap(){
-    if(window.__FUTUROLOGIO_PRODUCT_VISUAL_SHOW||typeof window.show!=='function')return;
-    const original=window.show;
-    window.show=function(p){
-      window.FUTUROLOGIO_CURRENT_PRODUCT=p||null;
-      window.FUTUROLOGIO_CURRENT_DB_ID=Number(p?.__dbId||0);
-      expectedKey='';expectedSrc='';
-      original(p);
-      setTimeout(()=>paint(true),30);setTimeout(()=>paint(true),450);
-    };
-    window.__FUTUROLOGIO_PRODUCT_VISUAL_SHOW=true;
-  }
-
-  const observer=new MutationObserver(()=>{
-    const card=document.querySelector('.game-image-card');
-    const p=product();
-    if(!card||!p)return;
-    const id=dbId(p),key=String(p.id)+'|'+String(id)+'|'+String(p.name);
-    const img=card.querySelector('.ft-fix-stage>img');
-    const wrongImg=img&&expectedSrc&&media(img.currentSrc||img.src)!==expectedSrc;
-    const missingExpected=expectedSrc&&!img;
-    const unexpectedOld=!expectedSrc&&img;
-    if(card.dataset.ftFixPainted!==key||wrongImg||missingExpected||unexpectedOld)setTimeout(()=>paint(true),0);
-  });
-  observer.observe(document.body,{childList:true,subtree:true});
-
-  const nameEl=document.getElementById('name');
-  if(nameEl)nameEl.addEventListener('DOMSubtreeModified',()=>setTimeout(()=>paint(true),20));
+  `;document.head.appendChild(css);
+  function full(src,alt){let o=document.getElementById('futuroProductVisualFixFull');if(!o){o=document.createElement('div');o.id='futuroProductVisualFixFull';o.className='ft-fix-full';o.innerHTML='<button type="button" aria-label="Fechar imagem">×</button><img alt="">';document.body.appendChild(o);o.addEventListener('click',e=>{if(e.target===o||e.target.tagName==='BUTTON')o.classList.remove('open')});document.addEventListener('keydown',e=>{if(e.key==='Escape')o.classList.remove('open')})}const img=o.querySelector('img');img.src=src;img.alt=alt||'Imagem da invenção';o.classList.add('open')}
+  async function serverImage(id){if(!id)return '';try{const r=await fetch(API+'/api/invention/'+encodeURIComponent(id));if(!r.ok)return '';const d=await r.json();return media(d.image_url)}catch{return ''}}
+  function actions(card,hasImage,p,id){const box=document.createElement('div');box.className='ft-fix-actions';const input=document.createElement('input');input.type='file';input.accept='image/jpeg,image/png,image/webp,image/gif';input.hidden=true;const b=document.createElement('button');b.type='button';b.textContent=hasImage?'Trocar imagem':'Enviar minha imagem';const s=document.createElement('div');s.className='ft-fix-status';b.onclick=()=>{if(!user()){window.openAuth?.('register');return}input.click()};input.onchange=()=>{const f=input.files?.[0];input.value='';send(f,b,s,p,id)};box.append(b,input,s);card.appendChild(box)}
+  async function send(file,b,s,p,id){if(!file)return;if(!id){s.textContent='Esta invenção ainda não foi registrada no servidor.';s.className='ft-fix-status err';return}if(!/^image\/(jpeg|png|webp|gif)$/i.test(file.type)){s.textContent='Use JPG, PNG, WebP ou GIF.';s.className='ft-fix-status err';return}if(file.size>8*1024*1024){s.textContent='A imagem deve ter no máximo 8 MB.';s.className='ft-fix-status err';return}b.disabled=true;s.textContent='ENVIANDO IMAGEM…';try{const fd=new FormData();fd.append('image',file,file.name||'invention-image');fd.append('invention_id',String(id));const r=await fetch(API+'/api/invention-image',{method:'POST',headers:{Authorization:'Bearer '+token()},body:fd});const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||'Não foi possível enviar a imagem.');p.__dbId=id;p.image_url=media(d.image_url||API+'/api/invention-image/'+id);window.FUTUROLOGIO_CURRENT_PRODUCT=p;window.FUTUROLOGIO_CURRENT_DB_ID=id;s.textContent='IMAGEM SALVA. +5 XP POR UPLOAD VÁLIDO.';s.className='ft-fix-status ok';await paint(true)}catch(e){s.textContent=e.message||'Falha no upload.';s.className='ft-fix-status err'}finally{b.disabled=false}}
+  let expectedKey='',expectedSrc='',seq=0;
+  async function paint(force){const card=document.querySelector('.game-image-card'),p=product();if(!card||!p)return;const id=dbId(p),key=String(p.id)+'|'+String(id)+'|'+String(p.name);if(!force&&expectedKey===key&&card.dataset.ftFixPainted===key)return;expectedKey=key;const my=++seq;let src=await serverImage(id);if(!src&&id===dbId(product())&&p.image_url)src=media(p.image_url);if(my!==seq||product()?.id!==p.id)return;expectedSrc=src;card.querySelectorAll(':scope > *').forEach(x=>x.remove());const stage=document.createElement('div');stage.className='ft-fix-stage';if(src){p.image_url=src;const img=document.createElement('img');img.src=src;img.alt=p.name||'Imagem da invenção';img.onclick=()=>full(img.currentSrc||img.src,img.alt);stage.appendChild(img);const meta=document.createElement('div');meta.className='ft-fix-meta';meta.textContent='CLIQUE PARA AMPLIAR';card.append(stage,meta);actions(card,true,p,id)}else{stage.innerHTML='<div class="ft-fix-empty"><strong>IMAGEM DO CRIADOR</strong><span>Esta invenção ainda não possui uma imagem. Envie sua foto abaixo.</span></div>';const meta=document.createElement('div');meta.className='ft-fix-meta';meta.textContent='AGUARDANDO UPLOAD';card.append(stage,meta);actions(card,false,p,id)}card.dataset.ftFixPainted=key}
+  function wrap(){if(window.__FUTUROLOGIO_PRODUCT_VISUAL_SHOW||typeof window.show!=='function')return;const original=window.show;window.show=function(p){window.FUTUROLOGIO_CURRENT_PRODUCT=p||null;window.FUTUROLOGIO_CURRENT_DB_ID=Number(p?.__dbId||0);expectedKey='';expectedSrc='';original(p);setTimeout(()=>paint(true),30);setTimeout(()=>paint(true),450)};window.__FUTUROLOGIO_PRODUCT_VISUAL_SHOW=true}
+  const observer=new MutationObserver(()=>{const card=document.querySelector('.game-image-card'),p=product();if(!card||!p)return;const id=dbId(p),key=String(p.id)+'|'+String(id)+'|'+String(p.name),stage=card.querySelector('.ft-fix-stage'),actionsBox=card.querySelector('.ft-fix-actions'),img=card.querySelector('.ft-fix-stage>img');const wrongImg=img&&expectedSrc&&media(img.currentSrc||img.src)!==expectedSrc;const missingExpected=expectedSrc&&!img;const unexpectedOld=!expectedSrc&&img;const missingOurStructure=!stage||!actionsBox;if(card.dataset.ftFixPainted!==key||wrongImg||missingExpected||unexpectedOld||missingOurStructure)setTimeout(()=>paint(true),0)});observer.observe(document.body,{childList:true,subtree:true});
+  const nameEl=document.getElementById('name');if(nameEl)nameEl.addEventListener('DOMSubtreeModified',()=>setTimeout(()=>paint(true),20));
   const timer=setInterval(()=>{wrap();if(typeof window.show==='function'){clearInterval(timer);setTimeout(()=>paint(true),80)}},50);
 })();
