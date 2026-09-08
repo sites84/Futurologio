@@ -27,6 +27,7 @@ jobs:
           node --check frontend/social.js
           node --check frontend/profile-panel.js
           node --check frontend/gamification.js
+          node --check frontend/game-ui.js
       - name: Validate critical integration hooks
         run: |
           grep -q 'window.openAuth=openAuth' frontend/auth-gate.js
@@ -34,5 +35,8 @@ jobs:
           grep -q 'FUTUROLOGIO_DB_ID_FOR' frontend/auth-gate.js
           grep -q 'waitForDbId' frontend/social.js
           grep -q "'?invention='" frontend/social.js
-          grep -q "sharedId" index.html
+          grep -q 'sharedId' index.html
+          grep -q 'game-image-card' frontend/game-ui.js
+          grep -q 'game-prompt-card' frontend/game-ui.js
+          grep -q 'buildPrompt' frontend/game-ui.js
           ! grep -q 'frontend/auth-social-bridge.js' index.html
