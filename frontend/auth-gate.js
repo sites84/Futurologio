@@ -77,5 +77,18 @@
   window.FUTUROLOGIO_AFTER_CREATE=recordCreated;
   window.FUTUROLOGIO_DB_ID_FOR=productId=>Number(map()[productId]||0);
   function install(){const create=$('createBtn'),another=$('anotherBtn');if(!create)return;create.onclick=async()=>{if(await canCreate())window.newInvention()};if(another)another.onclick=async()=>{if(await canCreate())window.newInvention()};const login=$('ftLoginBtn');if(login&&!login.dataset.gateBound){login.dataset.gateBound='1';login.onclick=()=>user()?(clearSession(),location.reload()):openAuth('register')}}
-  const timer=setInterval(()=>{if($('createBtn')){clearInterval(timer);install();const path=location.pathname;const isCreatePage=/\/criar(?:\.html)?\/?$/.test(path);const q=new URLSearchParams(location.search);if(isCreatePage&&!token()&&!q.has('db_invention')&&!q.has('invention'))setTimeout(()=>openAuth('register'),120)}},50);
+  function mountCreationAccount(){
+    if(!$('createBtn'))return;
+    const nav=document.querySelector('header nav');
+    if(nav&&!$('ftAccountBtn')){
+      const b=document.createElement('button');b.id='ftAccountBtn';b.type='button';b.textContent=token()&&user()?'MEU PERFIL':'ENTRAR';b.style.cssText='margin-left:auto;border:1.5px solid #171717;background:#fff;border-radius:10px;padding:9px 13px;font:inherit;font-weight:900;cursor:pointer;color:#171717';
+      b.onclick=()=>{if(!token()||!user()){openAuth('register');return}document.querySelector('.profile')?.scrollIntoView({behavior:'smooth',block:'start'})};
+      nav.appendChild(b);
+    }else if($('ftAccountBtn'))$('ftAccountBtn').textContent=token()&&user()?'MEU PERFIL':'ENTRAR';
+    if(token()&&!document.getElementById('futuro-gamification-loader')){
+      const s=document.createElement('script');s.id='futuro-gamification-loader';s.src='./frontend/gamification.js?v=20260909b';document.body.appendChild(s);
+    }
+  }
+  const timer=setInterval(()=>{if($('createBtn')){clearInterval(timer);install();mountCreationAccount();const path=location.pathname;const isCreatePage=/\/criar(?:\.html)?\/?$/.test(path);const q=new URLSearchParams(location.search);if(isCreatePage&&!token()&&!q.has('db_invention')&&!q.has('invention'))setTimeout(()=>openAuth('register'),120)}},50);
+  setInterval(mountCreationAccount,2000);
 })();
