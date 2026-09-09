@@ -75,6 +75,12 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: wrangler d1 execute futurologio --remote --file=seed.sql --config wrangler.deploy.toml
 
+      - name: Patch protected admin routes
+        run: |
+          set -e
+          node backend/patch-admin-routes.mjs
+          node --check backend/worker.js
+
       - name: Bootstrap standalone catalog file
         run: |
           set -e
