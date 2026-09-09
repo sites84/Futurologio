@@ -77,5 +77,5 @@
   window.FUTUROLOGIO_AFTER_CREATE=recordCreated;
   window.FUTUROLOGIO_DB_ID_FOR=productId=>Number(map()[productId]||0);
   function install(){const create=$('createBtn'),another=$('anotherBtn');if(!create)return;create.onclick=async()=>{if(await canCreate())window.newInvention()};if(another)another.onclick=async()=>{if(await canCreate())window.newInvention()};const login=$('ftLoginBtn');if(login&&!login.dataset.gateBound){login.dataset.gateBound='1';login.onclick=()=>user()?(clearSession(),location.reload()):openAuth('register')}}
-  const timer=setInterval(()=>{if($('createBtn')){clearInterval(timer);install()}},50);
+  const timer=setInterval(()=>{if($('createBtn')){clearInterval(timer);install();const path=location.pathname;const isCreatePage=/\/criar(?:\.html)?\/?$/.test(path);const q=new URLSearchParams(location.search);if(isCreatePage&&!token()&&!q.has('db_invention')&&!q.has('invention'))setTimeout(()=>openAuth('register'),120)}},50);
 })();
