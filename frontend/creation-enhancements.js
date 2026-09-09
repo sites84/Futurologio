@@ -4,7 +4,7 @@ if(window.__FUTUROLOGIO_CREATION_ENHANCEMENTS)return;
 window.__FUTUROLOGIO_CREATION_ENHANCEMENTS=true;
 const API='https://motor-invencoes.edsonfernandesvet.workers.dev';
 const TOKEN_KEY='futuro_auth_token',USER_KEY='futuro_social_user',MAP_KEY='futuro_db_invention_ids';
-const STYLE_PROMPT='Mad Magazine style meets cyberpunk aesthetic, grotesque extreme caricature, hyper-realistic cartoon gross-up, with unsettling rich details, but the main character has a creepy, extreme manic expressions while using the product. Greasy and sweaty skin, dilated pores, popping bloodshot eyes, crooked teeth visible through a giant manic grin, dripping sweat beads. High-tech futuristic cyberpunk design, glowing neon LED lights, holographic displays showing statistics, sleek polished materials, fiber optic cables, cinematic lighting, deep shadows, chaotic and extremely funny composition, 16:9 aspect ratio.';
+const STYLE_PROMPT='Satirical magazine illustration style meets cyberpunk aesthetic, grotesque extreme caricature, hyper-realistic cartoon gross-up, with unsettling rich details, but the main character has a creepy, extreme manic expressions while using the product. Greasy and sweaty skin, dilated pores, popping bloodshot eyes, crooked teeth visible through a giant manic grin, dripping sweat beads. High-tech futuristic cyberpunk design, glowing neon LED lights, holographic displays showing statistics, sleek polished materials, fiber optic cables, cinematic lighting, deep shadows, chaotic and extremely funny composition, 16:9 aspect ratio.';
 const $=id=>document.getElementById(id);
 const token=()=>localStorage.getItem(TOKEN_KEY)||'';
 const currentUser=()=>{try{return JSON.parse(localStorage.getItem(USER_KEY)||'null')}catch{return null}};
