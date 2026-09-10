@@ -1,3 +1,4 @@
+import './patch-views-routes.mjs';
 import fs from 'node:fs';
 
 const file='backend/worker.js';
