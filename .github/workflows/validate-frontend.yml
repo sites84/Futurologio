@@ -32,6 +32,7 @@ jobs:
           node --check frontend/home-social.js
           node --check frontend/product-social.js
           node --check frontend/profile-top.js
+          node --check frontend/profile-page.js
           node --check frontend/recent-feed-fix.js
           node --check frontend/welcome-and-sound.js
       - name: Validate critical integration hooks
@@ -46,6 +47,8 @@ jobs:
           grep -q 'product-social.js' frontend/welcome-and-sound.js
           grep -q 'profile-top.js' frontend/welcome-and-sound.js
           grep -q 'home-social.js' frontend/welcome-and-sound.js
+          grep -q 'recent-feed-fix.js' frontend/welcome-and-sound.js
+          grep -q 'profile-page.js' profile.html
           grep -q 'game-image-card' frontend/game-ui.js
           grep -q 'game-prompt-card' frontend/game-ui.js
           grep -q 'buildPrompt' frontend/game-ui.js
