@@ -13,4 +13,4 @@ binding = "IMAGES"
 bucket_name = "futurologio-images"
 
 [vars]
-# GOOGLE_CLIENT_ID is optional until Google Sign-In is configured.
+GOOGLE_CLIENT_ID = "939334121296-31dq7odt6c6d0lqh3qdf8rodvic8phql.apps.googleusercontent.com"
