@@ -4,11 +4,15 @@ on:
   push:
     paths:
       - 'index.html'
+      - 'profile.html'
+      - 'criar.html'
       - 'frontend/**'
       - '.github/workflows/validate-frontend.yml'
   pull_request:
     paths:
       - 'index.html'
+      - 'profile.html'
+      - 'criar.html'
       - 'frontend/**'
       - '.github/workflows/validate-frontend.yml'
 
@@ -31,10 +35,10 @@ jobs:
           node --check frontend/game-ui.js
           node --check frontend/home-social.js
           node --check frontend/product-social.js
-          node --check frontend/profile-top.js
-          node --check frontend/profile-page.js
-          node --check frontend/recent-feed-fix.js
           node --check frontend/welcome-and-sound.js
+          node --check frontend/recent-creations-v2.js
+          node --check frontend/profile-nav-v2.js
+          node --check frontend/profile-page-v2.js
       - name: Validate critical integration hooks
         run: |
           grep -q 'window.openAuth=openAuth' frontend/auth-gate.js
@@ -42,13 +46,20 @@ jobs:
           grep -q 'FUTUROLOGIO_DB_ID_FOR' frontend/auth-gate.js
           grep -q 'waitForDbId' frontend/social.js
           grep -q "'?invention='" frontend/social.js
-          grep -q 'sharedId' index.html
           grep -q 'FUTUROLOGIO_CHECK_REWARDS' frontend/gamification-events.js
-          grep -q 'product-social.js' frontend/welcome-and-sound.js
-          grep -q 'profile-top.js' frontend/welcome-and-sound.js
-          grep -q 'home-social.js' frontend/welcome-and-sound.js
-          grep -q 'recent-feed-fix.js' frontend/welcome-and-sound.js
-          grep -q 'profile-page.js' profile.html
+          grep -q 'home-social.js' index.html
+          grep -q 'recent-creations-v2.js' index.html
+          grep -q 'profile-nav-v2.js' index.html
+          grep -q 'profile-nav-v2.js' criar.html
+          grep -q 'profile-page-v2.js' profile.html
+          grep -q 'profile-settings.js' profile.html
+          grep -q 'api/recent-creations' frontend/recent-creations-v2.js
+          ! grep -q 'recent-feed-fix.js' index.html
+          ! grep -q 'profile-top.js' index.html
+          ! grep -q 'frontend/profile-page.js' profile.html
+          ! grep -q '<section class="panel profile"' criar.html
+          ! grep -q 'frontend/recent-feed-fix.js' frontend/welcome-and-sound.js
+          ! grep -q 'frontend/profile-top.js' frontend/welcome-and-sound.js
           grep -q 'game-image-card' frontend/game-ui.js
           grep -q 'game-prompt-card' frontend/game-ui.js
           grep -q 'buildPrompt' frontend/game-ui.js
