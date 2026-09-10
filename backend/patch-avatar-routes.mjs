@@ -43,7 +43,7 @@ ${profileMarker}
 if(path==='/api/profile-settings'&&request.method==='GET'){
   if(!session)return json({ok:false,error:'Não autenticado'},401);
   const u=await user(env.DB,session.sub); if(!u)return json({ok:false,error:'Usuário não encontrado'},404);
-  return json({ok:true,profile:{id:u.id,username:u.username,email:u.email,sex:u.sex||'',age:u.age==null?'':Number(u.age),address:u.address||'',bio:u.bio||'',avatar:u.avatar||'',profile_photo_url:u.profile_photo_key?`${url.origin}/api/profile-image/${encodeURIComponent(u.id)}`:null}});
+  return json({ok:true,profile:{id:u.id,username:u.username,email:u.email,sex:u.sex||'',age:u.age==null?'':Number(u.age),address:u.address||'',bio:u.bio||'',avatar:u.avatar||'',profile_photo_url:u.profile_photo_key?url.origin+'/api/profile-image/'+encodeURIComponent(u.id):null}});
 }
 if(path==='/api/profile-settings'&&request.method==='POST'){
   if(!session)return json({ok:false,error:'Não autenticado'},401);
@@ -55,15 +55,15 @@ if(path==='/api/profile-settings'&&request.method==='POST'){
   if(address.length>300)return json({ok:false,error:'Endereço muito longo.'},400); if(bio.length>300)return json({ok:false,error:'Biografia muito longa.'},400);
   const clash=await env.DB.prepare('SELECT id FROM USERS WHERE username=? AND id<>?').bind(username,u.id).first(); if(clash)return json({ok:false,error:'Nome de usuário já está em uso.'},409);
   await env.DB.prepare('UPDATE USERS SET username=?,sex=?,age=?,address=?,bio=?,updated_at=CURRENT_TIMESTAMP WHERE id=?').bind(username,sex,ageRaw===''?null:ageRaw,address,bio,u.id).run();
-  const v=await user(env.DB,u.id); return json({ok:true,user:pub(v,await allowance(env.DB,v)),profile:{id:v.id,username:v.username,email:v.email,sex:v.sex||'',age:v.age==null?'':Number(v.age),address:v.address||'',bio:v.bio||'',avatar:v.avatar||'',profile_photo_url:v.profile_photo_key?`${url.origin}/api/profile-image/${encodeURIComponent(v.id)}`:null}});
+  const v=await user(env.DB,u.id); return json({ok:true,user:pub(v,await allowance(env.DB,v)),profile:{id:v.id,username:v.username,email:v.email,sex:v.sex||'',age:v.age==null?'':Number(v.age),address:v.address||'',bio:v.bio||'',avatar:v.avatar||'',profile_photo_url:v.profile_photo_key?url.origin+'/api/profile-image/'+encodeURIComponent(v.id):null}});
 }
 if(path==='/api/profile-image'&&request.method==='POST'){
   if(!session)return json({ok:false,error:'Não autenticado'},401); if(!env.IMAGES)return json({ok:false,error:'Armazenamento de imagens indisponível.'},503);
   const form=await request.formData(),file=form.get('image'); if(!file||typeof file.arrayBuffer!=='function')return json({ok:false,error:'Imagem inválida.'},400);
   const type=String(file.type||'').toLowerCase(); if(!['image/jpeg','image/png','image/webp','image/gif'].includes(type))return json({ok:false,error:'Use JPG, PNG, WebP ou GIF.'},400); if(file.size>5*1024*1024)return json({ok:false,error:'A foto de perfil deve ter no máximo 5 MB.'},413);
-  const u=await user(env.DB,session.sub); if(!u)return json({ok:false,error:'Usuário não encontrado'},404); const ext=({'image/jpeg':'jpg','image/png':'png','image/webp':'webp','image/gif':'gif'})[type]; const key=`profiles/${u.id}/${crypto.randomUUID()}.${ext}`;
+  const u=await user(env.DB,session.sub); if(!u)return json({ok:false,error:'Usuário não encontrado'},404); const ext=({'image/jpeg':'jpg','image/png':'png','image/webp':'webp','image/gif':'gif'})[type]; const key='profiles/'+u.id+'/'+crypto.randomUUID()+'.'+ext;
   await env.IMAGES.put(key,file,{httpMetadata:{contentType:type,cacheControl:'public,max-age=31536000,immutable'}}); if(u.profile_photo_key)await env.IMAGES.delete(u.profile_photo_key); await env.DB.prepare('UPDATE USERS SET profile_photo_key=?,profile_photo_content_type=?,updated_at=CURRENT_TIMESTAMP WHERE id=?').bind(key,type,u.id).run();
-  return json({ok:true,profile_photo_url:`${url.origin}/api/profile-image/${encodeURIComponent(u.id)}`});
+  return json({ok:true,profile_photo_url:url.origin+'/api/profile-image/'+encodeURIComponent(u.id)});
 }
 if(path==='/api/profile-image/delete'&&request.method==='POST'){
   if(!session)return json({ok:false,error:'Não autenticado'},401); const u=await user(env.DB,session.sub); if(!u)return json({ok:false,error:'Usuário não encontrado'},404); if(u.profile_photo_key&&env.IMAGES)await env.IMAGES.delete(u.profile_photo_key); await env.DB.prepare('UPDATE USERS SET profile_photo_key=NULL,profile_photo_content_type=NULL,updated_at=CURRENT_TIMESTAMP WHERE id=?').bind(u.id).run(); return json({ok:true});
