@@ -86,4 +86,5 @@
   }
   const timer=setInterval(()=>{if($('createBtn')){clearInterval(timer);install();mountCreationAccount();const path=location.pathname;const isCreatePage=/\/criar(?:\.html)?\/?$/.test(path);const q=new URLSearchParams(location.search);if(isCreatePage&&!token()&&!q.has('db_invention')&&!q.has('invention'))setTimeout(()=>openAuth('register'),120)}},50);
   setInterval(mountCreationAccount,2000);
+  const gs=document.createElement('script');gs.src='./frontend/google-auth.js?v=20260910a';gs.defer=true;document.head.appendChild(gs);
 })();
