@@ -96,6 +96,7 @@ jobs:
             git push
           else
             echo 'Standalone catalog already exists.'
+          fi
 
       - name: Seed catalog from standalone file
         env:
