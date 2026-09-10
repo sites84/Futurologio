@@ -12,6 +12,9 @@ const orderOld="order=mode==='week'?`${week} DESC,i.created_at DESC`:'i.created_
 const orderNew="order=mode==='week'?`${week} DESC,i.created_at DESC`:'i.id DESC';";
 if(s.includes(orderOld))s=s.replace(orderOld,orderNew);
 
+const myOrderOld="WHERE o.user_id=? ORDER BY o.created_at DESC LIMIT ?";
+if(s.includes(myOrderOld))s=s.replace(myOrderOld,"WHERE o.user_id=? ORDER BY i.id DESC LIMIT ?");
+
 const recentMarker="if(path==='/api/explore'&&request.method==='GET')";
 if(!s.includes("path==='/api/recent-creations'&&request.method==='GET'")){
   const route=`if(path==='/api/recent-creations'&&request.method==='GET'){const limit=Math.min(200,Math.max(1,Number(url.searchParams.get('limit')||4)));const rows=await env.DB.prepare(\`SELECT i.id,i.name,i.category,i.concept,i.data,i.image_key,u.id user_id,u.username,u.avatar,(SELECT COUNT(*) FROM LIKES l WHERE l.invention_id=i.id) likes,(SELECT COUNT(*) FROM COMMENTS c WHERE c.invention_id=i.id) comments,(SELECT COUNT(*) FROM INVENTION_VIEWS v WHERE v.invention_id=i.id) views FROM INVENTIONS i JOIN INVENTION_OWNERS o ON o.invention_id=i.id JOIN USERS u ON u.id=o.user_id ORDER BY i.id DESC LIMIT ?\`).bind(limit).all();const items=(rows.results||[]).map(r=>{let d={};try{d=JSON.parse(r.data||'{}')}catch{};return {...r,source_id:d.source_id||null,image_url:r.image_key?\`\${url.origin}/api/invention-image/\${r.id}\`:null}});return json({ok:true,items})}\n`;
