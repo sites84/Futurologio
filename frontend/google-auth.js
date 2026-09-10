@@ -14,6 +14,7 @@
     b.onclick=googleLogin;
     actions.parentElement.insertBefore(b,$('ftGateStatus'));
   }
+  function hideAnother(){const b=$('anotherBtn');if(b)b.style.display='none'}
   function setStatus(msg){const s=$('ftGateStatus');if(s)s.textContent=msg||''}
   async function googleLogin(){
     setStatus('Abrindo login do Google…');
@@ -35,7 +36,7 @@
     }catch(e){setStatus(e.message||'Não foi possível entrar com Google.')}
   }
   function loadGIS(){return new Promise((resolve,reject)=>{if(window.google?.accounts?.id)return resolve();const s=document.createElement('script');s.src='https://accounts.google.com/gsi/client';s.async=true;s.defer=true;s.onload=resolve;s.onerror=()=>reject(new Error('Não foi possível carregar o Google.'));document.head.appendChild(s)})}
-  const timer=setInterval(()=>{if($('ftGateModal'))addButton()},100);
+  const timer=setInterval(()=>{if($('ftGateModal'))addButton();hideAnother()},100);
   setTimeout(()=>clearInterval(timer),30000);
-  new MutationObserver(()=>{if($('ftGateModal'))addButton()}).observe(document.documentElement,{childList:true,subtree:true});
+  new MutationObserver(()=>{if($('ftGateModal'))addButton();hideAnother()}).observe(document.documentElement,{childList:true,subtree:true});
 })();
