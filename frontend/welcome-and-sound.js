@@ -3,7 +3,6 @@
 if(window.__FUTURO_WELCOME_SOUND)return;
 window.__FUTURO_WELCOME_SOUND=true;
 const SHOW_KEY='futuro_show_welcome_v1';
-const USER_KEY='futuro_social_user';
 function playCreationSound(){
   try{
     const AC=window.AudioContext||window.webkitAudioContext;
@@ -55,7 +54,7 @@ function watchRegister(){
   btn.addEventListener('click',()=>{
     if(modal.dataset.mode!=='register')return;
     localStorage.setItem(SHOW_KEY,'1');
-    setTimeout(()=>{if(document.getElementById('ftGateModal'))localStorage.removeItem(SHOW_KEY)},900);
+    setTimeout(()=>{if(document.getElementById('ftGateModal'))localStorage.removeItem(SHOW_KEY)},15000);
   },true);
 }
 showWelcome();
