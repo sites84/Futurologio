@@ -1,7 +1,7 @@
 (() => {
   'use strict';
   const API='https://motor-invencoes.edsonfernandesvet.workers.dev';
-  const CLIENT_ID=window.FUTUROLOGIO_GOOGLE_CLIENT_ID||'';
+  const CLIENT_ID='939334121296-31dq7odt6c6d0lqh3qdf8rodvic8phql.apps.googleusercontent.com';
   const $=id=>document.getElementById(id);
   function addButton(){
     const modal=$('ftGateModal');
@@ -16,7 +16,6 @@
   }
   function setStatus(msg){const s=$('ftGateStatus');if(s)s.textContent=msg||''}
   async function googleLogin(){
-    if(!CLIENT_ID){setStatus('Login com Google ainda não foi configurado.');return}
     setStatus('Abrindo login do Google…');
     try{
       await loadGIS();
