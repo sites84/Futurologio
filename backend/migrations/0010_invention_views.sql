@@ -1,0 +1,10 @@
+-- FUTUROLOGIO™ invention view counting
+CREATE TABLE IF NOT EXISTS INVENTION_VIEWS (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  invention_id INTEGER NOT NULL,
+  visitor_id TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (invention_id) REFERENCES INVENTIONS(id) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS idx_invention_views_invention ON INVENTION_VIEWS(invention_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_invention_views_visitor ON INVENTION_VIEWS(visitor_id, created_at DESC);
