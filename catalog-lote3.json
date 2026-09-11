@@ -1,0 +1,19 @@
+[
+  {
+    "id": "lote3-001",
+    "name": "O CERTIFICADOR DE DESCONEXÃO GENUÍNA",
+    "what": "Uma pulseira de praia/camping que monitora em tempo real quantas vezes o usuário \"só vai checar uma coisinha rápida\" no celular durante as férias, emitindo um relatório final impresso que desmonta publicamente a alegação de \"fui desconectar de verdade\" feita depois, no jantar de família.",
+    "realTech": "Pulseiras de monitoramento de tela (screen time tracking), sensores de proximidade Bluetooth entre dispositivo e usuário, aplicativos de bem-estar digital corporativos.",
+    "specTech": "Detecção de \"microchecagens\" (menos de 8 segundos de tela) através de padrão de movimento de pulso combinado a proximidade do celular, diferenciando isso de uso legítimo prolongado.",
+    "inventedTech": "O \"Certificado de Desconexão Real\", documento impresso ao fim da viagem com selo de autenticidade (tipo diploma), que classifica o usuário em categorias como \"Desconectado Genuíno\", \"Desconectado de Fachada\" ou \"Trabalhou Escondido no Banheiro da Pousada\".",
+    "build": "Pulseira com sensor de proximidade Bluetooth de baixo consumo, acelerômetro para detectar gesto de \"pegar o celular\", sincronizada a um aplicativo que gera, ao fim da viagem, um PDF/impresso estilizado como certificado emoldurável.",
+    "uses": "Pessoas que postam \"modo avião ativado\" nas redes enquanto checam e-mail escondido no banheiro. Famílias que querem provar, com dados, qual membro realmente descansou nas férias coletivas.",
+    "dangers": "Usuários classificados como \"Trabalhou Escondido no Banheiro\" tendem a contestar a metodologia do dispositivo com veemência desproporcional ao tamanho do problema, o que os técnicos já apelidam de \"Estágio de Negação Estatística\".",
+    "curiosity": "Fato Real: Pesquisas em psicologia organizacional mostram que a incapacidade de se desconectar do trabalho durante férias está associada a maior exaustão emocional e menor recuperação percebida, tema estudado sob o conceito de \"detachment psicológico\" no trabalho. Fato Inventado: O recorde de microchecagens em uma única viagem de sete dias foi 312, pertencente a um \"consultor de estratégia\" que classificou o resultado como \"margem de erro do aparelho\".",
+    "tests": "O voluntário, autodeclarado \"mestre da desconexão\", recebeu certificado de \"Desconectado de Fachada\" com 89 microchecagens em cinco dias de praia. Ele pediu recontagem. O número, na segunda contagem, subiu para 91, porque ele checou o celular enquanto discutia o resultado.",
+    "category": "Viagem",
+    "readiness": "Não informado no lote",
+    "year": "Não informado no lote",
+    "patent": "Não informado no lote"
+  }
+]
