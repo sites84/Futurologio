@@ -23,7 +23,46 @@ async function upload(file,st){const n=dbId();if(!n||!token())return;if(!/^image
 async function remove(st){const n=dbId();if(!n||!token())return;if(!confirm('Apagar a foto desta invenção?'))return;st.textContent='APAGANDO…';st.className='v4status';try{const r=await fetch(API+'/api/invention-image/'+n,{method:'DELETE',headers:{Authorization:'Bearer '+token()}});const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||('Falha ao apagar ('+r.status+').'));const p=current();if(p)delete p.image_url;st.textContent='FOTO APAGADA. Agora envie outra.';st.className='v4status ok';await render(true)}catch(e){st.textContent=e.message||'Falha ao apagar a foto.';st.className='v4status err'}}
 function share(){const old=document.getElementById('shareBtn');if(!old)return;let box=document.getElementById('v4share');if(!box){box=document.createElement('details');box.id='v4share';box.className='v4share';old.replaceWith(box);box.innerHTML='<summary>↗ Compartilhar invenção</summary><div class="grid"><a class="wa" target="_blank" rel="noopener">WhatsApp</a><a class="fb" target="_blank" rel="noopener">Facebook</a><a class="x" target="_blank" rel="noopener">X</a><a class="th" target="_blank" rel="noopener">Threads</a><a class="ig" target="_blank" rel="noopener">Instagram</a><button class="copy" type="button">Copiar link</button></div>';box.querySelector('.copy').onclick=async()=>{const u=shareUrl();try{await navigator.clipboard.writeText(u);alert('Link copiado.')}catch{prompt('Copie o link:',u)}}}const u=shareUrl(),t=encodeURIComponent((current()?.name||'Invenção FUTUROLOGIO™')+' — uma invenção que não existe. FUTUROLOGIO™');box.querySelector('.wa').href='https://wa.me/?text='+t+'%20'+encodeURIComponent(u);box.querySelector('.fb').href='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(u);box.querySelector('.x').href='https://twitter.com/intent/tweet?text='+t+'&url='+encodeURIComponent(u);box.querySelector('.th').href='https://www.threads.net/intent/post?text='+encodeURIComponent(t+' '+u);box.querySelector('.ig').href='https://www.instagram.com/'}
 function shareUrl(){const n=dbId(),p=current();if(n){const u=new URL(location.href);u.searchParams.set('db_invention',String(n));if(p?.id)u.searchParams.set('invention',String(p.id));return u.toString()}return location.href}
-function sanitize(){const x=document.getElementById('futuroPromptText');if(x)x.textContent=x.textContent.replace(/Mad Magazine/gi,'satirical magazine illustration').replace(/Mad/gi,'satirical')}
+function imagePrompt(){
+ const p=current()||{};
+ const name=String(p.name||document.getElementById('name')?.textContent||'NOME DO PRODUTO').trim();
+ const desc=String(p.description||p.what||p.funcao||p.function||p.how_it_works||'').trim();
+ return `Create a single horizontal 16:9 promotional illustration for the fictional futuristic product "${name}" from FUTUROLOGIO™.
+
+Show the product clearly working in a chaotic, extremely funny and absurd situation. The product must be the absolute visual focus, fully visible, large, detailed, and immediately understandable. Show a main character actively using the product in an exaggerated ridiculous situation${desc?`, based on this product concept: ${desc}`:''}, surrounded by secondary characters reacting with shock, fear, disgust, confusion or exaggerated laughter.
+
+VISUAL STYLE:
+Satirical futuristic magazine advertisement mixed with gritty cyberpunk comic-book illustration and graphic-novel aesthetics. Grotesque extreme caricature, hyper-detailed cartoon rendering, exaggerated anatomy and facial expressions, unsettling but humorous details, dirty urban-futuristic atmosphere, dramatic perspective, dense composition and visual storytelling.
+
+CHARACTERS:
+The main character should have an extremely exaggerated manic expression: huge bloodshot eyes, dilated pupils, crooked teeth, enormous disturbing grin, sweaty greasy skin, visible pores, wrinkles, facial tension and dripping sweat. Secondary characters should have equally exaggerated reactions, with distorted faces, bulging eyes, open mouths, panic and disbelief.
+
+PRODUCT DESIGN:
+The fictional product must look like an absurd but believable piece of futuristic technology. Sleek polished materials, metallic surfaces, transparent components, glowing neon LEDs, holographic interfaces, fiber-optic cables, illuminated buttons, futuristic displays and intricate mechanical details. Make the product visually impressive and unmistakably functional.
+
+ADVERTISING COMPOSITION:
+Design the scene like an overloaded satirical magazine advertisement. Include the exact product name "${name}" prominently and clearly, plus the exact brand name "FUTUROLOGIO™". Add humorous Portuguese advertising slogans, warning signs, technical diagrams, holographic statistics, product feature panels, exaggerated labels, comic sound effects and small visual jokes integrated naturally into the environment.
+
+COLOR AND LIGHTING:
+Strong neon cyan, electric blue, magenta, hot pink and purple accents against dark industrial surroundings. Cinematic lighting, glowing neon reflections, deep shadows, dramatic rim lighting, volumetric light, atmospheric haze and strong contrast.
+
+COMPOSITION:
+Extremely detailed, visually chaotic but carefully organized. The main product occupies a prominent central or foreground position. The main character interacts directly with it. Secondary characters and environmental jokes fill the background without competing with the product. Keep the product, product name, FUTUROLOGIO™ logo and all important text safely inside the margins.
+
+MOOD:
+Absurd, grotesque, disturbing, ridiculous, satirical and extremely funny, as if a dystopian technology company created the world's most unnecessary invention.
+
+IMPORTANT:
+No photorealistic human photography.
+No anime.
+No minimalist design.
+No generic stock-photo aesthetic.
+No clean corporate advertising.
+No realistic conventional product photography.
+Use illustrated comic-book rendering throughout.
+16:9 horizontal composition.`;
+}
+function sanitize(){const x=document.getElementById('futuroPromptText');if(!x)return;const prompt=imagePrompt();if(x.value!==prompt)x.value=prompt;x.textContent=prompt}
 async function render(){const card=document.querySelector('.game-image-card'),p=current();if(!card||!p)return;cleanOld();const src=await getImage();if(current()!==p)return;card.querySelectorAll(':scope > img').forEach(x=>x.remove());let ph=card.querySelector('.game-image-placeholder');if(src){ph?.remove();const img=document.createElement('img');img.src=src+'?v='+Date.now();img.alt=p.name||'Imagem da invenção';img.style.cssText='width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:10px;cursor:zoom-in';img.onclick=()=>full(img.currentSrc||img.src,img.alt);card.prepend(img);card.querySelector('.game-image-meta b')?.replaceChildren(document.createTextNode('CLIQUE PARA AMPLIAR'));controls(true)}else{if(!ph){ph=document.createElement('div');card.prepend(ph)}ph.className='game-image-placeholder';ph.innerHTML='<div><strong>VISUALIZAÇÃO DA INVENÇÃO</strong><span>Crie a imagem na IA de sua preferência usando o prompt abaixo e envie o arquivo aqui.</span></div>';card.querySelector('.game-image-meta b')?.replaceChildren(document.createTextNode('AGUARDANDO IMAGEM'));controls(false)}sanitize();share()}
 let last='';function tick(){const r=document.getElementById('result');if(!r||r.classList.contains('hidden'))return;const key=(document.getElementById('name')?.textContent||'')+'|'+dbId();if(key!==last){last=key;render()}else{sanitize();share()}}setTimeout(tick,700);setTimeout(tick,1500);setInterval(tick,1200);
 css();
