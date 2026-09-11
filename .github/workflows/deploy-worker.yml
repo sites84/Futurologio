@@ -82,6 +82,8 @@ jobs:
           node backend/patch-image-routes.mjs
           node backend/patch-share-preview.mjs
           node backend/patch-avatar-routes.mjs
+          node backend/patch-views-routes.mjs
+          node backend/patch-social-upgrades.mjs
           node --check backend/worker.js
 
       - name: Bootstrap standalone catalog file
