@@ -28,17 +28,24 @@ Show the invention actively doing something ridiculous, unexpected or completely
 Use physical comedy, absurd consequences, exaggerated reactions and dark humor.
 The scene should feel like a frame from a bizarre futuristic comedy movie rather than an infographic.
 
-BRAND:
+BRAND AND HUMOROUS TEXT:
 The word "FUTUROLOGIO™" must appear clearly and prominently as the main brand identity, integrated naturally into the product itself, a small illuminated logo, screen or physical branding.
 The brand must be easy to notice without covering the illustration.
 The product name "${name}" may appear ONCE as a small secondary product label integrated into the product.
 
+In addition to the FUTUROLOGIO™ brand and the product name, include EXACTLY THREE short humorous Portuguese advertising phrases.
+Each phrase must be very short, punchy and visually integrated into the scene.
+The three phrases should be different from one another and directly related to the absurd product or situation.
+Prefer dark humor, sarcasm, absurdity or ridiculous consequences.
+The phrases should support the joke, never explain the product.
+Keep each phrase to approximately 2–7 words.
+Do not create any other text.
+
 TEXT LIMIT — EXTREMELY IMPORTANT:
-Use very little text.
-Only allow:
+The image may contain ONLY:
 1. "FUTUROLOGIO™" as the main brand.
 2. "${name}" once as the product name.
-3. At most ONE very short humorous phrase if it genuinely improves the scene.
+3. EXACTLY THREE short humorous Portuguese phrases as described above.
 
 NO paragraphs.
 NO text blocks.
@@ -50,25 +57,30 @@ NO diagrams.
 NO statistics.
 NO warning boxes.
 NO price tags.
-NO multiple slogans.
+NO additional slogans beyond the three allowed phrases.
 NO magazine layout.
 NO feature lists.
 NO fake documentation.
 NO large advertising copy.
 NO crowded typography.
+Do not repeat any phrase.
+Do not fill empty areas with text.
 The illustration must remain visually dominant.
 
 COMPOSITION:
 Use a cinematic composition with the product in the foreground or central area.
 The main character interacts directly with it.
 Secondary characters remain in the background and reinforce the joke.
+Place the three short humorous phrases sparingly in natural locations, with generous empty space between them.
+Never create text panels or clusters.
 Leave generous visual breathing room around the characters and product.
 Do not fill empty areas with text, panels or decorative information.
 The image should feel rich because of the ENVIRONMENT, CHARACTERS, LIGHTING and PRODUCT DETAILS — not because of typography.
 
 HUMOR:
 Absurd, grotesque, sarcastic, dark and ridiculous.
-The joke must be understandable visually without needing to read text.
+The joke must be understandable visually even without reading the text.
+The three phrases should act only as small comedic accents.
 Think of an extremely expensive futuristic commercial advertising an invention that absolutely should never have been invented.
 
 COLOR AND LIGHTING:
@@ -90,9 +102,10 @@ No multiple panels.
 16:9 horizontal composition.
 One coherent cinematic scene.
 Product first.
-Comedy second.
+Visual comedy second.
 Characters third.
-Brand clearly visible.
+FUTUROLOGIO™ prominently visible.
+Exactly three short humorous phrases.
 Minimal text.
 Maximum visual storytelling.${desc?'\n\nPRODUCT CONCEPT:\n'+desc:''}`}
 window.FUTUROLOGIO_IMAGE_PROMPT=prompt;
