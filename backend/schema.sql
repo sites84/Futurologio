@@ -145,6 +145,16 @@ CREATE TABLE IF NOT EXISTS CREDIT_PURCHASES (
   FOREIGN KEY (user_id) REFERENCES USERS(id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS DAILY_CREDIT_MISSIONS (
+  user_id TEXT NOT NULL,
+  mission_date TEXT NOT NULL,
+  likes_rewarded INTEGER NOT NULL DEFAULT 0,
+  comment_rewarded INTEGER NOT NULL DEFAULT 0,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (user_id, mission_date),
+  FOREIGN KEY (user_id) REFERENCES USERS(id) ON DELETE CASCADE
+);
+
 CREATE INDEX IF NOT EXISTS idx_user_inventions_user ON USER_INVENTIONS(user_id, created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_invention_owners_user ON INVENTION_OWNERS(user_id, created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_invention_views_invention ON INVENTION_VIEWS(invention_id, created_at DESC);
@@ -153,3 +163,4 @@ CREATE INDEX IF NOT EXISTS idx_comments_invention ON COMMENTS(invention_id, crea
 CREATE INDEX IF NOT EXISTS idx_shares_user_date ON SHARES(user_id, created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_xp_events_user_date ON XP_EVENTS(user_id, event_date);
 CREATE INDEX IF NOT EXISTS idx_inventions_category ON INVENTIONS(category);
+CREATE INDEX IF NOT EXISTS idx_daily_credit_missions_date ON DAILY_CREDIT_MISSIONS(mission_date);
