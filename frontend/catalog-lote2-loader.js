@@ -1,0 +1,6 @@
+(()=>{'use strict';
+const FILES=['./catalog-lote2-01-10.json.gz.b64'];
+const KEY={i:'id',n:'name',w:'what',r:'realTech',s:'specTech',v:'inventedTech',b:'build',u:'uses',d:'dangers',c:'curiosity',t:'tests',g:'category',R:'readiness',y:'year',p:'patent'};
+function b64bytes(s){const bin=atob(s.replace(/\s+/g,''));const a=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)a[i]=bin.charCodeAt(i);return a}
+async function decode(s){const ds=new DecompressionStream('gzip');const stream=new Blob([b64bytes(s)]).stream().pipeThrough(ds);return JSON.parse(await new Response(stream).text())}
+async function load(){try{const batches=await Promise.all(FILES.map(f=>fetch(f,{cache:'no-store'}).then(r=>{if(!r.ok)throw Error(f+' '+r.status);return r.text()}).then(decode)));const additions=batches.flat().map(x=>{const p={};Object.keys(x).forEach(k=>p[KEY[k]||k]=x[k]);return p});const merge=()=>{const old=Array.isArray(window.FUTUROLOGIO_PRODUCTS)?window.FUTUROLOGIO_PRODUCTS:[];const ids=new Set(old.map(x=>String(x.id)));window.FUTUROLOGIO_PRODUCTS=old.concat(additions.filter(x=>!ids.has(String(x.id))))};merge();window.FUTUROLOGIO_CATALOG_LOTE2_READY=true;setInterval(merge,1000);console.log('FUTUROLOGIO lote 2 carregado:',additions.length,'produtos') }catch(e){console.error('FUTUROLOGIO lote 2',e)}}load()})();
