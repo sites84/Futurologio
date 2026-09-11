@@ -1,7 +1,7 @@
 (()=>{'use strict';
 const PARTS=['./catalog-lote2-01a.b64','./catalog-lote2-01b.b64'];
 const FILES=Array.from({length:18},(_,i)=>`./catalog-lote2-${String(i+2).padStart(2,'0')}.b64`);
-const EXTRAS=['./catalog-lote3.json','./catalog-lote4.json','./catalog-lote5.json','./catalog-lote6.json','./catalog-lote7.json','./catalog-lote8.json'];
+const EXTRAS=['./catalog-lote3.json','./catalog-lote4.json','./catalog-lote5.json','./catalog-lote6.json','./catalog-lote7.json','./catalog-lote8.json','./catalog-lote9.json'];
 function b64bytes(s){const bin=atob(s.replace(/\s+/g,''));const a=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)a[i]=bin.charCodeAt(i);return a}
 async function text(f){const r=await fetch(f,{cache:'no-store'});if(!r.ok)throw Error(f+' '+r.status);return r.text()}
 async function decode(s){const ds=new DecompressionStream('gzip');const stream=new Blob([b64bytes(s)]).stream().pipeThrough(ds);return JSON.parse(await new Response(stream).text())}
