@@ -110,5 +110,6 @@ Minimal text.
 Maximum visual storytelling.${desc?'\n\nPRODUCT CONCEPT:\n'+desc:''}`}
 window.FUTUROLOGIO_IMAGE_PROMPT=prompt;
 function apply(){const x=document.getElementById('futuroPromptText');if(!x)return;const v=prompt();if(x.value!==v)x.value=v;x.textContent=v}
+window.FUTUROLOGIO_REFRESH_PROMPT=apply;
 setTimeout(apply,50);setTimeout(apply,200);setInterval(apply,100);
 })();
