@@ -1,1 +1,14 @@
-PLACEHOLDER
+[
+  {
+    "what": "Um microfone de mesa que analisa a curva de entonação da frase “tá bom” e calcula, em decibéis de ressentimento, o quanto ela significa exatamente o oposto. Existe porque nenhum casal no histórico da civilização jamais resolveu um “tá bom, faz o que você quiser” sem consequências posteriores.",
+    "realTech": "Análise prosódica de voz, softwares de detecção de sarcasmo em call centers, sensores de estresse vocal usados em polígrafos modernos.",
+    "specTech": "Modelos de linguagem calibrados especificamente para dialetos conjugais regionais, capazes de diferenciar “tá bom” de aceitação real e “tá bom” de sentença capital.",
+    "inventedTech": "O “Termômetro de Rancor Retroativo”, que soma o “tá bom” atual a todos os “tá bom” anteriores do casal, projetando a data estimada da próxima discussão sobre “aquilo lá de 2019”.",
+    "build": "Um objeto de mesa discreto, parecido com uma pedra polida, com microfone omnidirecional e um pequeno mostrador analógico que se move de “Aceitação Genuína” a “Guerra Fria Iminente”.",
+    "uses": "Casais que discordam sobre para onde ir no fim de semana e fingem que não. Terapeutas de casal que precisam de prova material antes da sessão.",
+    "dangers": "O aparelho, quando calibrado mal, tende a marcar “Guerra Fria Iminente” em 100% dos “tá bom” registrados em qualquer relacionamento com mais de dois anos, o que os fabricantes já classificam internamente como “funcionamento normal”.",
+    "curiosity": "Fato Real: Estudos do psicólogo John Gottman sobre casais mostram que o tom emocional de uma frase prediz o desfecho de uma discussão com mais precisão do que o conteúdo literal das palavras. Fato Inventado: O recorde de rancor acumulado em um único “tá bom” foi de 14 anos de casamento condensados em 1,3 segundos de fala.",
+    "tests": "O casal voluntário usou o aparelho durante um jantar. Ele marcou “Guerra Fria Iminente” quatro vezes antes da entrada ser servida. Os dois concordaram em desligá-lo — a primeira concordância genuína registrada da noite.",
+    "id": "lote3-081", "name": "O DETECTOR DE “TÁ BOM” PASSIVO-AGRESSIVO", "category": "RELACIONAMENTOS", "readiness": "Não informado no lote", "year": "Não informado no lote", "patent": "Não informado no lote"
+  }
+]
