@@ -1,0 +1,21 @@
+name: Inspect lote 2 catalog
+on:
+  push:
+    branches: [main]
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decode and inspect lote 2
+        run: |
+          node <<'NODE'
+          const fs=require('fs'),zlib=require('zlib');
+          const files=['catalog-lote2-01a.b64','catalog-lote2-01b.b64',...Array.from({length:18},(_,i)=>`catalog-lote2-${String(i+2).padStart(2,'0')}.b64`)];
+          const out=[];
+          const raw=fs.readFileSync(files[0],'utf8')+fs.readFileSync(files[1],'utf8');
+          out.push(...JSON.parse(zlib.gunzipSync(Buffer.from(raw.replace(/\s+/g,''),'base64')).toString('utf8')));
+          for(const f of files.slice(2)) out.push(...JSON.parse(zlib.gunzipSync(Buffer.from(fs.readFileSync(f,'utf8').replace(/\s+/g,''),'base64')).toString('utf8')));
+          console.log('COUNT='+out.length);
+          for(const p of out) console.log(p.id+'\t'+p.name);
+          NODE
