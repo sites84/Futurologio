@@ -1,0 +1,2 @@
+-- FUTUROLOGIO™: missão diária de 3 compartilhamentos
+ALTER TABLE DAILY_CREDIT_MISSIONS ADD COLUMN share_rewarded INTEGER NOT NULL DEFAULT 0;
