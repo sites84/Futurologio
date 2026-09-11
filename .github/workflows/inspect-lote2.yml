@@ -11,11 +11,12 @@ jobs:
         run: |
           node <<'NODE'
           const fs=require('fs'),zlib=require('zlib');
+          const part=f=>Buffer.from(fs.readFileSync(f,'utf8').replace(/\s+/g,''),'base64');
           const files=['catalog-lote2-01a.b64','catalog-lote2-01b.b64',...Array.from({length:18},(_,i)=>`catalog-lote2-${String(i+2).padStart(2,'0')}.b64`)];
           const out=[];
-          const raw=fs.readFileSync(files[0],'utf8')+fs.readFileSync(files[1],'utf8');
-          out.push(...JSON.parse(zlib.gunzipSync(Buffer.from(raw.replace(/\s+/g,''),'base64')).toString('utf8')));
-          for(const f of files.slice(2)) out.push(...JSON.parse(zlib.gunzipSync(Buffer.from(fs.readFileSync(f,'utf8').replace(/\s+/g,''),'base64')).toString('utf8')));
+          const first=Buffer.concat([part(files[0]),part(files[1])]);
+          out.push(...JSON.parse(zlib.gunzipSync(first).toString('utf8')));
+          for(const f of files.slice(2)) out.push(...JSON.parse(zlib.gunzipSync(part(f)).toString('utf8')));
           console.log('COUNT='+out.length);
           for(const p of out) console.log(p.id+'\t'+p.name);
           NODE
