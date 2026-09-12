@@ -35,6 +35,8 @@ jobs:
           node --check frontend/game-ui.js
           node --check frontend/home-social.js
           node --check frontend/product-social.js
+          node --check frontend/product-social-v1.js
+          node --check frontend/credits-v2.js
           node --check frontend/welcome-and-sound.js
           node --check frontend/recent-creations-v2.js
           node --check frontend/profile-nav-v2.js
