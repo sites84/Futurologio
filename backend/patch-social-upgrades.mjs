@@ -8,10 +8,10 @@ if(s.includes(xpGate) && !s.includes("if((type==='like'||type==='share'||type===
   s=s.replace(xpGate,"if((type==='like'||type==='share'||type==='upload')&&refType&&refId){");
 }
 
-const ownerMarker="if(path==='/api/public-profile'&&request.method==='GET')";
+const ownerMarker="if(path==='/api/profile'&&request.method==='GET')";
 if(!s.includes("path==='/api/public-invention'&&request.method==='GET'")){
   const route=`if(path==='/api/public-invention'&&request.method==='GET'){const id=String(url.searchParams.get('id')||'').trim();if(!id)return json({ok:false,error:'Invenção não informada'},400);const row=await env.DB.prepare('SELECT i.id,o.user_id,u.username,u.avatar FROM INVENTIONS i JOIN INVENTION_OWNERS o ON o.invention_id=i.id JOIN USERS u ON u.id=o.user_id WHERE i.id=? ORDER BY o.created_at ASC LIMIT 1').bind(id).first();if(!row)return json({ok:false,error:'Invenção não encontrada'},404);return json({ok:true,invention:{id:row.id,creator_id:row.user_id,username:row.username,avatar:row.avatar}})}\n`;
-  if(!s.includes(ownerMarker))throw new Error('Public profile route marker not found');
+  if(!s.includes(ownerMarker))throw new Error('Profile route marker not found');
   s=s.replace(ownerMarker,route+ownerMarker);
 }
 
