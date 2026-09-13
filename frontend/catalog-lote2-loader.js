@@ -2,6 +2,7 @@
 const CATS=['Casa','Comida & Cozinha','Transporte','Moda','Animais','Tecnologia','Mente & Comportamento','Meio Ambiente','Escola & Trabalho','Espaço','Sem sentido','Tecnologia do futuro','Indústria','Esportes','Entretenimento','Dinheiro & Negócios','Cidade','Agricultura','Viagem','Comunicação','Energia','Tempo & Clima','Objetos pessoais','Lazer','Museu','Bizarro ou Nojento'];
 const MAP={'Relacionamento':'Mente & Comportamento','Trabalho':'Escola & Trabalho','Escritório':'Escola & Trabalho','Escola':'Escola & Trabalho','Saúde':'Casa','Banheiro':'Casa','Quarto':'Casa','Cozinha':'Comida & Cozinha','Pets':'Animais','Condomínio':'Cidade'};
 const VOL1B64=Array.from({length:6},(_,i)=>`./catalog-vol1-${String(i+1).padStart(2,'0')}.b64`);
+const EXTRA_B64=['./catalog-lote3.b64','./catalog-lote4.b64'];
 const EXTRAS=['./catalog-lote3.json','./catalog-lote4.json','./catalog-lote5.json','./catalog-lote6.json','./catalog-lote7.json','./catalog-lote8.json','./catalog-lote9.json','./catalog-lote10.json','./catalog-lote11.json','./catalog-lote12.json','./catalog-lote13.json','./catalog-lote14.json','./catalog-lote15.json','./catalog-lote16.json','./catalog-lote16-02.json','./catalog-lote16-03.json','./catalog-lote16-04.json','./catalog-lote16-05.json','./catalog-lote16-06.json','./catalog-lote16-07.json','./catalog-lote17.json','./catalog-lote17-02.json','./catalog-lote17-03.json','./catalog-lote17-04.json'];
 const PARTS=['./catalog-lote2-01a.b64','./catalog-lote2-01b.b64'];
 const FILES=Array.from({length:18},(_,i)=>`./catalog-lote2-${String(i+2).padStart(2,'0')}.b64`);
@@ -16,15 +17,17 @@ return added}
 function b64bytes(s){const bin=atob(String(s||'').replace(/\s+/g,''));const a=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)a[i]=bin.charCodeAt(i);return a}
 async function decode(s){const ds=new DecompressionStream('gzip');const stream=new Blob([b64bytes(s)]).stream().pipeThrough(ds);return JSON.parse(await new Response(stream).text())}
 async function loadJson(f){try{const r=await fetch(f,{cache:'no-store'});if(!r.ok)return [];const d=await r.json();return Array.isArray(d)?d:[]}catch{return []}}
+async function loadB64File(f){try{const t=await fetch(f,{cache:'no-store'}).then(r=>r.ok?r.text():'');if(!t)return [];return await decode(t)||[]}catch{return []}}
 async function loadB64Join(files){try{const parts=await Promise.all(files.map(f=>fetch(f,{cache:'no-store'}).then(r=>r.ok?r.text():'')));if(!parts.every(Boolean))return [];return await decode(parts.join(''))||[]}catch{return []}}
 async function loadLote2(){const out=[];try{const first=await Promise.all(PARTS.map(f=>fetch(f,{cache:'no-store'}).then(r=>r.ok?r.text():'')));if(first.every(Boolean)){try{out.push(...(await decode(first.join(''))||[]))}catch{}}}catch{}
 for(const f of FILES){try{const t=await fetch(f,{cache:'no-store'}).then(r=>r.ok?r.text():'');if(!t)continue;out.push(...(await decode(t)||[]))}catch{}}
 return out}
 async function load(){const extras=(await Promise.all(EXTRAS.map(loadJson))).flat();
+const extraB64=(await Promise.all(EXTRA_B64.map(loadB64File))).flat();
 const vol1=await loadB64Join(VOL1B64);
 const lote2=await loadLote2();
-const added=merge(extras.concat(vol1,lote2));
+const added=merge(extras.concat(extraB64,vol1,lote2));
 window.FUTUROLOGIO_CATALOG_LOTE2_READY=true;
-console.log('FUTUROLOGIO catalogo unificado: +'+added+' extras, vol1='+vol1.length+', total '+(window.FUTUROLOGIO_PRODUCTS||[]).length);
-setInterval(()=>merge(extras.concat(vol1,lote2)),1500)}
+console.log('FUTUROLOGIO catalogo unificado: +'+added+' extras, extraB64='+extraB64.length+', vol1='+vol1.length+', total '+(window.FUTUROLOGIO_PRODUCTS||[]).length);
+setInterval(()=>merge(extras.concat(extraB64,vol1,lote2)),1500)}
 load()})();
