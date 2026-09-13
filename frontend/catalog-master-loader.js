@@ -1,0 +1,11 @@
+(()=>{'use strict';
+if(window.__FUTURO_CATALOG_MASTER_V1)return;window.__FUTURO_CATALOG_MASTER_V1=true;
+const CATS=['Casa','Comida & Cozinha','Transporte','Moda','Animais','Tecnologia','Mente & Comportamento','Meio Ambiente','Escola & Trabalho','Espaço','Sem sentido','Tecnologia do futuro','Indústria','Esportes','Entretenimento','Dinheiro & Negócios','Cidade','Agricultura','Viagem','Comunicação','Energia','Tempo & Clima','Objetos pessoais','Lazer','Museu','Bizarro ou Nojento'];
+const MAP={'CASA & VIDA DOMÉSTICA':'Casa','TRABALHO & ESCRITÓRIO':'Escola & Trabalho','TRANSPORTE & TRÂNSITO':'Transporte','RELACIONAMENTOS & FAMÍLIA':'Mente & Comportamento','SAÚDE & BEM-ESTAR':'Casa','TECNOLOGIA & FUTURO':'Tecnologia do futuro','VIZINHANÇA & CONVIVÊNCIA':'Cidade','ESCOLA & TRABALHO':'Escola & Trabalho'};
+const REQUIRED=['what','realTech','specTech','inventedTech','build','uses','dangers','curiosity','tests'];
+function txt(v){if(Array.isArray(v))return v.map(txt).join(' ');if(v&&typeof v==='object')return Object.values(v).map(txt).join(' ');return String(v??'').trim()}
+function norm(v){return txt(v).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^\w\s]/g,' ').replace(/\s+/g,' ').trim()}
+function clean(p){if(!p||!txt(p.id)||!txt(p.name))return null;const q={...p};q.name=txt(q.name);q.category=MAP[txt(q.category).toUpperCase()]||txt(q.category)||'Sem sentido';for(const f of REQUIRED)q[f]=txt(q[f]);return q}
+async function load(){try{const r=await fetch('./catalog.json?v=20260913',{cache:'no-store'});if(!r.ok)throw Error('catalog.json '+r.status);const data=await r.json();const list=Array.isArray(data)?data.map(clean).filter(Boolean):[];const byId=new Map();for(const p of list){const id=String(p.id);if(!byId.has(id)||JSON.stringify(p).length>JSON.stringify(byId.get(id)).length)byId.set(id,p)}window.FUTUROLOGIO_PRODUCTS=[...byId.values()];window.FUTUROLOGIO_CATALOG_UNION_COUNT=window.FUTUROLOGIO_PRODUCTS.length;window.FUTUROLOGIO_CATALOG_MASTER_READY=true;window.dispatchEvent(new Event('futuro-catalog-ready'));console.log('FUTUROLOGIO catálogo mestre carregado:',window.FUTUROLOGIO_PRODUCTS.length)}catch(e){console.error('FUTUROLOGIO catálogo mestre falhou',e);window.FUTUROLOGIO_PRODUCTS=[];window.FUTUROLOGIO_CATALOG_UNION_COUNT=0;window.dispatchEvent(new Event('futuro-catalog-ready'))}}
+load();
+})();
