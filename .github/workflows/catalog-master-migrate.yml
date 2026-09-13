@@ -14,6 +14,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Restore previous master as migration input
+        run: |
+          git show HEAD^:catalog.json > catalog.json
       - uses: actions/setup-python@v5
         with:
           python-version: '3.x'
