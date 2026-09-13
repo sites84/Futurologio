@@ -1,4 +1,5 @@
 (()=>{'use strict';if(window.__FUTURO_CREATION_CATALOG_V1)return;window.__FUTURO_CREATION_CATALOG_V1=true;
+const s=document.createElement('script');s.src='./catalog-lote18-loader.js?v=20260913r';document.head.appendChild(s);
 const REQUIRED=['what','realTech','specTech','inventedTech','build','uses','dangers','curiosity','tests'];
 const MIN={what:160,realTech:45,specTech:45,inventedTech:45,build:45,uses:30,dangers:40,curiosity:70,tests:70};
 const CATMAP={'CASA & VIDA DOMÉSTICA':'Casa','TRABALHO & ESCRITÓRIO':'Escola & Trabalho','TRANSPORTE & TRÂNSITO':'Transporte','RELACIONAMENTOS & FAMÍLIA':'Mente & Comportamento','TECNOLOGIA & FUTURO':'Tecnologia do futuro','SAÚDE & BEM-ESTAR':'Casa','COMIDA & RESTAURANTES':'Comida & Cozinha','EDUCAÇÃO & FACULDADE':'Escola & Trabalho','DINHEIRO & CONSUMISMO':'Dinheiro & Negócios','SOCIEDADE & BUROCRACIA':'Cidade','ACADEMIA & ESPORTE':'Esportes','LAZER & ENTRETENIMENTO':'Entretenimento','VIZINHANÇA & CONVIVÊNCIA':'Cidade','ANIMAIS & PETS':'Animais','VIAGENS & TURISMO':'Viagem'};
