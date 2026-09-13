@@ -88,6 +88,7 @@ jobs:
           node backend/patch-daily-credits.mjs
           node backend/patch-tester-unlimited.mjs
           node backend/patch-auth-robust.mjs
+          node backend/patch-catalog-upload-registration.mjs
           node --check backend/worker.js
 
       - name: Bootstrap standalone catalog file
