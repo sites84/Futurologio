@@ -1,0 +1,76 @@
+name: Catalog audit
+on:
+  push:
+    paths:
+      - 'catalog-*.json'
+      - 'catalog-*.b64'
+      - 'frontend/catalog-*.b64'
+      - '.github/workflows/catalog-audit-temp.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: Audit catalog
+        run: |
+          python3 - <<'PY'
+          import json,base64,re,glob
+          req=['name','what','realTech','specTech','inventedTech','build','uses','dangers','curiosity','tests','category']
+          items=[]
+          files=sorted(set(glob.glob('catalog-*.json')+glob.glob('catalog-*.b64')+glob.glob('frontend/catalog-*.b64')))
+          def add(obj,src):
+              if isinstance(obj,list):
+                  for x in obj:
+                      if isinstance(x,dict) and x.get('id'): items.append((x,src))
+              elif isinstance(obj,dict):
+                  if obj.get('id'): items.append((obj,src))
+                  elif isinstance(obj.get('content'),list): add(obj['content'],src)
+          for f in files:
+              try:
+                  raw=open(f,'rb').read()
+                  if f.endswith('.b64'):
+                      try: raw=base64.b64decode(raw,validate=False)
+                      except: continue
+                  txt=raw.decode('utf-8','ignore').strip()
+                  if txt.startswith('see-file') or txt=='PLACEHOLDER_WILL_FAIL': continue
+                  try: add(json.loads(txt),f)
+                  except Exception: pass
+              except Exception: pass
+          def num(x):
+              m=re.search(r'-(\d+)$',x.get('id',''))
+              return int(m.group(1)) if m else None
+          def norm(s): return re.sub(r'[^a-z0-9]+','',str(s or '').lower())
+          print('RAW_RECORDS',len(items))
+          print('UNIQUE_IDS',len({x.get('id') for x,_ in items}))
+          post=[(x,s) for x,s in items if (num(x) or 0)>139]
+          print('POST_139',len(post))
+          bad=[]
+          for x,s in post:
+              missing=[k for k in req if not str(x.get(k,'')).strip()]
+              generic=('dispositivo físico revolucionário focado na categoria' in x.get('what','').lower() or x.get('inventedTech','').strip()=='O Cristal de Modulação Comportamental do FUTUROLOGIO™ — capaz de absorver impulsos de vergonha alheia ou desespero biológico.' or x.get('build','').strip().startswith('Uma carcaça ergonômica de polímero aeroespacial que se prende ao corpo'))
+              if missing or generic: bad.append((x,s,missing,'TEMPLATE_GENERIC' if generic else 'MISSING_FIELD'))
+          print('INVALID_DESCRIPTION',len(bad))
+          for x,s,missing,reason in bad: print('BAD',x['id'],x.get('name'),reason,','.join(missing),s)
+          byname={}; bywhat={}; dup=[]
+          for x,s in items:
+              n=num(x) or 999999
+              for key,d,label in [(norm(x.get('name')),byname,'NAME'),(norm(x.get('what')),bywhat,'WHAT')]:
+                  if not key: continue
+                  if key in d:
+                      y,ys=d[key]
+                      if n>139 and x.get('id')!=y.get('id'):
+                          dup.append((x,s,y,ys,label))
+                      elif n<=(num(y) or 999999) and (num(y) or 0)>139:
+                          dup.append((y,ys,x,s,label))
+                  else: d[key]=(x,s)
+          seen=set(); out=[]
+          for x,s,y,ys,r in dup:
+              if x['id'] not in seen: seen.add(x['id']); out.append((x,s,y,ys,r))
+          print('DUPLICATES',len(out))
+          for x,s,y,ys,r in out: print('DUP',x['id'],x.get('name'),'=',y['id'],y.get('name'),r,s,'vs',ys)
+          PY
