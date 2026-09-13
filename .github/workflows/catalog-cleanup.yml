@@ -1,0 +1,59 @@
+name: Catalog cleanup
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Clean catalog
+        run: python3 scripts/clean_catalog.py
+
+      - name: Validate catalog and creation wiring
+        run: |
+          python3 - <<'PY'
+          import json, re, pathlib
+          p=pathlib.Path('catalog.json')
+          data=json.loads(p.read_text(encoding='utf-8'))
+          fields=['what','realTech','specTech','inventedTech','build','uses','dangers','curiosity','tests']
+          bad=[]
+          ids=[]
+          for x in data:
+              ids.append(str(x.get('id','')))
+              for f in fields:
+                  if len(str(x.get(f,'')).strip()) < 20:
+                      bad.append((x.get('id'),f))
+          assert len(ids)==len(set(ids)), 'duplicate ids remain'
+          assert not bad, bad[:10]
+          html=pathlib.Path('criar.html').read_text(encoding='utf-8')
+          loader=pathlib.Path('frontend/catalog-lote2-loader.js').read_text(encoding='utf-8')
+          assert 'catalog.json' in html, 'creation page no longer references canonical catalog'
+          assert 'window.FUTUROLOGIO_PRODUCTS' in loader, 'catalog loader wiring missing'
+          print('FINAL_CATALOG', len(data))
+          print('UNIQUE_IDS', len(set(ids)))
+          print('CREATION_WIRING_OK')
+          PY
+
+      - name: Commit cleaned catalog
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add catalog.json catalog-cleanup-report.json
+          if git diff --cached --quiet; then
+            echo 'NO_CATALOG_CHANGES'
+          else
+            git commit -m 'catalog: remove incomplete and duplicate products'
+            git push
+          fi
