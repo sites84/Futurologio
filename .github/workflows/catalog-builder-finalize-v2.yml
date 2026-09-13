@@ -1,0 +1,62 @@
+name: Finalize catalog Builder import v2
+on:
+  workflow_run:
+    workflows: [Build catalog master]
+    types: [completed]
+permissions:
+  contents: write
+jobs:
+  finalize:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Merge and validate
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root=Path('.')
+          catalog=json.loads((root/'catalog.json').read_text(encoding='utf-8'))
+          incoming=json.loads((root/'frontend/catalog-builder-import-193-196.json').read_text(encoding='utf-8'))
+          by_id={str(p.get('id')):p for p in catalog if isinstance(p,dict) and p.get('id')}
+          for p in incoming:
+              if str(p.get('id')) in {'produto-193','produto-194','produto-195','produto-196'}: by_id[str(p['id'])]=p
+          for path in ['frontend/catalog-lote17-03.json','frontend/catalog-lote17-04.json']:
+              src=json.loads((root/path).read_text(encoding='utf-8'))
+              if isinstance(src,dict): src=[src]
+              for p in src:
+                  if str(p.get('id')) in {'produto-188','produto-189','produto-190'}: by_id[str(p['id'])]=p
+          def key(p):
+              try: return int(str(p.get('id','')).rsplit('-',1)[1])
+              except: return 10**9
+          final=sorted(by_id.values(),key=key)
+          ids=[p.get('id') for p in final]
+          names={p.get('id'):p.get('name') for p in final}
+          assert len(final)==196 and len(ids)==len(set(ids))
+          for i in range(156,197): assert f'produto-{i}' in ids
+          assert names['produto-188']=='PEDAL DE URGÊNCIA FICTÍCIA™'
+          assert names['produto-189']=='VÁLVULA DE RISO SECO™'
+          assert names['produto-190']=='METRÔNOMO DE DESVIO™'
+          assert names['produto-193']=='BLOQUEADOR DE DESPEDIDA™'
+          assert names['produto-194']=='FILTRO DE DEDADA TRAIDORA™'
+          assert names['produto-195']=='GUILHOTINA CARBOIDRATO™'
+          assert names['produto-196']=='RADAR DE LUTO ALHEIO™'
+          (root/'catalog.json').write_text(json.dumps(final,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          report=json.loads((root/'catalog-master-migration-report.json').read_text(encoding='utf-8'))
+          report.update({'final_records':196,'new_id_range':[156,196],'missing_new_ids':[]})
+          (root/'catalog-master-migration-report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          print('CATALOG OK: 196 produtos; IDs 156-196 completos; 188-190 canonizados; 193-196 integrados.')
+          PY
+      - name: Commit master
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add catalog.json catalog-master-migration-report.json
+          git commit -m 'catalog-master: finalize 193-196 [catalog-master]' || exit 0
+          git push
