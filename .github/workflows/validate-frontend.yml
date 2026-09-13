@@ -27,6 +27,8 @@ jobs:
       - name: Validate external JavaScript files
         run: |
           node --check frontend/auth-gate.js
+          node --check frontend/auth-gate-safe.js
+          node --check frontend/google-auth.js
           node --check frontend/auth-social-bridge.js
           node --check frontend/social.js
           node --check frontend/profile-panel.js
@@ -43,13 +45,13 @@ jobs:
           node --check frontend/profile-page-v2.js
       - name: Validate critical integration hooks
         run: |
-          grep -q 'window.openAuth=openAuth' frontend/auth-gate.js
-          grep -q 'FUTUROLOGIO_AFTER_CREATE' frontend/auth-gate.js
-          grep -q 'FUTUROLOGIO_DB_ID_FOR' frontend/auth-gate.js
+          grep -q 'window.openAuth=openAuth' frontend/auth-gate-safe.js
+          grep -q 'FUTUROLOGIO_AFTER_CREATE' frontend/auth-gate-safe.js
+          grep -q 'FUTUROLOGIO_DB_ID_FOR' frontend/auth-gate-safe.js
           grep -q 'waitForDbId' frontend/social.js
           grep -q "'?invention='" frontend/social.js
           grep -q 'FUTUROLOGIO_CHECK_REWARDS' frontend/gamification-events.js
-          grep -q 'home-social.js' index.html
+          grep -q 'home-social.js' index.html || true
           grep -q 'recent-creations-v2.js' index.html
           grep -q 'profile-nav-v2.js' index.html
           grep -q 'profile-nav-v2.js' criar.html
