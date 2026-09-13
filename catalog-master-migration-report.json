@@ -1,7 +1,7 @@
 {
-  "raw_records_seen": 389,
-  "final_records": 71,
-  "removed_records": 181,
+  "raw_records_seen": 305,
+  "final_records": 126,
+  "removed_records": 122,
   "source_files_seen": [
     "catalog-lote10.json",
     "catalog-lote11.json",
@@ -71,7 +71,7 @@
     "frontend/catalog-lote9.json"
   ],
   "id_range": [
-    1000000000,
-    1000000000
+    1,
+    192
   ]
 }
