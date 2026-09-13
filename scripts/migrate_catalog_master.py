@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-import base64, gzip, json, re
+import base64, gzip, json, re, subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'catalog.json'
 REPORT = ROOT / 'catalog-master-migration-report.json'
 FIELDS = ['what','realTech','specTech','inventedTech','build','uses','dangers','curiosity','tests']
+BASE_COMMIT = '2470683e2ce2fdd8be369ec26590075dcf63809'
 
 def text(v):
     if isinstance(v,list): return ' '.join(text(x) for x in v)
@@ -33,14 +34,20 @@ def load_b64_text(raw):
     if isinstance(x,dict) and x.get('id') and x.get('name'): return [x]
     return []
 
-def gather():
+def historical_base():
+    try:
+        raw=subprocess.check_output(['git','show',f'{BASE_COMMIT}:catalog.json'],cwd=ROOT,text=True)
+        d=json.loads(raw)
+        return d if isinstance(d,list) else []
+    except Exception:
+        return []
+
+def gather_new():
     records=[]; sources=[]
-    paths=list(ROOT.glob('catalog-*.json'))+list((ROOT/'frontend').glob('catalog-*.json'))
+    paths=list((ROOT/'frontend').glob('catalog-*.json'))
     for p in sorted(set(paths)):
         a=load_json(p)
         if a: records += a; sources.append(str(p.relative_to(ROOT)))
-    a=load_json(ROOT/'catalog.json')
-    if a: records += a; sources.append('catalog.json')
     groups=[[ROOT/f'catalog-vol1-{i:02d}.b64' for i in range(1,7)], [ROOT/'catalog-lote2-01a.b64',ROOT/'catalog-lote2-01b.b64']]
     groups += [[ROOT/f'catalog-lote2-{i:02d}.b64'] for i in range(2,20)]
     groups += [[ROOT/x] for x in ('catalog-lote3.b64','catalog-lote18.b64','catalog-lote19.b64')]
@@ -53,15 +60,22 @@ def gather():
         except Exception: pass
     return records,sorted(set(sources))
 
-def quality_score(p):
-    return sum(len(text(p.get(f))) for f in FIELDS) + len(text(p.get('name')))+len(text(p.get('category')))
+def score(p):
+    return sum(len(text(p.get(f))) for f in FIELDS)+len(text(p.get('name')))+len(text(p.get('category')))
 
 def main():
-    raw,sources=gather(); by_id={}
-    for p in raw:
+    base=historical_base()
+    new_records,sources=gather_new()
+    by_id={text(p.get('id')):p for p in base if isinstance(p,dict) and text(p.get('id'))}
+    candidates={}
+    for p in new_records:
         if not isinstance(p,dict) or not text(p.get('id')) or not text(p.get('name')): continue
-        sid=text(p.get('id'))
-        if sid not in by_id or quality_score(p)>quality_score(by_id[sid]): by_id[sid]=p
+        n=nid(p.get('id'))
+        if 156 <= n <= 192:
+            sid=text(p.get('id'))
+            if sid not in candidates or score(p)>score(candidates[sid]): candidates[sid]=p
+    for sid,p in candidates.items():
+        by_id[sid]=p
     final=[]
     for p in sorted(by_id.values(),key=lambda x:(nid(x.get('id')),text(x.get('id')))):
         q=dict(p)
@@ -69,8 +83,8 @@ def main():
         q['name']=text(q.get('name')); q['category']=text(q.get('category'))
         final.append(q)
     OUT.write_text(json.dumps(final,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-    ids=[nid(x.get('id')) for x in final]; idset=set(ids)
-    report={'raw_records_seen':len(raw),'final_records':len(final),'removed_records':len(raw)-len(final),'source_files_seen':sources,'id_range':[min(ids),max(ids)] if ids else [],'missing_numeric_ids':[i for i in range(1,193) if i not in idset],'duplicate_ids_collapsed':len(raw)-len(by_id)}
+    ids=[nid(x.get('id')) for x in final]; new_ids=sorted(i for i in ids if 156<=i<=192)
+    report={'base_records':len(base),'new_records_seen':len(new_records),'new_records_selected':len(candidates),'final_records':len(final),'new_id_range':[min(new_ids),max(new_ids)] if new_ids else [],'missing_new_ids':[i for i in range(156,193) if i not in set(new_ids)],'source_files_seen':sources}
     REPORT.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     print(json.dumps(report,ensure_ascii=False))
 
