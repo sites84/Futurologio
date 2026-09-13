@@ -15,10 +15,10 @@ def text(v):
     return str(v or '').strip()
 
 def norm(v):
-    return re.sub(r'\\s+',' ',re.sub(r'[^\\w\\s]',' ',text(v).lower())).strip()
+    return re.sub(r'\s+',' ',re.sub(r'[^\w\s]',' ',text(v).lower())).strip()
 
 def nid(v):
-    m=re.search(r'(?:^|[-_])(\\d+)$',text(v))
+    m=re.search(r'(?:^|[-_])(\d+)$',text(v))
     return int(m.group(1)) if m else 10**9
 
 def valid(p):
@@ -34,15 +34,12 @@ def load_json(p):
         return d if isinstance(d,list) else []
     except Exception: return []
 
-def load_b64(p):
-    try:
-        raw=re.sub(r'\\s+','',p.read_text(encoding='utf-8'))
-        d=base64.b64decode(raw)
-        try: d=gzip.decompress(d)
-        except OSError: pass
-        x=json.loads(d.decode('utf-8'))
-        return x if isinstance(x,list) else []
-    except Exception: return []
+def load_b64_text(raw):
+    d=base64.b64decode(re.sub(r'\s+','',raw))
+    try: d=gzip.decompress(d)
+    except OSError: pass
+    x=json.loads(d.decode('utf-8'))
+    return x if isinstance(x,list) else []
 
 def gather():
     records=[]; sources=[]
@@ -58,18 +55,10 @@ def gather():
     for g in groups:
         if not all(p.exists() for p in g): continue
         try:
-            raw=''.join(p.read_text(encoding='utf-8') for p in g)
-            a=load_b64_text(raw)
+            a=load_b64_text(''.join(p.read_text(encoding='utf-8') for p in g))
             if a: records += a; sources += [str(p.relative_to(ROOT)) for p in g]
         except Exception: pass
     return records,sorted(set(sources))
-
-def load_b64_text(raw):
-    d=base64.b64decode(re.sub(r'\\s+','',raw))
-    try: d=gzip.decompress(d)
-    except OSError: pass
-    x=json.loads(d.decode('utf-8'))
-    return x if isinstance(x,list) else []
 
 def main():
     raw,sources=gather(); rejected=[]; by_id={}
