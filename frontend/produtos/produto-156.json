@@ -1,0 +1,14 @@
+{
+  "id": "produto-156",
+  "name": "TAPETE DE RECEPÇÃO EMOCIONAL (THRESHOLD COOLDOWN MAT™)",
+  "category": "CASA & VIDA DOMÉSTICA",
+  "what": "É um capacho grosso de borracha instalado na porta de entrada que usa sensores de pressão para detectar quando alguém parou por mais de oito segundos antes de destrancar a porta — sinal clássico de quem chegou em casa ainda processando uma briga, um dia ruim ou uma ligação de banco. Ao detectar a hesitação, o tapete libera uma névoa leve de lavanda sintética, toca um elevator jazz institucional e acende uma luz âmbar de 'zona neutra' embutida na soleira, dando à pessoa uma desculpa física para se recompor antes de entrar e fingir que está tudo bem.",
+  "realTech": "Sensores piezoelétricos de pressão sob a borracha, um difusor ultrassônico de aromas alimentado por pilha, um alto-falante piezo de baixo consumo e uma tira de LED âmbar controlada por um microcontrolador simples com temporizador.",
+  "specTech": "Versões futuras poderiam usar materiais sensíveis à condutância da pele para detectar o nível de cortisol de quem pisa no tapete, ajustando a intensidade da névoa e da música em tempo real conforme o estresse medido.",
+  "inventedTech": "Protocolo de Descompressão Doméstica™: um algoritmo fictício que classifica a hesitação na soleira em cinco categorias emocionais (cansaço, raiva, vergonha, exaustão existencial e 'só esqueci a chave') e escolhe a trilha sonora correspondente.",
+  "build": "Uma base de borracha reforçada de 60x40cm com sensor de pressão distribuído em quatro quadrantes, conectada a uma placa controladora escondida sob o tapete, alimentada por bateria recarregável via USB-C acessível por uma aba lateral discreta, com o difusor de aroma embutido na moldura de metal da soleira.",
+  "uses": "Usado por pessoas que voltam de reuniões terríveis, adolescentes que precisam de um segundo antes de encarar os pais, e casais que moram juntos e desenvolveram o hábito de brigar por telefone no elevador antes de entrar em casa como se nada tivesse acontecido.",
+  "dangers": "Pode causar atrasos crônicos de entrada caso o morador comece a fingir hesitação só para ganhar mais tempo de música ambiente, e há relatos de vizinhos description enganados pensando que a casa está pegando fogo por causa do cheiro de fumaça sintética mal calibrada.",
+  "curiosity": "Durante os testes de protótipo, um morador ficou parado por 40 minutos simplesmente porque gostou da playlist, e a equipe teve que criar um limite máximo de permanência para o tapete não virar uma sala de meditação não planejada.",
+  "tests": "Testes incluíram simulação de chegada furiosa com porta batendo, teste de resistência a 4.000 pisadas de saltos agulha, teste de detecção falsa positiva com entregadores parados esperando assinatura, e teste de overdose de lavanda em ambiente fechado de 20m²."
+}
