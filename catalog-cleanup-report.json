@@ -1,0 +1,951 @@
+{
+  "raw_records_seen": 332,
+  "quality_valid_before_duplicates": 189,
+  "final_records": 155,
+  "removed_records": 145,
+  "source_files_seen": [
+    "catalog-lote10.json",
+    "catalog-lote11.json",
+    "catalog-lote12.json",
+    "catalog-lote13.json",
+    "catalog-lote14.json",
+    "catalog-lote15.json",
+    "catalog-lote16-02.json",
+    "catalog-lote16-03.json",
+    "catalog-lote16-04.json",
+    "catalog-lote16-05.json",
+    "catalog-lote16-06.json",
+    "catalog-lote16-07.json",
+    "catalog-lote16.json",
+    "catalog-lote17-02.json",
+    "catalog-lote17.json",
+    "catalog-lote2-04.b64",
+    "catalog-lote2-05.b64",
+    "catalog-lote2-06.b64",
+    "catalog-lote2-07.b64",
+    "catalog-lote2-10.b64",
+    "catalog-lote2-11.b64",
+    "catalog-lote2-12.b64",
+    "catalog-lote2-13.b64",
+    "catalog-lote2-14.b64",
+    "catalog-lote2-16.b64",
+    "catalog-lote2-18.b64",
+    "catalog-lote2-19.b64",
+    "catalog-lote4-01.json",
+    "catalog-lote4.json",
+    "catalog-lote5.json",
+    "catalog-lote6.json",
+    "catalog-lote7.json",
+    "catalog-lote8.json",
+    "catalog-lote9.json",
+    "catalog-vol1-01.json",
+    "catalog.json"
+  ],
+  "removed": [
+    {
+      "id": "lote3-096",
+      "name": "O JUIZ DE LOUÇA SUJA COMPARTILHADA",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "lote3-097",
+      "name": "O DETECTOR DE QUEM COMEU A ÚLTIMA FATIA",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "lote3-098",
+      "name": "O MEDIDOR DE VOLUME DE TV DO VIZINHO",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "lote3-099",
+      "name": "O ALARME DE PAPEL HIGIÊNICO NÃO REPOSTO",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "lote3-100",
+      "name": "O ÁRBITRO DE TEMPERATURA DO AR-CONDICIONADO FAMILIAR",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "lote3-101",
+      "name": "O CONTADOR DE STORIES ASSISTIDOS EM SEGREDO",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "lote3-102",
+      "name": "O DETECTOR DE FÉRIAS FINANCIADAS PELO CARTÃO",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "lote3-103",
+      "name": "O MEDIDOR DE TEXTO DIGITADO E DELETADO",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "lote3-104",
+      "name": "O CALCULADOR DE FOTO DE PERFIL DESATUALIZADA",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "lote3-105",
+      "name": "O EXPOSITOR DE CURTIDA EM STALKEAMENTO ANTIGO",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "lote3-106",
+      "name": "O DELATOR DE BUZINA INJUSTIFICADA",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "lote3-107",
+      "name": "O CRONÔMETRO DE FAROL SOCIAL EM ROTATÓRIA",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "lote3-108",
+      "name": "O JUIZ DE VAGA DE ESTACIONAMENTO DISPUTADA",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "lote3-109",
+      "name": "O MEDIDOR DE PACIÊNCIA EM FILA DE CAIXA",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "lote3-110",
+      "name": "O DETECTOR DE ROTA “MAIS RÁPIDA” MENTIROSA DE APLICATIVO",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "lote3-111",
+      "name": "O DETECTOR DE ROUPA “SÓ PRA ESSA FOTO”",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "lote3-112",
+      "name": "O CALIBRADOR DE BARRIGA ESCONDIDA EM FOTO DE PERFIL",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "lote3-113",
+      "name": "O CRONÔMETRO DE ESPERA PARA “TÁ QUASE PRONTA”",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "lote3-114",
+      "name": "O AVALIADOR DE TÊNIS NOVO FINGIDO DE VELHO",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "lote3-115",
+      "name": "O DETECTOR DE PERFUME REAPLICADO PARA DISFARÇAR CIGARRO",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "lote3-116",
+      "name": "O CONTADOR DE ASSINATURAS ESQUECIDAS",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "lote3-117",
+      "name": "O JULGADOR DE COMPRA POR IMPULSO ÀS 3 DA MANHÃ",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "lote3-118",
+      "name": "O CALCULADOR DE CAFÉ QUE PODERIA TER SIDO APOSENTADORIA",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "lote3-119",
+      "name": "O DETECTOR DE “É INVESTIMENTO” DISFARÇANDO GASTO",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "lote3-120",
+      "name": "O AVALIADOR DE RATEIO DE CONTA DE RESTAURANTE",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "lote3-121",
+      "name": "O TRADUTOR DE CHORO DE BEBÊ EM RECLAMAÇÃO ESPECÍFICA",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "lote3-122",
+      "name": "O DETECTOR DE “ESTUDANDO” VERSUS JOGANDO NO CELULAR",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "lote3-123",
+      "name": "O JUIZ DE QUEM CEDEU PRIMEIRO NA BIRRA",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "lote3-124",
+      "name": "O CONTADOR DE VEZES QUE “TÁ QUASE CHEGANDO” FOI MENTIRA",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "lote3-125",
+      "name": "O AVALIADOR DE DESENHO INFANTIL PARA ELOGIO SINCERO",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "lote3-126",
+      "name": "O CRONÔMETRO DE VELÓRIO SOCIALMENTE ACEITÁVEL",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "lote3-127",
+      "name": "O CALCULADOR DE HERANÇA VERSUS AFETO DEMONSTRADO",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "lote3-128",
+      "name": "O DETECTOR DE CHORO PERFORMÁTICO EM FUNERAL",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "lote3-129",
+      "name": "O CONTADOR REGRESSIVO DE ANIVERSÁRIO QUE NINGUÉM MAIS COMEMORA COM ENTUSIASMO",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "lote3-130",
+      "name": "O AVALIADOR DE LEGADO DIGITAL PÓS-MORTE",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "garfo-detector-de-mentira-alimentar",
+      "name": "",
+      "reason": "missing-identity"
+    },
+    {
+      "id": "lote1-016",
+      "name": "ALARME DE CLIMÃO",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-017",
+      "name": "TRAVESSEIRO DE DIGESTÃO",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-018",
+      "name": "VENTO-CONTRÁRIO PESSOAL",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-019",
+      "name": "MEMÓRIA DE GELADEIRA",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-020",
+      "name": "TRADUTOR DE SUBTEXTO DE REUNIÃO",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-021",
+      "name": "NUVIBOLSO",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-022",
+      "name": "MOSQUIFILTRO",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-023",
+      "name": "SOMCOFRE",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-024",
+      "name": "MALARRUMA",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-025",
+      "name": "OLFOMAPA",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-026",
+      "name": "SONHOVISOR",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-027",
+      "name": "DESCULPÔMETRO",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-028",
+      "name": "SOMBRAESPIÃ",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-029",
+      "name": "CLIMAFARDO",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-030",
+      "name": "SILÊNCIOSUAVE",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-031",
+      "name": "VOZALVO",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-032",
+      "name": "PELECLIMA",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-033",
+      "name": "PLANTASSINAL",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-034",
+      "name": "LEVITABOLSO",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-035",
+      "name": "EMOLEITOR",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-036",
+      "name": "CHUVADESVIO",
+      "reason": "incomplete-what"
+    },
+    {
+      "id": "lote1-037",
+      "name": "TOQUECOFRE",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-038",
+      "name": "SILÊNCIÔMETRO",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-039",
+      "name": "ÓCULOSCLIMA",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-040",
+      "name": "BOLSARECUSA",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-041",
+      "name": "NOMEVOLTA",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-042",
+      "name": "TRAVESSEIROSONHO",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-043",
+      "name": "LUZMEMÓRIA",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-044",
+      "name": "SAPATOTRILHA",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-045",
+      "name": "DESENTORNA",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-046",
+      "name": "CLIMÃOALERTA",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-047",
+      "name": "RISCOFRE",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-048",
+      "name": "PEGADASÓEU",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-049",
+      "name": "PORTAMEMÓRIA",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-050",
+      "name": "CÃOTRADUTOR",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-051",
+      "name": "ANTIADERENTE",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-052",
+      "name": "AMORTECEDOR",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-053",
+      "name": "VENTOMAPA",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-054",
+      "name": "ABRAÇOCOFRE",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-055",
+      "name": "LIVRECHAMA",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-056",
+      "name": "ESTRAGÔMETRO",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-057",
+      "name": "TEMPOLENTO",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-058",
+      "name": "ESTÁTICOFIM",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-059",
+      "name": "RESÍDUOEMOCIONAL",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-060",
+      "name": "CORSÓEU",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-061",
+      "name": "INTERROMPEALERTA",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-062",
+      "name": "BRISACOFRE",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-063",
+      "name": "TEXTOSEGREDO",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-064",
+      "name": "CAMINHOMAPA",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-065",
+      "name": "VOZSUAVE",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-066",
+      "name": "ESPIRROAVISO",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-067",
+      "name": "MEMÓRIAPAUSA",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-068",
+      "name": "CALORRESÍDUO",
+      "reason": "incomplete-what"
+    },
+    {
+      "id": "lote1-069",
+      "name": "DETECTOR DE OLHAR NU",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-070",
+      "name": "CÁPSULA DE ORGASMO",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-071",
+      "name": "EXPRESSÃO PÓSTUMA",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-072",
+      "name": "MAPA DE DESEJO RESIDUAL",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-073",
+      "name": "EMISSOR DE INCOMODO CONSENTIDO",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-074",
+      "name": "SENSOR DE DESINTERESSE",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-075",
+      "name": "GRAVADOR DE EXPOSIÇÃO",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-076",
+      "name": "COLCHÃO ECO",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-077",
+      "name": "FLUSH DE CLÍMAX",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-078",
+      "name": "EMPRÉSTIMO DE PRAZER",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-079",
+      "name": "VISÃO DE DESEJO",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-080",
+      "name": "MEMÓRIA DE MORDIDA",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-081",
+      "name": "LÁGRIMA QUÍMICA",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-082",
+      "name": "CONTROLE DE RESÍDUO",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-083",
+      "name": "DENSIDADE ÍNTIMA",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote1-084",
+      "name": "ESPELHO DE EXCITAÇÃO",
+      "reason": "incomplete-curiosity"
+    },
+    {
+      "id": "lote2-010",
+      "name": "MONITOR DE ASSUNTO REPETIDO DE ENCONTRO DE AMIGOS",
+      "reason": "incomplete-realTech"
+    },
+    {
+      "id": "lote2-025",
+      "name": "FILTRO DE BAFO DE PREGUIÇA MATINAL",
+      "reason": "incomplete-tests"
+    },
+    {
+      "id": "lote2-049",
+      "name": "EXAMINADOR DE CULPA DE ACUMULO DE ABAS DE NAVEGADOR ABERTAS",
+      "reason": "incomplete-build"
+    },
+    {
+      "id": "lote2-050",
+      "name": "SEQUESTRADOR DE HIPOCONDRIA DE GOOGLE",
+      "reason": "incomplete-tests"
+    },
+    {
+      "id": "lote2-055",
+      "name": "EXAMINADOR DE CULPA DE PACIENTE DE ACADEMIA DOENTE NO PRONTO-SOCORRO",
+      "reason": "incomplete-build"
+    },
+    {
+      "id": "lote2-035",
+      "name": "RECUPERADOR DE FRASE PERDIDA",
+      "reason": "section-splice-tests"
+    },
+    {
+      "id": "lote2-025",
+      "name": "DETECTOR DE “ESTOU BEM” MENTIROSO",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-019"
+    },
+    {
+      "id": "lote2-049",
+      "name": "NEUTRALIZADOR DE ODOR RESIDUAL DE BANHEIRO",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-038"
+    },
+    {
+      "id": "lote2-050",
+      "name": "BLOQUEADOR DE ENVIO PARA O CHAT ERRADO",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-039"
+    },
+    {
+      "id": "lote2-055",
+      "name": "DETECTOR DE CONCORDÂNCIA VAZIA",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-044"
+    },
+    {
+      "id": "lote2-056",
+      "name": "QUEBRADOR DE LOOP DE EDIÇÃO DE MENSAGEM",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-045"
+    },
+    {
+      "id": "lote2-057",
+      "name": "DETECTOR DE CÂMERA E MICROFONE FANTASMA",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-046"
+    },
+    {
+      "id": "lote2-058",
+      "name": "EXTINTOR DE PÂNICO DE BATERIA",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-047"
+    },
+    {
+      "id": "lote2-059",
+      "name": "QUEBRADOR DE ATUALIZAÇÃO COMPULSIVA",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-048"
+    },
+    {
+      "id": "lote2-060",
+      "name": "INTERCEPTOR DE AUTOCORREÇÃO TRAIÇOEIRA",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-049"
+    },
+    {
+      "id": "lote2-061",
+      "name": "CONTADOR DE ABAS ABERTAS COM VERGONHA",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-050"
+    },
+    {
+      "id": "lote2-062",
+      "name": "BLOQUEADOR DE BUSCA DE SINTOMAS",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-051"
+    },
+    {
+      "id": "lote2-063",
+      "name": "EXTINTOR DE CULPA POR META DE SONO",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-052"
+    },
+    {
+      "id": "lote2-064",
+      "name": "MONITOR DE HIDRATAÇÃO COM VERGONHA",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-053"
+    },
+    {
+      "id": "lote2-065",
+      "name": "DETECTOR DE POSTURA DE DERRETIMENTO",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-054"
+    },
+    {
+      "id": "lote2-066",
+      "name": "INTERCEPTOR DE CHECAGEM COMPULSIVA DE BATIMENTOS",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-055"
+    },
+    {
+      "id": "lote2-067",
+      "name": "DETECTOR DE JULGAMENTO SILENCIOSO DO PET",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-056"
+    },
+    {
+      "id": "lote2-068",
+      "name": "QUEBRADOR DE CHECAGEM COMPULSIVA DE CÂMERA PET",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-057"
+    },
+    {
+      "id": "lote2-076",
+      "name": "INTERCEPTOR DE COMPARAÇÃO DE LAZER ALHEIO",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-065"
+    },
+    {
+      "id": "lote2-077",
+      "name": "DETECTOR DE DÉFICIT DE NATUREZA",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-066"
+    },
+    {
+      "id": "lote2-078",
+      "name": "SUPRESSOR DE PÂNICO ENTOMOLÓGICO",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-067"
+    },
+    {
+      "id": "lote2-079",
+      "name": "BLOQUEADOR DE DOCUMENTAÇÃO EXCESSIVA DE PAISAGEM",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-068"
+    },
+    {
+      "id": "lote2-080",
+      "name": "MONITOR DE VIRTUDE ECOLÓGICA PERFORMÁTICA",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-069"
+    },
+    {
+      "id": "lote2-086",
+      "name": "QUEBRADOR DE OVERDOSE DE NOTÍCIAS CLIMÁTICAS",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-075"
+    },
+    {
+      "id": "lote2-087",
+      "name": "GERADOR DE RUÍDO DE PRODUTIVIDADE",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-076"
+    },
+    {
+      "id": "lote2-088",
+      "name": "COLAR DE CONFORMIDADE FACIAL",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-077"
+    },
+    {
+      "id": "lote2-089",
+      "name": "CONTADOR FÍSICO DE REUNIÕES INÚTEIS",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-078"
+    },
+    {
+      "id": "lote2-090",
+      "name": "DETECTOR DE OLHAR VAZIO EM LINHA",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-079"
+    },
+    {
+      "id": "lote2-091",
+      "name": "PULSEIRA DE REGISTRO DE PAUSA NÃO AUTORIZADA",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-080"
+    },
+    {
+      "id": "lote3-134",
+      "name": "SUPORTE DE POSTURA SOCIAL (EGO-BRACE™)",
+      "reason": "generic-repeated-template",
+      "repeated_sections": 3
+    },
+    {
+      "id": "lote3-135",
+      "name": "EXTRATOR DE DESCULPAS CORPORATIVAS (SLACK-OFF™)",
+      "reason": "generic-repeated-template",
+      "repeated_sections": 3
+    },
+    {
+      "id": "lote3-136",
+      "name": "DILUENTE DE DISCUSSÕES DOMÉSTICAS (MATRIMONY-HEAL™)",
+      "reason": "generic-repeated-template",
+      "repeated_sections": 3
+    },
+    {
+      "id": "lote3-137",
+      "name": "MEDIDOR DE ODIO AUTOMOTIVO (ROAD-RAGE™)",
+      "reason": "generic-repeated-template",
+      "repeated_sections": 3
+    },
+    {
+      "id": "lote3-138",
+      "name": "CORRETOR DE APERTO DE MÃO ALFA (GRIP-MASTER™)",
+      "reason": "generic-repeated-template",
+      "repeated_sections": 3
+    },
+    {
+      "id": "lote3-139",
+      "name": "FILTRO DE CONVERSA FIADA DE BARBEIRO (HAIR-TALK™)",
+      "reason": "generic-repeated-template",
+      "repeated_sections": 3
+    }
+  ],
+  "duplicate_groups": [
+    {
+      "removed": "lote2-025",
+      "kept": "lote3-019",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-049",
+      "kept": "lote3-038",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-050",
+      "kept": "lote3-039",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-055",
+      "kept": "lote3-044",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-056",
+      "kept": "lote3-045",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-057",
+      "kept": "lote3-046",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-058",
+      "kept": "lote3-047",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-059",
+      "kept": "lote3-048",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-060",
+      "kept": "lote3-049",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-061",
+      "kept": "lote3-050",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-062",
+      "kept": "lote3-051",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-063",
+      "kept": "lote3-052",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-064",
+      "kept": "lote3-053",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-065",
+      "kept": "lote3-054",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-066",
+      "kept": "lote3-055",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-067",
+      "kept": "lote3-056",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-068",
+      "kept": "lote3-057",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-076",
+      "kept": "lote3-065",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-077",
+      "kept": "lote3-066",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-078",
+      "kept": "lote3-067",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-079",
+      "kept": "lote3-068",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-080",
+      "kept": "lote3-069",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-086",
+      "kept": "lote3-075",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-087",
+      "kept": "lote3-076",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-088",
+      "kept": "lote3-077",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-089",
+      "kept": "lote3-078",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-090",
+      "kept": "lote3-079",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-091",
+      "kept": "lote3-080",
+      "reason": "exact-duplicate-name-or-what"
+    }
+  ],
+  "id_range": [
+    1,
+    133
+  ]
+}
