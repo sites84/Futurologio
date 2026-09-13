@@ -1,7 +1,7 @@
 {
-  "raw_records_seen": 417,
-  "final_records": 183,
-  "removed_records": 44,
+  "raw_records_seen": 429,
+  "final_records": 237,
+  "removed_records": 192,
   "source_files_seen": [
     "catalog-lote10.json",
     "catalog-lote11.json",
@@ -57,10 +57,18 @@
     "frontend/catalog-lote17-04.json",
     "frontend/catalog-lote17.json",
     "frontend/catalog-lote18-02.json",
+    "frontend/catalog-lote18-03.json",
+    "frontend/catalog-lote18-04.json",
+    "frontend/catalog-lote18-05.json",
     "frontend/catalog-lote18.json",
+    "frontend/catalog-lote19-02.json",
+    "frontend/catalog-lote19-03.json",
+    "frontend/catalog-lote19-04.json",
     "frontend/catalog-lote19.json",
+    "frontend/catalog-lote20-02.json",
     "frontend/catalog-lote20-03.json",
     "frontend/catalog-lote20-04.json",
+    "frontend/catalog-lote20.json",
     "frontend/catalog-lote21-03.json",
     "frontend/catalog-lote21-05.json",
     "frontend/catalog-lote21-07.json",
@@ -68,7 +76,8 @@
     "frontend/catalog-lote21.json",
     "frontend/catalog-lote7.json",
     "frontend/catalog-lote8.json",
-    "frontend/catalog-lote9.json"
+    "frontend/catalog-lote9.json",
+    "frontend/catalog-migration-156-159.b64"
   ],
   "id_range": [
     1,
@@ -77,12 +86,6 @@
   "missing_numeric_ids": [
     4,
     5,
-    58,
-    59,
-    60,
-    61,
-    62,
-    63,
     140,
     141,
     142,
@@ -98,17 +101,7 @@
     152,
     153,
     154,
-    155,
-    156,
-    157,
-    158,
-    159,
-    178,
-    179,
-    180,
-    182,
-    183,
-    184,
-    190
-  ]
+    155
+  ],
+  "duplicate_ids_collapsed": 192
 }
