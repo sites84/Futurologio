@@ -2,32 +2,68 @@
 const REQUIRED=['what','realTech','specTech','inventedTech','build','uses','dangers','curiosity','tests'];
 const MIN={what:160,realTech:45,specTech:45,inventedTech:45,build:45,uses:30,dangers:40,curiosity:70,tests:70};
 const CAT={'CASA & VIDA DOMÉSTICA':'Casa','TRABALHO & ESCRITÓRIO':'Escola & Trabalho','TRANSPORTE & TRÂNSITO':'Transporte','RELACIONAMENTOS & FAMÍLIA':'Mente & Comportamento','TECNOLOGIA & FUTURO':'Tecnologia do futuro','COMIDA & RESTAURANTES':'Comida & Cozinha','EDUCAÇÃO & FACULDADE':'Escola & Trabalho','DINHEIRO & CONSUMISMO':'Dinheiro & Negócios','SOCIEDADE & BUROCRACIA':'Cidade','ACADEMIA & ESPORTE':'Esportes','LAZER & ENTRETENIMENTO':'Entretenimento','VIZINHANÇA & CONVIVÊNCIA':'Cidade','ANIMAIS & PETS':'Animais','VIAGENS & TURISMO':'Viagem'};
-const LABELS={name:['nome do produto','nome da invenção','nome da invencao','nome','produto','invenção','invencao','título','titulo'],category:['categoria','category'],what:['o que é','o que e','descrição','descricao','como funciona'],realTech:['tecnologias existentes hoje','tecnologias existentes','tecnologia existente hoje','tecnologia real','tecnologia real utilizada','tecnologias reais','princípio real','principio real','princípios reais','principios reais'],specTech:['especificações técnicas','especificacoes tecnicas','especificação técnica','especificacao tecnica','tecnologia específica','tecnologia especifica','tecnologia específica utilizada','tecnologia especifica utilizada','especificações','especificacoes'],inventedTech:['tecnologias especulativas','tecnologia especulativa','tecnologia inventada','tecnologias inventadas','tecnologias fictícias','tecnologias ficticias','tecnologia fictícia','tecnologia ficticia','tecnologia inventada para o produto'],build:['como construir','como seria construído','como seria construido','como é construído','como e construido','como seria feito','construção','construcao','materiais','fabricação','fabricacao'],uses:['usos recomendados','usos','uso','para que serve','aplicações','aplicacoes'],dangers:['perigos e limitações','perigos e limitacoes','perigos','perigo','riscos','riscos e perigos'],curiosity:['curiosidades','curiosidade'],tests:['resultado dos testes','resultados dos testes','resultado de testes','testes realizados','testes','teste','protocolo de teste','protocolo de testes']};
-const $=id=>document.getElementById(id);const text=v=>Array.isArray(v)?v.map(text).join(' '):v&&typeof v==='object'?Object.values(v).map(text).join(' '):String(v??'').trim();const norm=v=>text(v).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^\w\s]/g,' ').replace(/\s+/g,' ').trim();
+const LABELS={
+name:['nome do produto','nome da invenção','nome da invencao','nome','produto','invenção','invencao','título','titulo'],
+category:['categoria','category'],
+what:['o que é','o que e','descrição do produto','descricao do produto','descrição','descricao','como funciona','funcionamento'],
+realTech:['tecnologias existentes hoje','tecnologias existentes atualmente','tecnologias existentes','tecnologia existente hoje','tecnologia existente','tecnologia real utilizada','tecnologia real','tecnologias reais','princípio real','principio real','princípios reais','principios reais'],
+specTech:['especificações técnicas','especificacoes tecnicas','especificação técnica','especificacao tecnica','especificações do produto','especificacoes do produto','tecnologia específica','tecnologia especifica','tecnologia específica utilizada','tecnologia especifica utilizada','especificações','especificacoes'],
+inventedTech:['tecnologias especulativas','tecnologia especulativa','tecnologias inventadas','tecnologia inventada','tecnologias fictícias','tecnologias ficticias','tecnologia fictícia','tecnologia ficticia','tecnologia inventada para o produto','tecnologia que ainda não existe','tecnologia que ainda nao existe','tecnologia futura','tecnologias futuras'],
+build:['como construir','como seria construído','como seria construido','como é construído','como e construido','como seria feito','como fabricar','como montar','construção','construcao','materiais','fabricação','fabricacao'],
+uses:['usos recomendados','usos','uso','para que serve','aplicações','aplicacoes','aplicação','aplicacao'],
+dangers:['perigos e limitações','perigos e limitacoes','perigos','perigo','riscos e limitações','riscos e limitacoes','riscos e perigos','riscos','limitações','limitacoes'],
+curiosity:['curiosidades','curiosidade'],
+tests:['resultado dos testes','resultados dos testes','resultado de testes','resultados de testes','testes realizados','testes e resultados','teste e resultado','protocolo de teste','protocolo de testes','testes','teste']
+};
+const $=id=>document.getElementById(id);
+const text=v=>Array.isArray(v)?v.map(text).join(' '):v&&typeof v==='object'?Object.values(v).map(text).join(' '):String(v??'').trim();
+const norm=v=>text(v).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^\w\s]/g,' ').replace(/\s+/g,' ').trim();
 function unwrap(v){if(Array.isArray(v))return v;if(v&&Array.isArray(v.products))return v.products;if(v&&Array.isArray(v.produtos))return v.produtos;if(v&&typeof v==='object')return [v];throw Error('Formato não reconhecido.');}
 function clean(p){const q={...p};q.id=text(q.id);q.name=text(q.name||q.nome||q.titulo||q.título);const rawCat=text(q.category||q.categoria);q.category=CAT[rawCat]||rawCat;return q;}
 function validate(p){const e=[];if(!p.name)e.push('nome ausente');if(!p.category)e.push('categoria ausente');for(const f of REQUIRED)if(text(p[f]).length<MIN[f])e.push(`${f} curto`);return e;}
 function nextId(used){let n=0;for(const id of used){const m=/^produto-(\d+)$/i.exec(String(id));if(m)n=Math.max(n,Number(m[1]));}return n+1;}
-function strip(s){return String(s||'').replace(/<[^>]+>/g,' ').replace(/[*_`]/g,'').replace(/^[\s#•\-–—]+/,'').trim();}
-function labelKey(line){const s=norm(strip(line)).replace(/[:：]\s*$/,'');if(!s)return null;for(const [key,alts] of Object.entries(LABELS)){for(const a of alts){const na=norm(a);if(s===na||s.startsWith(na+' '))return key;}}return null;}
-function productHeading(line){const s=strip(line);const m=s.match(/^(?:produto\s*)?(\d+)\s*[.)\-:–—]\s*(.+)$/i);return m?strip(m[2]):null;}
+function strip(s){return String(s||'').replace(/<[^>]+>/g,' ').replace(/[*_`]/g,'').replace(/^\s*(?:[-–—•>]\s*)+/,'').replace(/^\s*#+\s*/,'').trim();}
+function labelKey(line){
+ let s=strip(line).replace(/[:：]\s*$/,'').trim();
+ if(!s)return null;
+ const n=norm(s);
+ for(const [key,alts] of Object.entries(LABELS))for(const a of alts){const na=norm(a);if(n===na||n.startsWith(na+' '))return key;}
+ // Aceita variações naturais de títulos produzidos pelo ChatGPT.
+ if(/^(tecnologias?|princ[ií]pios?)\s+(existentes?|reais?)(\s+hoje|\s+atualmente)?$/.test(n))return'realTech';
+ if(/^(especifica(c|ç)(o|õ)es?|tecnologia)\s+(t(e|é)cnicas?|espec[ií]fica(s)?)(\s+utilizada(s)?)?$/.test(n))return'specTech';
+ if(/^(tecnologias?|tecnologia)\s+(especulativa(s)?|inventada(s)?|fict[ií]cia(s)?)$/.test(n))return'inventedTech';
+ if(/^(resultado(s)?|protocolo)\s+(dos?\s+)?testes?$/.test(n)||/^(testes?|teste)\s+(realizados?|e resultados?)$/.test(n))return'tests';
+ if(/^(curiosidades?|fatos?\s+curiosos?)$/.test(n))return'curiosity';
+ return null;
+}
+function productHeading(line){
+ const s=strip(line);
+ let m=s.match(/^(?:produto\s*)?(\d+)\s*[.)\-:–—]\s*(.+)$/i);
+ if(!m)m=s.match(/^(?:produto\s+)?(\d+)\s+(.+)$/i);
+ return m?strip(m[2]):null;
+}
 function parseBlock(block,headingName){
  const lines=block.replace(/\r/g,'').split('\n');const p={};if(headingName)p.name=headingName;let current=null;
- for(const original of lines){const line=original.trim();if(!line)continue;const key=labelKey(line);if(key){let cleaned=strip(line);const idx=cleaned.search(/[:：]/);const value=idx>=0?cleaned.slice(idx+1).trim():'';if(key==='name'&&p.name&&text(p.name)!==value){if(value)p.name=value;}else{current=key;if(value)p[key]=value;}continue;}if(current){const add=strip(line);if(add)p[current]=(p[current]?p[current]+' ':'')+add;}}
+ for(const original of lines){
+  const line=original.trim();if(!line)continue;
+  const key=labelKey(line);
+  if(key){
+   const cleaned=strip(line);const idx=cleaned.search(/[:：]/);const value=idx>=0?cleaned.slice(idx+1).trim():'';
+   if(key==='name'){if(value)p.name=value;}else{current=key;if(value)p[key]=value;}
+   continue;
+  }
+  if(current){const add=strip(line);if(add)p[current]=(p[current]?p[current]+' ':'')+add;}
+ }
  if(!p.name){const first=lines.map(strip).find(Boolean);if(first)p.name=first;}
  if(!p.category)p.category='Tecnologia do futuro';
- // Alguns lotes usam “Tecnologias especulativas” como o bloco da tecnologia inventada.
- // Se não houver especificações técnicas separadas, preservamos o conteúdo real como especificação técnica em vez de rejeitar o produto.
- if(!text(p.specTech)&&text(p.realTech))p.specTech=`Especificação técnica baseada na tecnologia existente descrita: ${p.realTech}`;
- // Se houver tecnologia específica mas não houver um bloco especulativo separado, use o bloco específico como base técnica inventada somente quando claramente rotulado como especulativo.
- if(!text(p.inventedTech)&&text(p.specTech)&&text(p.specTech).toLowerCase().includes('especul'))p.inventedTech=p.specTech;
+ if(!text(p.specTech)&&text(p.realTech))p.specTech=`Especificação técnica baseada nas tecnologias existentes descritas: ${p.realTech}`;
+ if(!text(p.inventedTech)&&text(p.specTech)&&/especulativ|inventad|fict[ií]ci/i.test(text(p.specTech)))p.inventedTech=p.specTech;
  return p;
 }
 function rawToProducts(raw){
  const lines=raw.replace(/\r/g,'').split('\n');const chunks=[];let cur=[];let heading=null;
- for(const line of lines){const h=productHeading(line.trim());if(h){if(cur.length)chunks.push({heading,lines:cur});cur=[];heading=h;}else cur.push(line);}if(cur.length||heading)chunks.push({heading,lines:cur});
- // Se não houver títulos numerados, trata o texto inteiro como um único produto.
- if(chunks.length===0)return[];
+ for(const line of lines){const h=productHeading(line.trim());if(h){if(cur.length||heading)chunks.push({heading,lines:cur});cur=[];heading=h;}else cur.push(line);}
+ if(cur.length||heading)chunks.push({heading,lines:cur});
  return chunks.map(c=>parseBlock(c.lines.join('\n'),c.heading)).filter(p=>p.name||p.what);
 }
 function parseInput(){const raw=$('input').value.trim();if(!raw)throw Error('Cole o texto das invenções.');try{return unwrap(JSON.parse(raw)).map(clean);}catch(_){return rawToProducts(raw).map(clean);}}
