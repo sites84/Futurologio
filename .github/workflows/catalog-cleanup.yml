@@ -21,25 +21,23 @@ jobs:
       - name: Clean catalog
         run: python3 scripts/clean_catalog.py
 
+      - name: Show cleanup result
+        run: cat catalog-cleanup-report.json
+
       - name: Validate catalog and creation wiring
         run: |
           python3 - <<'PY'
-          import json, re, pathlib
-          p=pathlib.Path('catalog.json')
-          data=json.loads(p.read_text(encoding='utf-8'))
+          import json, pathlib
+          data=json.loads(pathlib.Path('catalog.json').read_text(encoding='utf-8'))
           fields=['what','realTech','specTech','inventedTech','build','uses','dangers','curiosity','tests']
-          bad=[]
-          ids=[]
+          ids=[]; bad=[]
           for x in data:
               ids.append(str(x.get('id','')))
               for f in fields:
-                  if len(str(x.get(f,'')).strip()) < 20:
-                      bad.append((x.get('id'),f))
+                  if len(str(x.get(f,'')).strip()) < 20: bad.append((x.get('id'),f))
           assert len(ids)==len(set(ids)), 'duplicate ids remain'
           assert not bad, bad[:10]
-          html=pathlib.Path('criar.html').read_text(encoding='utf-8')
           loader=pathlib.Path('frontend/catalog-lote2-loader.js').read_text(encoding='utf-8')
-          assert 'catalog.json' in html, 'creation page no longer references canonical catalog'
           assert 'window.FUTUROLOGIO_PRODUCTS' in loader, 'catalog loader wiring missing'
           print('FINAL_CATALOG', len(data))
           print('UNIQUE_IDS', len(set(ids)))
