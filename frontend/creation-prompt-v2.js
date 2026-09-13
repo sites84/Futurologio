@@ -35,17 +35,30 @@ BRAND AND HUMOROUS TEXT:
 The only brand name allowed on the image is "FUTUROLOGIO™", as a lime-on-black plaque or illuminated logo on the product.
 Do NOT write "Museu Lima", collection names, inventory codes or extra brand subtitles.
 The product name "${name}" may appear once as a secondary label.
-Include THREE distinct humorous Portuguese text elements in addition to the brand and product name.
-Do NOT impose an artificial word or character limit on these three jokes.
-The three jokes must be inspired by the invention, its function or consequences, in an ACID, DARK, SARCASTIC, IRREVERENT comedy style.
-Avoid political posters and generic slogans.
+Include distinct humorous Portuguese text elements in addition to the brand and product name.
+Do NOT impose an artificial word, character, sentence or joke-count limit on the humorous text.
+The image may contain multiple jokes, comments, labels, warning phrases, speech bubbles, reaction texts or other humorous elements whenever they genuinely improve the comedy and help explain the invention.
+The humor must be directly inspired by the invention, its function, its absurdity, its operation, its consequences or the situation in which it is being used.
+Use an ACID, DARK, SARCASTIC, IRREVERENT comedy style. Make the jokes specific to this invention rather than generic captions.
+Avoid political posters, political propaganda and generic motivational slogans.
 
-TEXT CONTROL:
-ONLY THREE HUMOROUS TEXT ELEMENTS plus "FUTUROLOGIO™" and "${name}".
-No infographic, magazine layout, spec boxes, tiny scattered labels or extra copy.
+TEXT AND VISUAL BALANCE:
+There is NO fixed limit on the amount of humorous text or the number of jokes.
+However, prioritize visual clarity over quantity. Do NOT overcrowd the composition.
+Only include as much humorous text as can be naturally integrated while keeping the product, characters, scene and essential text clearly visible and readable.
+Prefer several short, visually distinct humorous elements over a large block of text when this improves readability.
+Humorous text may appear as speech bubbles, signs, labels, stickers, captions, warning plates, reaction texts or environmental details when appropriate.
+Text must complement the scene rather than cover, obscure, shrink or compete with the product.
+Do not turn the image into an infographic, magazine page, poster, collage or text-heavy advertisement.
+
+PRODUCT CLARITY:
+The product itself must remain the undisputed visual focus.
+Show the complete product clearly, including its physical structure and important components.
+Show the product actively functioning whenever possible, with the mechanism, output or consequence visible enough for the viewer to understand how it works.
+Do not sacrifice product visibility to add more jokes.
 
 COMPOSITION:
-Cinematic 16:9. Product foreground/center. Characters support the joke. Generous negative space.
+Cinematic 16:9. Product foreground/center. Characters support the joke. Keep enough negative space for readable humorous text without covering the product.
 
 COLOR AND LIGHTING:
 BRIGHT high-key lighting so every face, material and product detail is easy to see.
@@ -56,7 +69,7 @@ The artwork will sit on a dark website, so it must be LIGHTER than the site back
 IMPORTANT:
 No photoreal photography, anime, flat vector, stock, corporate ad, infographic, text-heavy poster, collage, multi-panel, excessive typography, dark underexposed image, rainbow neon cyberpunk, or the words "Museu Lima".
 
-16:9. One scene. Product first. Comedy second. FUTUROLOGIO™ visible. Three Portuguese jokes. Bright readable lighting.${desc?'\n\nPRODUCT CONCEPT:\n'+desc:''}`}
+16:9. One scene. Product first. Function clearly visible. Comedy and humorous text integrated naturally. FUTUROLOGIO™ visible. Bright readable lighting.${desc?'\n\nPRODUCT CONCEPT:\n'+desc:''}`}
 window.FUTUROLOGIO_IMAGE_PROMPT=prompt;
 function apply(){const x=document.getElementById('futuroPromptText');if(!x)return;const v=prompt();if(x.value!==v)x.value=v;x.textContent=v}
 window.FUTUROLOGIO_REFRESH_PROMPT=apply;
