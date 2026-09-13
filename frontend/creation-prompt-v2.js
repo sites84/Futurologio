@@ -7,58 +7,71 @@ function prompt(){const p=current()||{};const name=String(p.name||document.getEl
 
 Create ONE strong cinematic scene showing the product actually being used in an absurd, ridiculous and darkly funny situation.
 
-The PRODUCT is the absolute visual protagonist. Make it large, clearly visible, fully readable as an object, and visibly performing its intended function. The viewer should immediately understand what the invention does just by looking at the scene.
+The PRODUCT is the absolute visual protagonist. Make it large, dominant and immediately recognizable. Show its complete physical form and the mechanism that makes it work. The viewer should understand the invention from the image itself, without needing a wall of text or diagrams.
 
-Show ONE main character actively using or interacting with the product, with an exaggerated grotesque comedic expression. Add at most TWO secondary characters reacting naturally with shock, confusion, fear, disgust or uncontrollable laughter.
+Show ONE main character actively using or reacting to the product, with an exaggerated grotesque comedic expression. At most ONE secondary character may appear if it genuinely strengthens the joke. Do not fill the scene with crowds or extra characters.
 
 VISUAL STYLE — FUTUROLOGIO™:
 Unique brand look: satirical editorial graphic-novel illustration mixed with a bright collectible commercial.
 Highly detailed illustrated rendering, grotesque caricature, exaggerated anatomy, expressive faces, dramatic perspective, sharp textures.
 Materials: polished toy-like plastics, matte steel, dirty off-white enamel, acid-lime LED edges.
-The image must look like a well-lit display card that POPS against a dark website. Do NOT make a dark, muddy or underexposed picture.
+The image must look like a premium, well-lit display card that POPS against a dark website. Keep the artwork bright, clean and visually controlled.
 Never write the words "Museu Lima" anywhere in the image.
 
-The humor should come primarily from the VISUAL SITUATION, the absurd invention and the characters' reactions, reinforced by sharp written jokes.
+VISUAL PRIORITY — CRITICAL:
+Reduce visual clutter aggressively.
+Use a very clear hierarchy: PRODUCT FIRST, CHARACTER SECOND, HUMOROUS DETAIL THIRD.
+Approximately 70% of the visual attention should belong to the invention and its action, 20% to the character(s), and only 10% to humorous graphic details.
+Use generous negative space and clean areas around the main product.
+Do not try to fill every empty area of the canvas.
+A simpler composition with fewer elements is preferable to a busy composition.
 
 PRODUCT:
 The fictional product must look like a believable futuristic technological invention while remaining absurd and unnecessary.
-Use polished metallic materials, transparent components, lime LEDs, small holographic elements, cables and interfaces ONLY when they help explain the product.
-The product must remain visually clean, bright and easy to recognize.
+Use polished metallic materials, transparent components, lime LEDs, cables and interfaces ONLY when they physically help explain the product.
+Use very few secondary mechanisms or decorative details.
+Do not cover the product with labels, screens, diagrams or accessories.
+The product must remain visually clean, bright and easy to recognize from a distance.
 
 SCENE:
-Build one coherent environment around the product.
+Build ONE coherent physical environment around the product.
 Show the invention actively doing something ridiculous, unexpected or completely unnecessary.
-Use physical comedy, absurd consequences, exaggerated reactions and dark humor.
-The scene should feel like a brightly lit frame from a bizarre futuristic comedy, not an infographic and not a night-only cyberpunk still.
+Use physical comedy, absurd consequences and the character's reaction to create the humor.
+Keep the background simple and relevant to the situation. Use only a few environmental objects needed to establish the location.
+The scene should feel like a brightly lit frame from a bizarre futuristic comedy, not an infographic, magazine page or product catalog spread.
 
-BRAND AND HUMOROUS TEXT:
-The only brand name allowed on the image is "FUTUROLOGIO™", as a lime-on-black plaque or illuminated logo on the product.
-Do NOT write "Museu Lima", collection names, inventory codes or extra brand subtitles.
-The product name "${name}" may appear once as a secondary label.
-Include distinct humorous Portuguese text elements in addition to the brand and product name.
-Do NOT impose an artificial word, character, sentence or joke-count limit on the humorous text.
-The image may contain multiple jokes, comments, labels, warning phrases, speech bubbles, reaction texts or other humorous elements whenever they genuinely improve the comedy and help explain the invention.
-The humor must be directly inspired by the invention, its function, its absurdity, its operation, its consequences or the situation in which it is being used.
-Use an ACID, DARK, SARCASTIC, IRREVERENT comedy style. Make the jokes specific to this invention rather than generic captions.
+TEXT — STRICTLY MINIMAL:
+Text must NOT dominate the image.
+Use ONLY these text elements:
+1. "FUTUROLOGIO™" once, preferably as a small lime-on-black illuminated logo physically integrated into the product.
+2. The product name "${name}" may appear ONCE on the product as a small secondary label, but omit it if it would clutter the composition.
+3. ONE short humorous Portuguese phrase OR ONE speech bubble, maximum one joke.
+No other text.
+
+Do NOT add multiple jokes, comments, captions, warning plates, signs, posters, stickers, reaction texts, data screens, scoreboards, technical specifications, instruction panels, fake advertisements, subtitles, inventory codes or decorative typography.
+Do NOT create side panels or UI panels around the product.
+Do NOT put text in every corner of the image.
+Do NOT create a collage or multi-panel composition.
+The single humorous phrase must be specific to the invention, acid, dark, sarcastic and irreverent. It should reinforce the visual joke rather than explain everything.
 Avoid political posters, political propaganda and generic motivational slogans.
 
-TEXT AND VISUAL BALANCE:
-There is NO fixed limit on the amount of humorous text or the number of jokes.
-However, prioritize visual clarity over quantity. Do NOT overcrowd the composition.
-Only include as much humorous text as can be naturally integrated while keeping the product, characters, scene and essential text clearly visible and readable.
-Prefer several short, visually distinct humorous elements over a large block of text when this improves readability.
-Humorous text may appear as speech bubbles, signs, labels, stickers, captions, warning plates, reaction texts or environmental details when appropriate.
-Text must complement the scene rather than cover, obscure, shrink or compete with the product.
-Do not turn the image into an infographic, magazine page, poster, collage or text-heavy advertisement.
+COMPOSITION — CRITICAL:
+Cinematic 16:9.
+One scene only.
+Large product in the foreground or central midground.
+One main character positioned to support the product, not compete with it.
+Simple background with depth, atmosphere and a few relevant objects.
+Leave visible negative space.
+No symmetrical wall of information around the product.
+No side columns, no multiple boxes, no control panels surrounding the scene.
+Do not make the image resemble a technical brochure, infographic or trading card packed with information.
+The composition must read instantly even if all text is removed.
 
-PRODUCT CLARITY:
-The product itself must remain the undisputed visual focus.
-Show the complete product clearly, including its physical structure and important components.
-Show the product actively functioning whenever possible, with the mechanism, output or consequence visible enough for the viewer to understand how it works.
-Do not sacrifice product visibility to add more jokes.
-
-COMPOSITION:
-Cinematic 16:9. Product foreground/center. Characters support the joke. Keep enough negative space for readable humorous text without covering the product.
+HUMOR:
+The comedy must come primarily from the visual situation, the absurd invention and the character's reaction.
+The image should still be funny with the text ignored.
+Prefer one excellent visual gag over many small jokes.
+Make the absurd consequence obvious through the action itself.
 
 COLOR AND LIGHTING:
 BRIGHT high-key lighting so every face, material and product detail is easy to see.
@@ -66,10 +79,14 @@ Brand palette: acid lime #d8ff55, dirty off-white, steel gray, warm skin; deep n
 Strong fill light plus lime rim light. Open shadows. High contrast. No crushed blacks, no muddy fog, no cyan-magenta cyberpunk night.
 The artwork will sit on a dark website, so it must be LIGHTER than the site background and immediately pop.
 
-IMPORTANT:
-No photoreal photography, anime, flat vector, stock, corporate ad, infographic, text-heavy poster, collage, multi-panel, excessive typography, dark underexposed image, rainbow neon cyberpunk, or the words "Museu Lima".
+IMPORTANT NEGATIVE CONSTRAINTS:
+No photoreal photography, anime, flat vector, stock, corporate ad, infographic, magazine layout, text-heavy poster, collage, multi-panel, excessive typography, side panels, multiple signs, multiple speech bubbles, data dashboards, scoreboards, instruction boards, dark underexposed image, rainbow neon cyberpunk, or the words "Museu Lima".
 
-16:9. One scene. Product first. Function clearly visible. Comedy and humorous text integrated naturally. FUTUROLOGIO™ visible. Bright readable lighting.${desc?'\n\nPRODUCT CONCEPT:\n'+desc:''}`}
+FINAL VISUAL RULE:
+If there is a choice between adding another joke/detail and keeping the composition clean, ALWAYS keep it clean.
+The product, its function and the main visual gag are more important than decorative information.
+
+16:9. One scene. Product first. Function clearly visible. One main character. Minimal text. Clean composition. FUTUROLOGIO™ visible. Bright readable lighting.${desc?'\n\nPRODUCT CONCEPT:\n'+desc:''}`}
 window.FUTUROLOGIO_IMAGE_PROMPT=prompt;
 function apply(){const x=document.getElementById('futuroPromptText');if(!x)return;const v=prompt();if(x.value!==v)x.value=v;x.textContent=v}
 window.FUTUROLOGIO_REFRESH_PROMPT=apply;
