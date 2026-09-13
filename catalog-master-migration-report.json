@@ -1,7 +1,7 @@
 {
-  "raw_records_seen": 305,
-  "final_records": 126,
-  "removed_records": 122,
+  "raw_records_seen": 360,
+  "final_records": 183,
+  "removed_records": 44,
   "source_files_seen": [
     "catalog-lote10.json",
     "catalog-lote11.json",
@@ -73,5 +73,42 @@
   "id_range": [
     1,
     192
+  ],
+  "missing_numeric_ids": [
+    4,
+    5,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    140,
+    141,
+    142,
+    143,
+    144,
+    145,
+    146,
+    147,
+    148,
+    149,
+    150,
+    151,
+    152,
+    153,
+    154,
+    155,
+    156,
+    157,
+    158,
+    159,
+    178,
+    179,
+    180,
+    182,
+    183,
+    184,
+    190
   ]
 }
