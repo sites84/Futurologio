@@ -6,8 +6,6 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'catalog.json'
 REPORT = ROOT / 'catalog-master-migration-report.json'
 FIELDS = ['what','realTech','specTech','inventedTech','build','uses','dangers','curiosity','tests']
-MIN = {'what':160,'realTech':45,'specTech':45,'inventedTech':45,'build':45,'uses':30,'dangers':40,'curiosity':70,'tests':70}
-BAD = ('nao informado no lote','todo','tbd')
 
 def text(v):
     if isinstance(v,list): return ' '.join(text(x) for x in v)
@@ -20,13 +18,6 @@ def norm(v):
 def nid(v):
     m=re.search(r'(?:^|[-_])(\d+)$',text(v))
     return int(m.group(1)) if m else 10**9
-
-def valid(p):
-    if not isinstance(p,dict) or not text(p.get('id')) or not text(p.get('name')) or not text(p.get('category')): return False
-    for f in FIELDS:
-        s=text(p.get(f))
-        if len(s)<MIN[f] or any(x in norm(s) for x in BAD): return False
-    return True
 
 def load_json(p):
     try:
@@ -60,26 +51,27 @@ def gather():
         except Exception: pass
     return records,sorted(set(sources))
 
+def quality_score(p):
+    return sum(len(text(p.get(f))) for f in FIELDS) + len(text(p.get('name'))) + len(text(p.get('category')))
+
 def main():
-    raw,sources=gather(); rejected=[]; by_id={}
+    raw,sources=gather(); by_id={}; rejected=[]
     for p in raw:
-        if not valid(p):
-            rejected.append({'id':text(p.get('id')) if isinstance(p,dict) else '', 'name':text(p.get('name')) if isinstance(p,dict) else '', 'reason':'quality'})
-            continue
+        if not isinstance(p,dict) or not text(p.get('id')) or not text(p.get('name')): continue
+        sid=text(p.get('id'))
+        if sid not in by_id or quality_score(p)>quality_score(by_id[sid]): by_id[sid]=p
+    final=[]; names=set(); whats=set()
+    for p in sorted(by_id.values(),key=lambda x:(nid(x.get('id')),text(x.get('id')))):
         q=dict(p)
         for f in FIELDS: q[f]=text(q.get(f)).replace('------------------------------','').strip()
         q['name']=text(q.get('name')); q['category']=text(q.get('category'))
-        sid=text(q.get('id'))
-        if sid not in by_id: by_id[sid]=q
-        elif len(text(q.get('what')))+len(text(q.get('inventedTech'))) > len(text(by_id[sid].get('what')))+len(text(by_id[sid].get('inventedTech'))): by_id[sid]=q
-    final=[]; names=set(); whats=set()
-    for p in sorted(by_id.values(),key=lambda x:(nid(x.get('id')),text(x.get('id')))):
-        n=norm(p.get('name')); w=norm(p.get('what'))
-        if n in names or w in whats:
-            rejected.append({'id':text(p.get('id')),'name':text(p.get('name')),'reason':'duplicate-name-or-what'}); continue
-        names.add(n); whats.add(w); final.append(p)
+        n=norm(q.get('name')); w=norm(q.get('what'))
+        if n in names or (w and w in whats):
+            rejected.append({'id':text(q.get('id')),'name':text(q.get('name')),'reason':'duplicate-name-or-what'}); continue
+        names.add(n); whats.add(w); final.append(q)
     OUT.write_text(json.dumps(final,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-    report={'raw_records_seen':len(raw),'final_records':len(final),'removed_records':len(rejected),'source_files_seen':sources,'id_range':[nid(final[0]['id']),nid(final[-1]['id'])] if final else []}
+    ids=[nid(x.get('id')) for x in final]
+    report={'raw_records_seen':len(raw),'final_records':len(final),'removed_records':len(rejected),'source_files_seen':sources,'id_range':[min(ids),max(ids)] if ids else [],'missing_numeric_ids':[i for i in range(1,193) if i not in set(ids)]}
     REPORT.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     print(json.dumps(report,ensure_ascii=False))
 
