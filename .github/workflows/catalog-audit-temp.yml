@@ -19,10 +19,9 @@ jobs:
       - name: Audit catalog
         run: |
           python3 - <<'PY'
-          import json,base64,re,glob,gzip
+          import json,base64,re,glob,gzip,os
           req=['name','what','realTech','specTech','inventedTech','build','uses','dangers','curiosity','tests','category']
           items=[]
-          files=sorted(set(glob.glob('catalog-*.json')+glob.glob('catalog-*.b64')+glob.glob('frontend/catalog-*.b64')))
           def add(obj,src):
               if isinstance(obj,list):
                   for x in obj:
@@ -30,17 +29,33 @@ jobs:
               elif isinstance(obj,dict):
                   if obj.get('id'): items.append((obj,src))
                   elif isinstance(obj.get('content'),list): add(obj['content'],src)
-          for f in files:
+          def decode_blob(raw):
+              raw=base64.b64decode(raw,validate=False)
+              if raw[:2]==b'\x1f\x8b': raw=gzip.decompress(raw)
+              return raw
+          # JSON catalog files
+          for f in sorted(glob.glob('catalog-*.json')):
               try:
-                  raw=open(f,'rb').read()
-                  if f.endswith('.b64'):
-                      raw=base64.b64decode(raw,validate=False)
-                      if raw[:2]==b'\x1f\x8b': raw=gzip.decompress(raw)
-                  txt=raw.decode('utf-8','ignore').strip()
-                  if txt.startswith('see-file') or txt=='PLACEHOLDER_WILL_FAIL': continue
-                  try: add(json.loads(txt),f)
-                  except Exception: pass
+                  txt=open(f,'rb').read().decode('utf-8','ignore').strip()
+                  if txt!='PLACEHOLDER_WILL_FAIL': add(json.loads(txt),f)
               except Exception: pass
+          # Individual extra gzip/base64 files
+          for f in sorted(glob.glob('catalog-lote3.b64')+glob.glob('catalog-lote18.b64')+glob.glob('catalog-lote19.b64')+glob.glob('frontend/catalog-lote3.b64')+glob.glob('frontend/catalog-lote18.b64')+glob.glob('frontend/catalog-lote19.b64')):
+              try: add(json.loads(decode_blob(open(f,'rb').read()).decode('utf-8','ignore')),f)
+              except Exception: pass
+          # Vol 1 is one gzip stream split across six base64 chunks.
+          for root in ['','frontend/']:
+              fs=[f'{root}catalog-vol1-{i:02d}.b64' for i in range(1,7)]
+              if all(os.path.exists(f) for f in fs):
+                  try: add(json.loads(decode_blob(b''.join(open(f,'rb').read().strip() for f in fs)).decode('utf-8','ignore')),root+'catalog-vol1-01..06.b64')
+                  except Exception: pass
+          # Lote 2 is one gzip stream per part/file, with 01 split into 01a+01b.
+          for root in ['','frontend/']:
+              groups=[[f'{root}catalog-lote2-01a.b64',f'{root}catalog-lote2-01b.b64']]+[[f'{root}catalog-lote2-{i:02d}.b64'] for i in range(2,20)]
+              for fs in groups:
+                  if all(os.path.exists(f) for f in fs):
+                      try: add(json.loads(decode_blob(b''.join(open(f,'rb').read().strip() for f in fs)).decode('utf-8','ignore')),fs[0]+'+'+fs[-1])
+                      except Exception: pass
           def num(x):
               m=re.search(r'-(\d+)$',x.get('id',''))
               return int(m.group(1)) if m else None
@@ -63,10 +78,8 @@ jobs:
                   if not key: continue
                   if key in d:
                       y,ys=d[key]
-                      if n>139 and x.get('id')!=y.get('id'):
-                          dup.append((x,s,y,ys,label))
-                      elif n<=(num(y) or 999999) and (num(y) or 0)>139:
-                          dup.append((y,ys,x,s,label))
+                      if n>139 and x.get('id')!=y.get('id'): dup.append((x,s,y,ys,label))
+                      elif n<=(num(y) or 999999) and (num(y) or 0)>139: dup.append((y,ys,x,s,label))
                   else: d[key]=(x,s)
           seen=set(); out=[]
           for x,s,y,ys,r in dup:
