@@ -1,1 +1,1 @@
-(()=>{'use strict';if(window.__FUTURO_AUTH_SAFE_LOADED)return;window.__FUTURO_AUTH_SAFE_LOADED=true;const s=document.createElement('script');s.src='./frontend/auth-gate-safe.js?v=20260913g';s.defer=true;document.head.appendChild(s);})();
+(()=>{'use strict';if(window.__FUTURO_AUTH_SAFE_LOADED)return;window.__FUTURO_AUTH_SAFE_LOADED=true;const s=document.createElement('script');s.src='./frontend/auth-gate-safe.js?v=20260913h';s.defer=true;document.head.appendChild(s);})();
