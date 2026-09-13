@@ -19,7 +19,7 @@ jobs:
       - name: Audit catalog
         run: |
           python3 - <<'PY'
-          import json,base64,re,glob
+          import json,base64,re,glob,gzip
           req=['name','what','realTech','specTech','inventedTech','build','uses','dangers','curiosity','tests','category']
           items=[]
           files=sorted(set(glob.glob('catalog-*.json')+glob.glob('catalog-*.b64')+glob.glob('frontend/catalog-*.b64')))
@@ -34,8 +34,8 @@ jobs:
               try:
                   raw=open(f,'rb').read()
                   if f.endswith('.b64'):
-                      try: raw=base64.b64decode(raw,validate=False)
-                      except: continue
+                      raw=base64.b64decode(raw,validate=False)
+                      if raw[:2]==b'\x1f\x8b': raw=gzip.decompress(raw)
                   txt=raw.decode('utf-8','ignore').strip()
                   if txt.startswith('see-file') or txt=='PLACEHOLDER_WILL_FAIL': continue
                   try: add(json.loads(txt),f)
