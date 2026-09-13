@@ -1,6 +1,6 @@
 {
   "base_records": 155,
-  "new_records_seen": 109,
+  "new_records_seen": 113,
   "new_records_selected": 37,
   "final_records": 192,
   "new_id_range": [
@@ -21,6 +21,7 @@
     "catalog-lote2-16.b64",
     "catalog-lote2-18.b64",
     "catalog-lote2-19.b64",
+    "frontend/catalog-builder-import-193-196.json",
     "frontend/catalog-lote10.json",
     "frontend/catalog-lote11.json",
     "frontend/catalog-lote12.json",
