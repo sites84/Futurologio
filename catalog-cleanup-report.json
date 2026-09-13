@@ -1,8 +1,8 @@
 {
-  "raw_records_seen": 348,
-  "quality_valid_before_duplicates": 189,
-  "final_records": 155,
-  "removed_records": 71,
+  "raw_records_seen": 319,
+  "quality_valid_before_duplicates": 191,
+  "final_records": 126,
+  "removed_records": 102,
   "source_files_seen": [
     "catalog-lote10.json",
     "catalog-lote11.json",
@@ -228,10 +228,76 @@
       "reason": "section-splice-tests"
     },
     {
+      "id": "lote2-024",
+      "name": "EXTINTOR DE SCROLL INFINITO",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-018"
+    },
+    {
       "id": "lote2-025",
       "name": "DETECTOR DE “ESTOU BEM” MENTIROSO",
       "reason": "duplicate-name-or-what",
       "kept": "lote3-019"
+    },
+    {
+      "id": "lote2-026",
+      "name": "ABSORVEDOR DE HÁLITO DE REUNIÃO MATINAL",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-020"
+    },
+    {
+      "id": "lote2-027",
+      "name": "BLOQUEADOR DE COMPRA POR INVEJA SOCIAL",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-021"
+    },
+    {
+      "id": "lote2-028",
+      "name": "NEUTRALIZADOR DE ESPAÇO PESSOAL INVADIDO",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-022"
+    },
+    {
+      "id": "lote2-029",
+      "name": "DESLIGADOR DE CÂMERA POR PÂNICO",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-023"
+    },
+    {
+      "id": "lote2-030",
+      "name": "DETECTOR DE “VAMOS MARCAR” FALSO",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-024"
+    },
+    {
+      "id": "lote2-031",
+      "name": "SILENCIADOR DE RONCO DE SONECA EM REUNIÃO",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-025"
+    },
+    {
+      "id": "lote2-033",
+      "name": "BLOQUEADOR DE “SÓ MAIS UM EPISÓDIO”",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-027"
+    },
+    {
+      "id": "lote2-034",
+      "name": "MINIMIZADOR DE CONVERSA DE ELEVADOR",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-028"
+    },
+    {
+      "id": "lote2-047",
+      "name": "SILENCIADOR DE MASTIGAÇÃO AUDÍVEL",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-036"
+    },
+    {
+      "id": "lote2-048",
+      "name": "DETECTOR DE ETIQUETA ESQUECIDA NA ROUPA",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-037"
     },
     {
       "id": "lote2-049",
@@ -244,6 +310,30 @@
       "name": "BLOQUEADOR DE ENVIO PARA O CHAT ERRADO",
       "reason": "duplicate-name-or-what",
       "kept": "lote3-039"
+    },
+    {
+      "id": "lote2-051",
+      "name": "MONITOR DE INTERRUPÇÃO EXCESSIVA",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-040"
+    },
+    {
+      "id": "lote2-052",
+      "name": "RECUPERADOR DE INTENÇÃO DE CÔMODO",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-041"
+    },
+    {
+      "id": "lote2-053",
+      "name": "CONTADOR DE VERIFICAÇÃO COMPULSIVA DE TRANCA",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-042"
+    },
+    {
+      "id": "lote2-054",
+      "name": "SUPRESSOR DE BOCEJO EM CADEIA",
+      "reason": "duplicate-name-or-what",
+      "kept": "lote3-043"
     },
     {
       "id": "lote2-055",
@@ -430,12 +520,163 @@
       "name": "FILTRO DE CONVERSA FIADA DE BARBEIRO (HAIR-TALK™)",
       "reason": "generic-repeated-template",
       "repeated_sections": 3
+    },
+    {
+      "id": "produto-160",
+      "name": "MALETA DE ENVELHECIMENTO ELETRÔNICO INDUZIDO (OBSOLESCENCE BRIEFCASE™)",
+      "reason": "generic-repeated-template",
+      "repeated_sections": 8
+    },
+    {
+      "id": "produto-161",
+      "name": "CHUVEIRO DE ENCERRAMENTO DE PERFORMANCE (SHOWER CONCERT LIMITER™)",
+      "reason": "generic-repeated-template",
+      "repeated_sections": 8
+    },
+    {
+      "id": "produto-162",
+      "name": "CESTO DE PÃO COM CONTAGEM REGRESSIVA DE CULPA (BREADBASKET GUILT TIMER™)",
+      "reason": "generic-repeated-template",
+      "repeated_sections": 8
+    },
+    {
+      "id": "produto-163",
+      "name": "APRESENTADOR DE SLIDES COM FALHA PEDAGÓGICA PROGRAMADA (IMPROV CLICKER™)",
+      "reason": "generic-repeated-template",
+      "repeated_sections": 8
+    },
+    {
+      "id": "produto-164",
+      "name": "CARTEIRA DE ENCOLHIMENTO PROGRESSIVO (SHRINKING WALLET™)",
+      "reason": "generic-repeated-template",
+      "repeated_sections": 8
+    },
+    {
+      "id": "produto-165",
+      "name": "MARCADOR DE APROVAÇÃO CIRCULAR (SEVEN STAMPS PROTOCOL™)",
+      "reason": "generic-repeated-template",
+      "repeated_sections": 8
+    },
+    {
+      "id": "produto-166",
+      "name": "ESPELHO DE TREINO COM EMBACAAMENTO POR MERITO",
+      "reason": "generic-repeated-template",
+      "repeated_sections": 8
+    },
+    {
+      "id": "produto-167",
+      "name": "CAIXA DE NEVOA DE ENCERRAMENTO DE DISCUSSAO DE REGRAS",
+      "reason": "generic-repeated-template",
+      "repeated_sections": 8
+    },
+    {
+      "id": "produto-168",
+      "name": "DEVOLVEDOR PROGRESSIVO DE BOLA DE CERCA (FENCE ESCALATION UNIT™)",
+      "reason": "generic-repeated-template",
+      "repeated_sections": 8
+    },
+    {
+      "id": "produto-169",
+      "name": "COMEDOURO DE CULPA MUTUA (SHARED GUILT FEEDER™)",
+      "reason": "generic-repeated-template",
+      "repeated_sections": 8
+    },
+    {
+      "id": "produto-170",
+      "name": "MALA DE DENUNCIA PUBLICA DE EXCESSO DE BAGAGEM (OVERWEIGHT SHAME SUITCASE™)",
+      "reason": "generic-repeated-template",
+      "repeated_sections": 8
+    },
+    {
+      "id": "produto-171",
+      "name": "MESA DE REUNIAO COM CENTRO DE TEMPO",
+      "reason": "generic-repeated-template",
+      "repeated_sections": 8
+    },
+    {
+      "id": "produto-172",
+      "name": "PIAO DE ANSIEDADE PROPORCIONAL DE ESPERA TECNOLOGICA (LOADING SPINNER DESK TOY™)",
+      "reason": "generic-repeated-template",
+      "repeated_sections": 8
+    },
+    {
+      "id": "produto-173",
+      "name": "PAINEL DE CONES DE DESAPROVACAO NO TRANSITO (TRAFFIC CONE JUDGE™)",
+      "reason": "generic-repeated-template",
+      "repeated_sections": 8
+    },
+    {
+      "id": "produto-174",
+      "name": "CAIXA ELETRONICO DE CONSELHO FINANCEIRO NAO SOLICITADO (JUDGY ATM STAND™)",
+      "reason": "generic-repeated-template",
+      "repeated_sections": 8
+    },
+    {
+      "id": "produto-175",
+      "name": "ARMARIO DE ROUPA DOBRADA POR PROCRASTINACAO ASSISTIDA (FOLD DELAY WARDROBE™)",
+      "reason": "generic-repeated-template",
+      "repeated_sections": 8
     }
   ],
   "duplicate_groups": [
     {
+      "removed": "lote2-024",
+      "kept": "lote3-018",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
       "removed": "lote2-025",
       "kept": "lote3-019",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-026",
+      "kept": "lote3-020",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-027",
+      "kept": "lote3-021",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-028",
+      "kept": "lote3-022",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-029",
+      "kept": "lote3-023",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-030",
+      "kept": "lote3-024",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-031",
+      "kept": "lote3-025",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-033",
+      "kept": "lote3-027",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-034",
+      "kept": "lote3-028",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-047",
+      "kept": "lote3-036",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-048",
+      "kept": "lote3-037",
       "reason": "exact-duplicate-name-or-what"
     },
     {
@@ -446,6 +687,26 @@
     {
       "removed": "lote2-050",
       "kept": "lote3-039",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-051",
+      "kept": "lote3-040",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-052",
+      "kept": "lote3-041",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-053",
+      "kept": "lote3-042",
+      "reason": "exact-duplicate-name-or-what"
+    },
+    {
+      "removed": "lote2-054",
+      "kept": "lote3-043",
       "reason": "exact-duplicate-name-or-what"
     },
     {
@@ -576,6 +837,6 @@
   ],
   "id_range": [
     1,
-    133
+    192
   ]
 }
