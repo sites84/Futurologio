@@ -1,4 +1,4 @@
-(()=>{'use strict';if(window.__FUTURO_CATALOG_UNION_V1)return;window.__FUTURO_CATALOG_UNION_V1=true;
+(()=>{'use strict';if(window.__FUTURO_CATALOG_UNION_V2)return;window.__FUTURO_CATALOG_UNION_V2=true;
 const CATS=['Casa','Comida & Cozinha','Transporte','Moda','Animais','Tecnologia','Mente & Comportamento','Meio Ambiente','Escola & Trabalho','Espaço','Sem sentido','Tecnologia do futuro','Indústria','Esportes','Entretenimento','Dinheiro & Negócios','Cidade','Agricultura','Viagem','Comunicação','Energia','Tempo & Clima','Objetos pessoais','Lazer','Museu','Bizarro ou Nojento'];
 const MAP={'Relacionamento':'Mente & Comportamento','Trabalho':'Escola & Trabalho','Escritório':'Escola & Trabalho','Escola':'Escola & Trabalho','Saúde':'Casa','Banheiro':'Casa','Quarto':'Casa','Cozinha':'Comida & Cozinha','Pets':'Animais','Condomínio':'Cidade'};
 const VOL1=Array.from({length:10},(_,i)=>`./catalog-vol1-${String(i+1).padStart(2,'0')}.json`);
@@ -7,7 +7,12 @@ const PARTS=['./catalog-lote2-01a.b64','./catalog-lote2-01b.b64'];
 const FILES=Array.from({length:18},(_,i)=>`./catalog-lote2-${String(i+2).padStart(2,'0')}.b64`);
 function normCat(c){c=String(c||'').trim();if(CATS.includes(c))return c;return MAP[c]||c||'Sem sentido'}
 function clean(list){return (list||[]).filter(x=>x&&(x.id||x.name)).map(x=>({...x,category:normCat(x.category)}))}
-function merge(additions){const old=Array.isArray(window.FUTUROLOGIO_PRODUCTS)?window.FUTUROLOGIO_PRODUCTS:[];const ids=new Set(old.map(x=>String(x.id)));const extra=clean(additions).filter(x=>!ids.has(String(x.id)));window.FUTUROLOGIO_PRODUCTS=old.concat(extra);window.FUTUROLOGIO_CATALOG_UNION_COUNT=(window.FUTUROLOGIO_PRODUCTS||[]).length;return extra.length}
+function score(p){return String((p&&p.what)||'').length+String((p&&p.inventedTech)||'').length}
+function merge(additions){const old=Array.isArray(window.FUTUROLOGIO_PRODUCTS)?window.FUTUROLOGIO_PRODUCTS.slice():[];const map=new Map(old.map(x=>[String(x.id),x]));let added=0,upgraded=0;
+for(const item of clean(additions)){const id=String(item.id||'');if(!id)continue;const prev=map.get(id);if(!prev){map.set(id,item);added++;}else if(score(item)>score(prev)+40){map.set(id,{...prev,...item});upgraded++;}}
+window.FUTUROLOGIO_PRODUCTS=Array.from(map.values());
+window.FUTUROLOGIO_CATALOG_UNION_COUNT=window.FUTUROLOGIO_PRODUCTS.length;
+return added}
 function b64bytes(s){const bin=atob(String(s||'').replace(/\s+/g,''));const a=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)a[i]=bin.charCodeAt(i);return a}
 async function decode(s){const ds=new DecompressionStream('gzip');const stream=new Blob([b64bytes(s)]).stream().pipeThrough(ds);return JSON.parse(await new Response(stream).text())}
 async function loadJson(f){try{const r=await fetch(f,{cache:'no-store'});if(!r.ok)return [];const d=await r.json();return Array.isArray(d)?d:[]}catch{return []}}
