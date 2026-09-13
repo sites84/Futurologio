@@ -2,10 +2,10 @@
   "base_records": 155,
   "new_records_seen": 113,
   "new_records_selected": 37,
-  "final_records": 196,
+  "final_records": 192,
   "new_id_range": [
     156,
-    196
+    192
   ],
   "missing_new_ids": [],
   "source_files_seen": [
