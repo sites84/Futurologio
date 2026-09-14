@@ -13,4 +13,4 @@ const routes=`if(path==='/api/visit'&&request.method==='POST'){try{const b=await
 source=source.replace(marker,marker+'\n'+routes);
 fs.writeFileSync(file,source);
 console.log('Admin routes patched into deployment copy.');
-// Admin dashboard deployment trigger.
+// Force the Worker deployment to re-run after admin authentication/route fixes.
