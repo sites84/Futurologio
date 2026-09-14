@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FUTUROLOGIO™</title>
+<script>
+(function(){
+  const path=location.pathname.replace(/^\/+|\/+$/g,'').split('/');
+  const id=path[path.length-1];
+  if(/^\d+$/.test(id)){
+    location.replace('https://motor-invencoes.edsonfernandesvet.workers.dev/share/'+id);
+    return;
+  }
+  document.documentElement.innerHTML='<body style="font-family:Arial,sans-serif;text-align:center;padding:40px"><h1>FUTUROLOGIO™</h1><p>Link de invenção inválido.</p></body>';
+})();
+</script>
+</head>
+<body>
+<p>FUTUROLOGIO™</p>
+</body>
+</html>
