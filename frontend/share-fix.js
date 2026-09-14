@@ -3,12 +3,13 @@
 if(window.__FUTUROLOGIO_SHARE_FIX)return;
 window.__FUTUROLOGIO_SHARE_FIX=true;
 const API='https://motor-invencoes.edsonfernandesvet.workers.dev';
+const SHARE_BASE='https://sites84.github.io/Futurologio/share/';
 const token=()=>localStorage.getItem('futuro_auth_token')||'';
 function loadRewards(){if(document.getElementById('futuroGamificationEvents'))return;const s=document.createElement('script');s.id='futuroGamificationEvents';s.src='./frontend/gamification-events.js?v=20260910b';document.head.appendChild(s)}
 loadRewards();
 function product(){return window.FUTUROLOGIO_CURRENT_PRODUCT||null}
 function dbId(){const q=new URLSearchParams(location.search).get('db_invention');if(q&&/^\d+$/.test(q))return Number(q);const p=product();try{return Number(p?.__dbId||window.FUTUROLOGIO_CURRENT_DB_ID||window.FUTUROLOGIO_DB_ID_FOR?.(p?.id)||0)}catch{return Number(p?.__dbId||0)}}
-function shareUrl(){const id=dbId();return id?API+'/share/'+id:location.href}
+function shareUrl(){const id=dbId();return id?SHARE_BASE+id:location.href}
 function productData(){const p=product()||{};const name=p.name||document.getElementById('name')?.textContent?.trim()||'Invenção FUTUROLOGIO™';const raw=p.what||p.concept||document.getElementById('what')?.textContent||'';const desc=String(raw).replace(/\s+/g,' ').trim();return {name,desc:desc.length>180?desc.slice(0,177)+'...':desc}}
 function slug(s){return String(s||'produto').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,50)||'produto'}
 function logShare(){const id=dbId();if(!id||!token())return;const h={Authorization:'Bearer '+token(),'content-type':'application/json'};fetch(API+'/api/inventions/'+id+'/share',{method:'POST',headers:h,body:'{}',keepalive:true}).catch(()=>{});fetch(API+'/api/mission-event',{method:'POST',headers:h,body:JSON.stringify({type:'share'}),keepalive:true}).then(()=>window.FUTUROLOGIO_CHECK_CREDIT_REWARDS?.()).catch(()=>{})}
