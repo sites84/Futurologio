@@ -1,5 +1,7 @@
 name: Deploy FUTUROLOGIO Worker
 
+# Force deployment of the current backend/admin route fixes.
+
 on:
   workflow_dispatch:
   push:
