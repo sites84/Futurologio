@@ -17,8 +17,11 @@ The main character must visibly suffer, panic, celebrate incorrectly, regret usi
 Make the consequence unmistakable and funny even without reading the text.
 Use irony, humiliation, absurd escalation, deadpan reactions and macabre-but-comedic consequences. No generic smiling people. No bland futuristic laboratory scene.
 
-CHARACTERS:
+CHARACTERS — VARY THE PROTAGONIST:
 ONE main character, actively involved in the action, with an exaggerated grotesque caricature expression appropriate to the joke. At most TWO secondary characters only when necessary for the punchline. No crowds.
+IMPORTANT: the main character MUST be independently varied for each generated product image. Do NOT use a fixed recurring protagonist, mascot, canonical face, canonical body, or the same-looking person across different products.
+Choose a substantially different protagonist for this image: vary age, apparent gender, skin tone, face shape, hairstyle, hair color, body type, clothing, accessories and overall silhouette. Avoid repeating the same combination used in other FUTUROLOGIO™ images.
+Treat each product image as a separate cast and separate story. There is NO default human character for the FUTUROLOGIO™ universe.
 Characters must interact physically with the invention or its consequences.
 
 VISUAL STYLE — FUTUROLOGIO™:
@@ -68,6 +71,8 @@ Do not use multiple competing speech bubbles.
 Do not cover the product with labels.
 Do not make every surface contain information.
 Do not use political propaganda or generic political posters.
+Do not reuse a recurring protagonist from another FUTUROLOGIO™ image.
+Do not make the protagonist look like the same person across products.
 
 VISUAL STORY EXAMPLE LOGIC:
 The character activates the invention → the machine visibly performs its mechanism → the mechanism produces an absurd consequence → the character realizes what happened → the environment contains a few discreet texts that make the situation even funnier.
@@ -80,7 +85,7 @@ Strong fill light, acid-lime rim light, open shadows, rich material contrast and
 No muddy darkness, no crushed blacks and no rainbow cyberpunk palette.
 
 IMPORTANT NEGATIVE CONSTRAINTS:
-No photoreal photography, anime, flat vector, stock art, corporate advertising, infographic layout, magazine layout, collage, multi-panel composition, empty minimalist product shot, generic smiling character, generic laboratory scene, excessive typography, giant text blocks, multiple large speech bubbles, dashboard UI, scoreboard, dark underexposure, rainbow neon cyberpunk, or the words "Museu Lima".
+No photoreal photography, anime, flat vector, stock art, corporate advertising, infographic layout, magazine layout, collage, multi-panel composition, empty minimalist product shot, generic smiling character, generic laboratory scene, excessive typography, giant text blocks, multiple large speech bubbles, dashboard UI, scoreboard, dark underexposure, rainbow neon cyberpunk, recurring protagonist, repeated canonical human character, or the words "Museu Lima".
 
 FINAL RULE:
 The image must be visually rich, mechanically informative and genuinely funny while remaining one coherent cinematic scene.
@@ -92,7 +97,7 @@ Prioritize this order:
 5. Three or more discreet environmental text elements.
 6. Rich but controlled details.
 
-16:9 horizontal. One scene. Product functioning. Mechanism visible. Dark comedy. Grotesque caricature. At least three integrated Portuguese text elements. FUTUROLOGIO™ branding. Bright cinematic illustration.${desc?'\n\nPRODUCT CONCEPT:\n'+desc:''}`}
+16:9 horizontal. One scene. Product functioning. Mechanism visible. Dark comedy. Grotesque caricature. Varied protagonist. Never reuse the same protagonist across products. At least three integrated Portuguese text elements. FUTUROLOGIO™ branding. Bright cinematic illustration.${desc?'\n\nPRODUCT CONCEPT:\n'+desc:''}`}
 window.FUTUROLOGIO_IMAGE_PROMPT=prompt;
 function apply(){const x=document.getElementById('futuroPromptText');if(!x)return;const v=prompt();if(x.value!==v)x.value=v;x.textContent=v}
 window.FUTUROLOGIO_REFRESH_PROMPT=apply;
