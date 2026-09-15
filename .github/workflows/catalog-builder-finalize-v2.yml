@@ -44,7 +44,7 @@ jobs:
           final=sorted(by_id.values(),key=key)
           ids=[p.get('id') for p in final]
           names={p.get('id'):p.get('name') for p in final}
-          assert len(final)==206 and len(ids)==len(set(ids))
+          assert len(final)==211 and len(ids)==len(set(ids))
           for i in range(156,202): assert f'produto-{i}' in ids
           for pid in ['lote4-001','lote4-002','lote4-003','lote4-004','lote4-005']: assert pid in ids
           assert names['lote4-001']=='ALTAR DE RESSONÂNCIA CRISTALINA POR FATURA (DEBT-CRYSTAL CHARGER™)'
@@ -66,7 +66,7 @@ jobs:
           assert names['produto-201']=='MARCA-PASSO DE CONCORDÂNCIA PSEUDO-INTELECTUAL™'
           (root/'catalog.json').write_text(json.dumps(final,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
           report=json.loads((root/'catalog-master-migration-report.json').read_text(encoding='utf-8'))
-          report.update({'final_records':206,'new_id_range':[156,201],'missing_new_ids':[]})
+          report.update({'final_records':211,'new_id_range':[156,201],'missing_new_ids':[]})
           (root/'catalog-master-migration-report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
           PY
       - name: Recover generic descriptions from historical source records
