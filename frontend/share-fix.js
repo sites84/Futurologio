@@ -3,7 +3,7 @@
 if(window.__FUTUROLOGIO_SHARE_FIX)return;
 window.__FUTUROLOGIO_SHARE_FIX=true;
 const API='https://motor-invencoes.edsonfernandesvet.workers.dev';
-const SHARE_BASE='https://sites84.github.io/Futurologio/share/';
+const SHARE_BASE=API+'/share/';
 const token=()=>localStorage.getItem('futuro_auth_token')||'';
 function loadRewards(){if(document.getElementById('futuroGamificationEvents'))return;const s=document.createElement('script');s.id='futuroGamificationEvents';s.src='./frontend/gamification-events.js?v=20260910b';document.head.appendChild(s)}
 loadRewards();
