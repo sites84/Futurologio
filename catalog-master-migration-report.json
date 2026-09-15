@@ -1,8 +1,8 @@
 {
   "base_records": 155,
-  "new_records_seen": 154,
-  "new_records_selected": 61,
-  "final_records": 216,
+  "new_records_seen": 160,
+  "new_records_selected": 67,
+  "final_records": 222,
   "new_id_range": [
     156,
     201
@@ -23,7 +23,13 @@
     "lote4-017",
     "lote4-018",
     "lote4-019",
-    "lote4-020"
+    "lote4-020",
+    "lote4-021",
+    "lote4-022",
+    "lote4-023",
+    "lote4-024",
+    "lote4-025",
+    "lote4-026"
   ],
   "source_files_seen": [
     "catalog-lote2-04.b64",
@@ -45,6 +51,7 @@
     "frontend/catalog-builder-import-200.json",
     "frontend/catalog-builder-import-201.json",
     "frontend/catalog-builder-import-lote4-016-020.json",
+    "frontend/catalog-builder-import-lote4-021-026.json",
     "frontend/catalog-canonical-161-169.json",
     "frontend/catalog-lote10.json",
     "frontend/catalog-lote11.json",
