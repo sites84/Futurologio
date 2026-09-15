@@ -1,0 +1,30 @@
+[
+  {
+    "id": "produto-161",
+    "name": "CHUVEIRO DE ENCERRAMENTO DE PERFORMANCE (SHOWER CONCERT LIMITER™)",
+    "category": "SAÚDE & BEM-ESTAR",
+    "what": "É um chuveiro elétrico com um microfone embutido na área de ventilação que identifica quando o banho deixou de ser higiene e virou show particular de karaokê, medindo volume, sustentação de notas e repetição do mesmo refrão, e responde aumentando gradualmente a pressão da água em jatos curtos e desconfortáveis até a 'performance' ser encerrada, sem nunca desligar a água quente por completo para não configurar crueldade.",
+    "realTech": "Um microfone eletreto resistente à umidade, um circuito de análise básica de amplitude sonora, uma válvula solenoide para modular a pressão da água, e um resistor de aquecimento padrão de chuveiro elétrico comum.",
+    "specTech": "Modelos especulativos poderiam incluir reconhecimento de afinação musical real para diferenciar cantores talentosos de tentativas trágicas, aplicando penalidades de pressão de água proporcionais ao desvio de tom, não apenas ao volume.",
+    "inventedTech": "Válvula de Constrangimento Hídrico™: uma tecnologia fictícia que converte decibéis sustentados acima de oito segundos diretamente em picos de pressão de água, como se o cano tivesse opinião própria sobre a qualidade vocal do usuário.",
+    "build": "Uma unidade de chuveiro elétrico padrão modificada com um compartimento extra vedado para o microfone e a placa de análise sonora, uma válvula solenoide instalada na tubulação de entrada, e um pequeno LED indicador externo que pisca em vermelho quando a 'performance' está prestes a ser interrompida.",
+    "uses": "Usado por moradores de apartamentos com paredes finas, por pais tentando reduzir a conta de água de adolescentes, e por colegas de república fazendo campanha silenciosa contra o repertório de axé matinal de um dos moradores.",
+    "dangers": "Há risco de choques térmicos leves pela variação repentina de pressão, reclamações de usuários que juram estar apenas cantarolando baixinho, e um caso documentado de pessoa que passou a tomar banho em silêncio total por puro medo do chuveiro.",
+    "curiosity": "A equipe de testes descobriu que a música mais frequentemente interrompida pelo protótipo foi, sem exceção, a mesma balada de rompimento tocada em loop por usuários recém-solteiros, um padrão que ninguém pediu para descobrir.",
+    "tests": "Testes incluíram simulação com cantores profissionais e amadores desastrosos, teste de resistência da válvula a 20.000 ciclos de abertura e fechamento, teste de infiltração de água no microfone, e teste específico de detecção de 'refrão repetido mais de três vezes seguidas'."
+  },
+  {
+    "id": "produto-169",
+    "name": "COMEDOURO DE CULPA MÚTUA (SHARED GUILT FEEDER™)",
+    "category": "ANIMAIS & PETS",
+    "what": "É um comedouro de pets com dois compartimentos conectados por um mecanismo mecânico simples: o compartimento do animal só libera a ração automaticamente depois que o dono retira e come, de fato, uma colher de um petisco humano idêntico em cor e formato colocado no compartimento paralelo, uma forma física e levemente cruel de garantir que ninguém mais esqueça de alimentar o pet na correria da manhã.",
+    "realTech": "Um mecanismo de báscula mecânica simples ligando os dois compartimentos, um sensor de peso que detecta a remoção do petisco humano, e uma trava eletromecânica de baixo consumo que libera a ração do pet somente após a condição ser satisfeita.",
+    "specTech": "Modelos especulativos poderiam incorporar sensores de mastigação para confirmar que o dono realmente ingeriu o petisco e não apenas fingiu, encerrando de vez qualquer tentativa de burlar o sistema.",
+    "inventedTech": "Vínculo Nutricional Recíproco™: uma tecnologia fictícia que sincroniza artificialmente a fome do dono e do animal por meio de um mecanismo puramente mecânico disfarçado de gesto emocional profundo entre espécies.",
+    "build": "Uma base plástica dupla com dois compartimentos espelhados de tamanhos proporcionais, um mecanismo de báscula central visível entre eles, e uma trava de liberação de ração posicionada sob o compartimento do animal, ativada apenas pelo peso reduzido do lado humano.",
+    "uses": "Usado por pessoas que esquecem de comer no meio da correria do dia, por famílias que discutem sobre de quem era a vez de alimentar o cachorro, e por donos de gatos que descobriram, sem querer, uma forma engraçada de lembrar do próprio café da manhã.",
+    "dangers": "Há risco de o dono comer petiscos de pet por engano em dias de pressa extrema, reclamações sobre o sabor duvidoso dos petiscos 'idênticos', e casos de animais frustrados assistindo ao dono demorar demais para cumprir sua parte do trato.",
+    "curiosity": "Nos testes internos, um dos avaliadores confessou ter comido, sem perceber a diferença de sabor, três petiscos de cachorro em uma única semana, um dado que a equipe decidiu não divulgar na embalagem final do produto.",
+    "tests": "Testes incluíram 1.000 ciclos de báscula mecânica, teste de sensibilidade do sensor de peso para pequenas quantidades removidas, teste de resistência da trava a tentativas de sabotagem com objetos pesados, e teste de aceitação de sabor comparando petiscos humanos e animais lado a lado."
+  }
+]
