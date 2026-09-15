@@ -1,0 +1,66 @@
+{
+  "catalog_records": 201,
+  "generic_detected": 14,
+  "recovered": 0,
+  "recovered_ids": [],
+  "missing": [
+    {
+      "id": "produto-160",
+      "name": "MALETA DE ENVELHECIMENTO ELETRÔNICO INDUZIDO (OBSOLESCENCE BRIEFCASE™)"
+    },
+    {
+      "id": "produto-162",
+      "name": "CESTO DE PÃO COM CONTAGEM REGRESSIVA DE CULPA (BREADBASKET GUILT TIMER™)"
+    },
+    {
+      "id": "produto-163",
+      "name": "APRESENTADOR DE SLIDES COM FALHA PEDAGÓGICA PROGRAMADA (IMPROV CLICKER™)"
+    },
+    {
+      "id": "produto-164",
+      "name": "CARTEIRA DE ENCOLHIMENTO PROGRESSIVO (SHRINKING WALLET™)"
+    },
+    {
+      "id": "produto-165",
+      "name": "MARCADOR DE APROVAÇÃO CIRCULAR (SEVEN STAMPS PROTOCOL™)"
+    },
+    {
+      "id": "produto-166",
+      "name": "ESPELHO DE TREINO COM EMBACAAMENTO POR MERITO"
+    },
+    {
+      "id": "produto-167",
+      "name": "CAIXA DE NEVOA DE ENCERRAMENTO DE DISCUSSAO DE REGRAS"
+    },
+    {
+      "id": "produto-168",
+      "name": "DEVOLVEDOR PROGRESSIVO DE BOLA DE CERCA (FENCE ESCALATION UNIT™)"
+    },
+    {
+      "id": "produto-170",
+      "name": "MALA DE DENUNCIA PUBLICA DE EXCESSO DE BAGAGEM (OVERWEIGHT SHAME SUITCASE™)"
+    },
+    {
+      "id": "produto-171",
+      "name": "MESA DE REUNIAO COM CENTRO DE TEMPO"
+    },
+    {
+      "id": "produto-172",
+      "name": "PIAO DE ANSIEDADE PROPORCIONAL DE ESPERA TECNOLOGICA (LOADING SPINNER DESK TOY™)"
+    },
+    {
+      "id": "produto-173",
+      "name": "PAINEL DE CONES DE DESAPROVACAO NO TRANSITO (TRAFFIC CONE JUDGE™)"
+    },
+    {
+      "id": "produto-174",
+      "name": "CAIXA ELETRONICO DE CONSELHO FINANCEIRO NAO SOLICITADO (JUDGY ATM STAND™)"
+    },
+    {
+      "id": "produto-175",
+      "name": "ARMARIO DE ROUPA DOBRADA POR PROCRASTINACAO ASSISTIDA (FOLD DELAY WARDROBE™)"
+    }
+  ],
+  "source_records_scanned": 117,
+  "repair_sql_statements": 0
+}
