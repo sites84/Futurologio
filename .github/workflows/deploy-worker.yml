@@ -82,7 +82,6 @@ jobs:
           set -e
           node backend/patch-admin-routes.mjs
           node backend/patch-top-likes.mjs
-          node backend/patch-google-new-user.mjs
           node backend/patch-image-routes.mjs
           node backend/patch-share-preview.mjs
           node backend/patch-avatar-routes.mjs
