@@ -4,7 +4,7 @@
   "recovered": 0,
   "recovered_ids": [],
   "missing": [],
-  "source_records_scanned": 136,
+  "source_records_scanned": 141,
   "repair_sql_statements": 16,
   "repair_source_ids": [
     "produto-160",

@@ -3199,17 +3199,17 @@
   },
   {
     "id": "produto-190",
-    "name": "PEDAL DE URGÊNCIA FICTÍCIA™",
-    "category": "ESCOLA & TRABALHO",
-    "what": "Um pedal discreto sob a mesa que, quando pressionado, transforma visualmente as telas do escritório em uma falsa crise de TI, exibindo compilação crítica, migração travada ou terminal de erro para conceder ao usuário alguns minutos de imunidade corporativa.",
-    "realTech": "Pedais de macro, controladores físicos, microcomputadores com saída de vídeo e técnicas de composição de interfaces permitem construir demonstrações visuais controladas sem alterar necessariamente o sistema operacional principal.",
-    "specTech": "Um microcomputador externo poderia gerar uma camada visual de terminal e sincronizá-la com displays de demonstração, respondendo a eventos de entrada para parecer uma atividade técnica em andamento.",
-    "inventedTech": "Algoritmo de Suor Frio™ produz erros personalizados de aparência corporativa e um Modo Sênior minimalista, baseado em uma única linha de terminal piscando para intimidar observadores.",
-    "build": "Pedal de alumínio, microcomputador compacto, circuito de controle de vídeo, bateria e adesivo de monitor com aviso de reindexação. A proposta é uma instalação física de comédia, não uma ferramenta para comprometer sistemas reais.",
-    "uses": "Esquetes, gravações, performances e humor corporativo em ambientes controlados. Não deve ser usado para enganar equipes de TI ou falsificar incidentes reais.",
-    "dangers": "Pode gerar confusão, perda de confiança ou problemas profissionais se usado como fraude. O conceito deve permanecer em ambientes de demonstração ou entretenimento autorizado.",
-    "curiosity": "A ideia satiriza a performatividade de ocupação associada aos chamados bullshit jobs: parecer ocupado pode se tornar parte do próprio trabalho. Aqui, a tela literalmente trabalha mais que o funcionário.",
-    "tests": "Um analista de dados usou a simulação em uma sexta-feira e ganhou algumas horas de tranquilidade. Na segunda-feira, porém, o gerente perguntou pelo suposto erro e o usuário descobriu que uma mentira visual também precisa de documentação."
+    "name": "METRÔNOMO DE DESVIO™",
+    "category": "Transporte",
+    "what": "Uma palmilha inteligente para corredores estreitos que detecta a aproximação de outra pessoa e emite uma vibração indicando uma direção de passagem, transformando o clássico desencontro de esquerda e direita em uma coreografia tecnológica absurda.",
+    "realTech": "Sensores de distância, ToF, acelerômetros, microcontroladores e atuadores hápticos são tecnologias existentes em dispositivos compactos. Modelos matemáticos também estudam o fluxo de pedestres.",
+    "specTech": "Um sensor frontal estima a distância e a direção de aproximação e um algoritmo simples escolhe uma indicação tátil para cada encontro detectado.",
+    "inventedTech": "Motor de Teoria dos Jogos de Calçada™ escolhe a direção com base em um equilíbrio espacial fictício, tentando impedir que duas pessoas tomem a mesma decisão simultaneamente.",
+    "build": "Palmilha flexível com sensor de distância, atuadores de vibração, microcontrolador, memória local e bateria fina recarregável. O dispositivo apenas sinaliza e nunca movimenta o usuário.",
+    "uses": "Corredores de supermercados, escritórios, hotéis, hospitais e outros espaços nos quais duas pessoas frequentemente precisam escolher uma direção de passagem.",
+    "dangers": "Uma orientação pode ser ignorada ou contradita por outra pessoa. O usuário deve continuar olhando o caminho e nunca tratar a vibração como substituta da atenção e do bom senso.",
+    "curiosity": "O estudo do movimento coletivo de pedestres mostra que pessoas ajustam suas trajetórias continuamente. O FUTUROLOGIO™ resolveu transformar esse comportamento normal em um campeonato imaginário de quem possui a prioridade do corredor.",
+    "tests": "Um estagiário tímido utilizou o protótipo durante uma semana em corredores movimentados. A maioria dos encontros terminou sem a tradicional dança lateral. Em um encontro especialmente confuso, os dois pedestres escolheram direções opostas, pararam, riram e seguiram caminhos diferentes."
   },
   {
     "id": "produto-191",
