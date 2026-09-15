@@ -1,6 +1,6 @@
 {
   "base_records": 155,
-  "new_records_seen": 139,
+  "new_records_seen": 144,
   "new_records_selected": 51,
   "final_records": 206,
   "new_id_range": [
@@ -92,6 +92,7 @@
     "frontend/catalog-recovery-172.json",
     "frontend/catalog-recovery-173.json",
     "frontend/catalog-recovery-174.json",
-    "frontend/catalog-recovery-175.json"
+    "frontend/catalog-recovery-175.json",
+    "frontend/catalog-recovery-lote4-001-005.json"
   ]
 }
