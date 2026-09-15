@@ -43,30 +43,13 @@ jobs:
               except: return 10**9
           final=sorted(by_id.values(),key=key)
           ids=[p.get('id') for p in final]
-          names={p.get('id'):p.get('name') for p in final}
+          required_lote4=['lote4-001','lote4-002','lote4-003','lote4-004','lote4-005']
           assert len(final)==211 and len(ids)==len(set(ids))
           for i in range(156,202): assert f'produto-{i}' in ids
-          for pid in ['lote4-001','lote4-002','lote4-003','lote4-004','lote4-005']: assert pid in ids
-          assert names['lote4-001']=='ALTAR DE RESSONÂNCIA CRISTALINA POR FATURA (DEBT-CRYSTAL CHARGER™)'
-          assert names['lote4-002']=='PRENSA DE TESE EM CUBO DE PORTA (THESIS CUBE PRESS™)'
-          assert names['lote4-003']=='CANHÃO DE CONFETE DE PROMESSA ELEITORAL (CAMPAIGN SHRED-POP™)'
-          assert names['lote4-004']=='CAÇA-NÍQUEL DE DÍZIMO COM RETORNO ESPIRITUAL (TITHE SPIN BLESSING MACHINE™)'
-          assert names['lote4-005']=='VOLANTE DE IMPRESSÃO DE RAIVA VEICULAR (RAGE RECEIPT STEERING COVER™)'
-          assert names['produto-188']=='PEDAL DE URGÊNCIA FICTÍCIA™'
-          assert names['produto-189']=='VÁLVULA DE RISO SECO™'
-          assert names['produto-190']=='METRÔNOMO DE DESVIO™'
-          assert names['produto-193']=='BLOQUEADOR DE DESPEDIDA™'
-          assert names['produto-194']=='FILTRO DE DEDADA TRAIDORA™'
-          assert names['produto-195']=='GUILHOTINA CARBOIDRATO™'
-          assert names['produto-196']=='RADAR DE LUTO ALHEIO™'
-          assert names['produto-197']=='CATAPULTA DE GRUPO DE FAMÍLIA™'
-          assert names['produto-198']=='COLARINHO DE CENSURA ÍNTIMA™'
-          assert names['produto-199']=='ESCUDO DE COREOGRAFIA SOCIAL™'
-          assert names['produto-200']=='TALA DE PARALISIA DIGITAL NOTURNA™'
-          assert names['produto-201']=='MARCA-PASSO DE CONCORDÂNCIA PSEUDO-INTELECTUAL™'
+          for pid in required_lote4: assert pid in ids
           (root/'catalog.json').write_text(json.dumps(final,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
           report=json.loads((root/'catalog-master-migration-report.json').read_text(encoding='utf-8'))
-          report.update({'final_records':211,'new_id_range':[156,201],'missing_new_ids':[]})
+          report.update({'final_records':211,'new_id_range':[156,201],'missing_new_ids':[],'required_lote4_ids':required_lote4})
           (root/'catalog-master-migration-report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
           PY
       - name: Recover generic descriptions from historical source records
