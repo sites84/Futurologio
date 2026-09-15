@@ -5,5 +5,23 @@
   "recovered_ids": [],
   "missing": [],
   "source_records_scanned": 131,
-  "repair_sql_statements": 0
+  "repair_sql_statements": 16,
+  "repair_source_ids": [
+    "produto-160",
+    "produto-161",
+    "produto-162",
+    "produto-163",
+    "produto-164",
+    "produto-165",
+    "produto-166",
+    "produto-167",
+    "produto-168",
+    "produto-169",
+    "produto-170",
+    "produto-171",
+    "produto-172",
+    "produto-173",
+    "produto-174",
+    "produto-175"
+  ]
 }
