@@ -50,6 +50,7 @@ def gather_new():
     groups += [[ROOT/f'catalog-lote2-{i:02d}.b64'] for i in range(2,20)]
     groups += [[ROOT/x] for x in ('catalog-lote3.b64','catalog-lote18.b64','catalog-lote19.b64')]
     groups += [[ROOT/'frontend/catalog-migration-156-159.b64']]
+    groups += [[ROOT/'catalog-canonical-160-175.b64']]
     for g in groups:
         if not all(p.exists() for p in g): continue
         try:
@@ -80,7 +81,7 @@ def main():
         q['name']=text(q.get('name')); q['category']=text(q.get('category'))
         final.append(q)
     OUT.write_text(json.dumps(final,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-    ids=[nid(x.get('id')) for x in final]; idset=set(ids); new_ids=sorted(i for i in ids if 156<=i<=192)
+    ids=[nid(x.get('id')) for x in final]; new_ids=sorted(i for i in ids if 156<=i<=192)
     report={'base_records':len(base),'new_records_seen':len(new_records),'new_records_selected':len(candidates),'final_records':len(final),'new_id_range':[min(new_ids),max(new_ids)] if new_ids else [],'missing_new_ids':[i for i in range(156,193) if i not in set(new_ids)],'source_files_seen':sources}
     REPORT.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     print(json.dumps(report,ensure_ascii=False))
