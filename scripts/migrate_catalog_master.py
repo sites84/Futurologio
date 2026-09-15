@@ -69,9 +69,8 @@ def main():
     candidates={}
     for p in new_records:
         if not isinstance(p,dict) or not text(p.get('id')) or not text(p.get('name')): continue
-        n=nid(p.get('id'))
-        if 156 <= n <= 192:
-            sid=text(p.get('id'))
+        sid=text(p.get('id')); n=nid(sid)
+        if 156 <= n <= 192 or sid.startswith('lote4-'):
             if sid not in candidates or score(p)>score(candidates[sid]): candidates[sid]=p
     for sid,p in candidates.items(): by_id[sid]=p
     final=[]
@@ -81,8 +80,10 @@ def main():
         q['name']=text(q.get('name')); q['category']=text(q.get('category'))
         final.append(q)
     OUT.write_text(json.dumps(final,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-    ids=[nid(x.get('id')) for x in final]; new_ids=sorted(i for i in ids if 156<=i<=192)
-    report={'base_records':len(base),'new_records_seen':len(new_records),'new_records_selected':len(candidates),'final_records':len(final),'new_id_range':[min(new_ids),max(new_ids)] if new_ids else [],'missing_new_ids':[i for i in range(156,193) if i not in set(new_ids)],'source_files_seen':sources}
+    ids=[str(x.get('id')) for x in final]
+    new_ids=sorted(i for i in [nid(x.get('id')) for x in final] if 156<=i<=192)
+    lote4_ids=sorted(x for x in ids if x.startswith('lote4-'))
+    report={'base_records':len(base),'new_records_seen':len(new_records),'new_records_selected':len(candidates),'final_records':len(final),'new_id_range':[min(new_ids),max(new_ids)] if new_ids else [],'missing_new_ids':[i for i in range(156,193) if i not in set(new_ids)],'lote4_ids':lote4_ids,'source_files_seen':sources}
     REPORT.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     print(json.dumps(report,ensure_ascii=False))
 
