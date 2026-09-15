@@ -24,28 +24,20 @@ jobs:
           root=Path('.')
           catalog=json.loads((root/'catalog.json').read_text(encoding='utf-8'))
           by_id={str(p.get('id')):p for p in catalog if isinstance(p,dict) and p.get('id')}
-          # Preserve the canonical corrections from the previous Builder import.
           for path in ['frontend/catalog-lote17-03.json','frontend/catalog-lote17-04.json']:
               src=json.loads((root/path).read_text(encoding='utf-8'))
               if isinstance(src,dict): src=[src]
               for p in src:
                   if str(p.get('id')) in {'produto-188','produto-189','produto-190'}:
                       by_id[str(p['id'])]=p
-          # Re-apply the durable Builder imports 193-201 after every master rebuild.
-          for path in ['frontend/catalog-builder-import-193-196.json',
-                       'frontend/catalog-builder-import-197.json',
-                       'frontend/catalog-builder-import-198.json',
-                       'frontend/catalog-builder-import-199.json',
-                       'frontend/catalog-builder-import-200.json',
-                       'frontend/catalog-builder-import-201.json']:
+          for path in ['frontend/catalog-builder-import-193-196.json','frontend/catalog-builder-import-197.json','frontend/catalog-builder-import-198.json','frontend/catalog-builder-import-199.json','frontend/catalog-builder-import-200.json','frontend/catalog-builder-import-201.json']:
               src=json.loads((root/path).read_text(encoding='utf-8'))
               if isinstance(src,dict): src=[src]
               for p in src:
                   pid=str(p.get('id',''))
                   if pid.startswith('produto-'):
                       n=int(pid.rsplit('-',1)[1])
-                      if 193 <= n <= 201:
-                          by_id[pid]=p
+                      if 193 <= n <= 201: by_id[pid]=p
           def key(p):
               try: return int(str(p.get('id','')).rsplit('-',1)[1])
               except: return 10**9
@@ -70,12 +62,13 @@ jobs:
           report=json.loads((root/'catalog-master-migration-report.json').read_text(encoding='utf-8'))
           report.update({'final_records':201,'new_id_range':[156,201],'missing_new_ids':[]})
           (root/'catalog-master-migration-report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-          print('CATALOG OK: 201 produtos; IDs 156-201 completos; 188-190 canonizados; 193-201 integrados.')
           PY
-      - name: Commit master
+      - name: Recover generic descriptions from historical source records
+        run: python scripts/recover_generic_catalog.py
+      - name: Commit master and recovery
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add catalog.json catalog-master-migration-report.json
-          git commit -m 'catalog-master: finalize 197-201 [catalog-master]' || exit 0
+          git add catalog.json catalog-master-migration-report.json catalog-generic-recovery-report.json backend/catalog_generic_repair.sql
+          git commit -m 'catalog-master: recover generic product descriptions [catalog-master]' || exit 0
           git push
