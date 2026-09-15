@@ -1,6 +1,6 @@
 {
   "base_records": 155,
-  "new_records_seen": 121,
+  "new_records_seen": 123,
   "new_records_selected": 37,
   "final_records": 192,
   "new_id_range": [
@@ -67,6 +67,8 @@
     "frontend/catalog-lote8.json",
     "frontend/catalog-lote9.json",
     "frontend/catalog-migration-156-159.b64",
-    "frontend/catalog-recovery-160.json"
+    "frontend/catalog-recovery-160.json",
+    "frontend/catalog-recovery-162.json",
+    "frontend/catalog-recovery-163.json"
   ]
 }
