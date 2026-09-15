@@ -10,7 +10,7 @@ if(!s.includes("url.searchParams.get('mode')==='top'")){
 }
 
 if(!s.includes("mode==='top'?'likes DESC,i.created_at DESC'")){
-  const re=/order=mode==='week'\?`\$\{week\} DESC,i\.created_at DESC`:'i\.created_at DESC'/;
+  const re=/order=mode==='week'\?.{1,220}:'i\.created_at DESC'/;
   if(!re.test(s))throw new Error('Explore order marker not found in worker.js');
   s=s.replace(re,"order=mode==='week'?`${week} DESC,i.created_at DESC`:mode==='top'?'likes DESC,i.created_at DESC':'i.created_at DESC'");
 }
