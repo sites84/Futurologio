@@ -3,6 +3,7 @@ const REQUIRED=['what','realTech','specTech','inventedTech','build','uses','dang
 const MIN={what:160,realTech:45,specTech:45,inventedTech:45,build:45,uses:30,dangers:40,curiosity:70,tests:70};
 const CAT={'CASA & VIDA DOMÉSTICA':'Casa','TRABALHO & ESCRITÓRIO':'Escola & Trabalho','TRANSPORTE & TRÂNSITO':'Transporte','RELACIONAMENTOS & FAMÍLIA':'Mente & Comportamento','TECNOLOGIA & FUTURO':'Tecnologia do futuro','COMIDA & RESTAURANTES':'Comida & Cozinha','EDUCAÇÃO & FACULDADE':'Escola & Trabalho','DINHEIRO & CONSUMISMO':'Dinheiro & Negócios','SOCIEDADE & BUROCRACIA':'Cidade','ACADEMIA & ESPORTE':'Esportes','LAZER & ENTRETENIMENTO':'Entretenimento','VIZINHANÇA & CONVIVÊNCIA':'Cidade','ANIMAIS & PETS':'Animais','VIAGENS & TURISMO':'Viagem'};
 const LABELS={
+id:['id','identificador'],
 name:['nome do produto','nome da invenção','nome da invencao','nome','produto','invenção','invencao','título','titulo'],
 category:['categoria','category'],
 what:['o que é','o que e','descrição do produto','descricao do produto','descrição','descricao','como funciona','funcionamento'],
@@ -28,7 +29,6 @@ function labelKey(line){
  if(!s)return null;
  const n=norm(s);
  for(const [key,alts] of Object.entries(LABELS))for(const a of alts){const na=norm(a);if(n===na||n.startsWith(na+' '))return key;}
- // Aceita variações naturais de títulos produzidos pelo ChatGPT.
  if(/^(tecnologias?|princ[ií]pios?)\s+(existentes?|reais?)(\s+hoje|\s+atualmente)?$/.test(n))return'realTech';
  if(/^(especifica(c|ç)(o|õ)es?|tecnologia)\s+(t(e|é)cnicas?|espec[ií]fica(s)?)(\s+utilizada(s)?)?$/.test(n))return'specTech';
  if(/^(tecnologias?|tecnologia)\s+(especulativa(s)?|inventada(s)?|fict[ií]cia(s)?)$/.test(n))return'inventedTech';
@@ -42,6 +42,9 @@ function productHeading(line){
  if(!m)m=s.match(/^(?:produto\s+)?(\d+)\s+(.+)$/i);
  return m?strip(m[2]):null;
 }
+function isIdStart(line){
+ const s=strip(line);return /^id\s*[:：]\s*\S+/i.test(s);
+}
 function parseBlock(block,headingName){
  const lines=block.replace(/\r/g,'').split('\n');const p={};if(headingName)p.name=headingName;let current=null;
  for(const original of lines){
@@ -49,7 +52,7 @@ function parseBlock(block,headingName){
   const key=labelKey(line);
   if(key){
    const cleaned=strip(line);const idx=cleaned.search(/[:：]/);const value=idx>=0?cleaned.slice(idx+1).trim():'';
-   if(key==='name'){if(value)p.name=value;}else{current=key;if(value)p[key]=value;}
+   if(key==='name'){if(value)p.name=value;}else if(key==='id'){if(value)p.id=value;}else{current=key;if(value)p[key]=value;}
    continue;
   }
   if(current){const add=strip(line);if(add)p[current]=(p[current]?p[current]+' ':'')+add;}
@@ -62,7 +65,12 @@ function parseBlock(block,headingName){
 }
 function rawToProducts(raw){
  const lines=raw.replace(/\r/g,'').split('\n');const chunks=[];let cur=[];let heading=null;
- for(const line of lines){const h=productHeading(line.trim());if(h){if(cur.length||heading)chunks.push({heading,lines:cur});cur=[];heading=h;}else cur.push(line);}
+ for(const line of lines){
+  const h=productHeading(line.trim());
+  if(h){if(cur.length||heading)chunks.push({heading,lines:cur});cur=[];heading=h;}
+  else if(isIdStart(line)){if(cur.length||heading)chunks.push({heading,lines:cur});cur=[line];heading=null;}
+  else cur.push(line);
+ }
  if(cur.length||heading)chunks.push({heading,lines:cur});
  return chunks.map(c=>parseBlock(c.lines.join('\n'),c.heading)).filter(p=>p.name||p.what);
 }
