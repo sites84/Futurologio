@@ -100,5 +100,12 @@
     "frontend/catalog-recovery-175.json",
     "frontend/catalog-recovery-lote4-001-005.json",
     "frontend/catalog-recovery-lote4-011-015.json"
+  ],
+  "required_lote4_ids": [
+    "lote4-001",
+    "lote4-002",
+    "lote4-003",
+    "lote4-004",
+    "lote4-005"
   ]
 }
