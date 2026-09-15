@@ -1,6 +1,6 @@
 {
   "base_records": 155,
-  "new_records_seen": 128,
+  "new_records_seen": 134,
   "new_records_selected": 37,
   "final_records": 192,
   "new_id_range": [
@@ -74,6 +74,12 @@
     "frontend/catalog-recovery-165.json",
     "frontend/catalog-recovery-166.json",
     "frontend/catalog-recovery-167.json",
-    "frontend/catalog-recovery-168.json"
+    "frontend/catalog-recovery-168.json",
+    "frontend/catalog-recovery-170.json",
+    "frontend/catalog-recovery-171.json",
+    "frontend/catalog-recovery-172.json",
+    "frontend/catalog-recovery-173.json",
+    "frontend/catalog-recovery-174.json",
+    "frontend/catalog-recovery-175.json"
   ]
 }
