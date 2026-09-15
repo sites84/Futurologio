@@ -1,13 +1,20 @@
 {
   "base_records": 155,
-  "new_records_seen": 135,
-  "new_records_selected": 37,
-  "final_records": 201,
+  "new_records_seen": 139,
+  "new_records_selected": 42,
+  "final_records": 197,
   "new_id_range": [
     156,
-    201
+    192
   ],
   "missing_new_ids": [],
+  "lote4_ids": [
+    "lote4-001",
+    "lote4-002",
+    "lote4-003",
+    "lote4-004",
+    "lote4-005"
+  ],
   "source_files_seen": [
     "catalog-lote2-04.b64",
     "catalog-lote2-05.b64",
@@ -64,6 +71,10 @@
     "frontend/catalog-lote21-10.json",
     "frontend/catalog-lote21.json",
     "frontend/catalog-lote4-001.json",
+    "frontend/catalog-lote4-002.json",
+    "frontend/catalog-lote4-003.json",
+    "frontend/catalog-lote4-004.json",
+    "frontend/catalog-lote4-005.json",
     "frontend/catalog-lote7.json",
     "frontend/catalog-lote8.json",
     "frontend/catalog-lote9.json",
