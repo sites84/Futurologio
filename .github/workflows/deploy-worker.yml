@@ -1,7 +1,5 @@
 name: Deploy FUTUROLOGIO Worker
 
-# Force deployment of the current backend/admin route fixes.
-
 on:
   workflow_dispatch:
   push:
@@ -118,25 +116,20 @@ jobs:
           wrangler d1 execute futurologio --remote --file=backend/catalog_seed.sql --config=backend/wrangler.deploy.toml
 
       - name: Repair existing user inventions that contain the generic catalog text
-        if: ${{ hashFiles('backend/catalog_generic_repair.sql') != '' }}
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
           set -e
           if [ -s backend/catalog_generic_repair.sql ]; then
+            echo 'Applying generic-description repair to existing INVENTIONS rows.'
             wrangler d1 execute futurologio --remote --file=backend/catalog_generic_repair.sql --config=backend/wrangler.deploy.toml
           else
-            echo 'No generic catalog repair statements generated.'
+            echo 'No generic-description repair statements generated.'
           fi
 
-      - name: Commit recovered catalog and audit report
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add catalog.json catalog-generic-recovery-report.json backend/catalog_generic_repair.sql
-          git commit -m 'catalog: recover generic descriptions and repair report' || exit 0
-          git push
+      - name: Show catalog recovery audit
+        run: cat catalog-generic-recovery-report.json
 
       - name: Preserve session secret
         working-directory: backend
