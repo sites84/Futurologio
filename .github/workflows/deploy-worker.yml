@@ -7,6 +7,8 @@ on:
   push:
     paths:
       - 'backend/**'
+      - 'catalog.json'
+      - 'scripts/recover_generic_catalog.py'
       - 'index.html'
       - '.github/workflows/deploy-worker.yml'
 
@@ -20,6 +22,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Recover generic catalog descriptions
+        run: python scripts/recover_generic_catalog.py
 
       - name: Check Cloudflare secrets
         env:
@@ -99,11 +104,6 @@ jobs:
           set -e
           if [ ! -f catalog.json ]; then
             node -e "const fs=require('fs');const html=fs.readFileSync('index.html','utf8');const m=html.match(/const PRODUCTS=(\\[.*?\\]);/s);if(!m)throw new Error('PRODUCTS catalog not found in index.html');const products=JSON.parse(m[1]);if(products.length<139)throw new Error('Catalog unexpectedly small: '+products.length);fs.writeFileSync('catalog.json',JSON.stringify(products,null,2)+'\\n');console.log('Created standalone catalog with '+products.length+' products.');"
-            git config user.name 'github-actions[bot]'
-            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git add catalog.json
-            git commit -m 'Add standalone FUTUROLOGIO catalog'
-            git push
           else
             echo 'Standalone catalog already exists.'
           fi
@@ -116,6 +116,27 @@ jobs:
           set -e
           node -e "const fs=require('fs'),crypto=require('crypto');const products=JSON.parse(fs.readFileSync('catalog.json','utf8'));if(products.length<139)throw new Error('Catalog unexpectedly small: '+products.length);const q=v=>String(v??'').replace(/'/g,\"''\");const norm=v=>String(v??'').toLowerCase().replace(/\\s+/g,' ').trim();const sql=products.map(p=>{const fp=crypto.createHash('sha256').update(norm(p.name+'|'+p.category+'|'+(p.what||''))).digest('hex');const slug=(String(p.name).normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,70)||'produto')+'-'+p.id;const data=JSON.stringify({source_id:p.id,what:p.what||'',realTech:p.realTech||'',specTech:p.specTech||'',inventedTech:p.inventedTech||'',build:p.build||'',uses:p.uses||'',dangers:p.dangers||'',test:p.test||p.tests||'',curiosity:p.curiosity||'',readiness:p.readiness||'',year:p.year||'',patent:p.patent||''});return \"INSERT OR IGNORE INTO INVENTIONS(slug,name,category,concept,fingerprint,data) VALUES('\"+q(slug)+\"','\"+q(p.name)+\"','\"+q(p.category)+\"','\"+q(p.what||p.name)+\"','\"+q(fp)+\"','\"+q(data)+\"');\"}).join('\\n');fs.writeFileSync('backend/catalog_seed.sql','-- Generated from catalog.json\\n'+sql+'\\n');console.log('Prepared '+products.length+' catalog rows.');"
           wrangler d1 execute futurologio --remote --file=backend/catalog_seed.sql --config=backend/wrangler.deploy.toml
+
+      - name: Repair existing user inventions that contain the generic catalog text
+        if: ${{ hashFiles('backend/catalog_generic_repair.sql') != '' }}
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -e
+          if [ -s backend/catalog_generic_repair.sql ]; then
+            wrangler d1 execute futurologio --remote --file=backend/catalog_generic_repair.sql --config=backend/wrangler.deploy.toml
+          else
+            echo 'No generic catalog repair statements generated.'
+          fi
+
+      - name: Commit recovered catalog and audit report
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add catalog.json catalog-generic-recovery-report.json backend/catalog_generic_repair.sql
+          git commit -m 'catalog: recover generic descriptions and repair report' || exit 0
+          git push
 
       - name: Preserve session secret
         working-directory: backend
