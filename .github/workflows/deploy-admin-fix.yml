@@ -5,7 +5,7 @@ on:
   push:
     paths:
       - 'admin.html'
-      - 'backend/patch-admin-routes.mjs'
+      - 'backend/**'
       - '.github/workflows/deploy-admin-fix.yml'
 
 permissions:
@@ -18,30 +18,37 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Install Wrangler
         run: npm install --global wrangler@latest
+
       - name: Deploy current Worker with admin routes
-        working-directory: backend
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
           set -e
-          cp wrangler.toml wrangler.deploy.toml
-          node patch-admin-routes.mjs
-          node patch-image-routes.mjs
-          node patch-share-preview.mjs
-          node patch-avatar-routes.mjs
-          node patch-views-routes.mjs
-          node patch-social-upgrades.mjs
-          node patch-credits-routes.mjs
-          node patch-daily-credits.mjs
-          node patch-tester-unlimited.mjs
-          node patch-auth-robust.mjs
-          node patch-catalog-upload-registration.mjs
-          node --check worker.js
-          if wrangler secret list --config wrangler.deploy.toml | grep -q 'SESSION_SECRET'; then echo 'SESSION_SECRET preserved.'; else openssl rand -hex 32 | wrangler secret put SESSION_SECRET --config wrangler.deploy.toml; fi
-          wrangler deploy --config wrangler.deploy.toml
+          cp backend/wrangler.toml backend/wrangler.deploy.toml
+          node backend/patch-admin-routes.mjs
+          node backend/patch-image-routes.mjs
+          node backend/patch-share-preview.mjs
+          node backend/patch-avatar-routes.mjs
+          node backend/patch-views-routes.mjs
+          node backend/patch-social-upgrades.mjs
+          node backend/patch-credits-routes.mjs
+          node backend/patch-daily-credits.mjs
+          node backend/patch-tester-unlimited.mjs
+          node backend/patch-auth-robust.mjs
+          node backend/patch-catalog-upload-registration.mjs
+          node --check backend/worker.js
+          if wrangler secret list --config backend/wrangler.deploy.toml | grep -q 'SESSION_SECRET'; then
+            echo 'SESSION_SECRET preserved.'
+          else
+            echo 'SESSION_SECRET missing; generating it once.'
+            openssl rand -hex 32 | wrangler secret put SESSION_SECRET --config backend/wrangler.deploy.toml
+          fi
+          wrangler deploy --config backend/wrangler.deploy.toml
+
       - name: Verify public Worker
         run: |
           set -e
@@ -49,3 +56,4 @@ jobs:
           echo
           CODE=$(curl --silent --show-error -o /tmp/admin-route.json -w '%{http_code}' https://motor-invencoes.edsonfernandesvet.workers.dev/api/admin/stats)
           test "$CODE" = "401" || { echo "Admin stats route missing or incorrect: HTTP $CODE"; cat /tmp/admin-route.json; exit 1; }
+          echo 'Admin stats route is live and protected (401 without session).'
