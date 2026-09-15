@@ -1,11 +1,11 @@
 {
   "base_records": 155,
-  "new_records_seen": 134,
+  "new_records_seen": 135,
   "new_records_selected": 37,
-  "final_records": 201,
+  "final_records": 192,
   "new_id_range": [
     156,
-    201
+    192
   ],
   "missing_new_ids": [],
   "source_files_seen": [
@@ -63,6 +63,7 @@
     "frontend/catalog-lote21-07.json",
     "frontend/catalog-lote21-10.json",
     "frontend/catalog-lote21.json",
+    "frontend/catalog-lote4-001.json",
     "frontend/catalog-lote7.json",
     "frontend/catalog-lote8.json",
     "frontend/catalog-lote9.json",
