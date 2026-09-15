@@ -1,5 +1,6 @@
 import './patch-admin-routes-v2.mjs';
 import './patch-views-routes.mjs';
+// Deployment trigger: also publishes the current catalog generic-text repair.
 import fs from 'node:fs';
 
 const file='backend/worker.js';
