@@ -1,3 +1,4 @@
+import './patch-admin-routes-v2.mjs';
 import './patch-views-routes.mjs';
 import fs from 'node:fs';
 
@@ -14,6 +15,5 @@ if(path==='/api/admin/stats'&&request.method==='GET'){const au=await auth(reques
 source=source.replace(marker,marker+'\n'+routes);
 fs.writeFileSync(file,source);
 console.log('Admin routes patched into deployment copy.');
-// Force Worker deployment after admin route fixes.
 console.log('Admin route deployment check enabled.');
-// Deployment trigger: keep the admin authentication route included in the Worker publish step.
+console.log('Deployment trigger: keep the admin authentication route included in the Worker publish step.');
