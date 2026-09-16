@@ -1,10 +1,10 @@
 {
-  "catalog_records": 229,
+  "catalog_records": 244,
   "generic_detected": 0,
   "recovered": 0,
   "recovered_ids": [],
   "missing": [],
-  "source_records_scanned": 164,
+  "source_records_scanned": 179,
   "repair_sql_statements": 16,
   "repair_source_ids": [
     "produto-160",
