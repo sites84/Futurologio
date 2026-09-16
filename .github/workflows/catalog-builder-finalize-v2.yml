@@ -25,8 +25,8 @@ jobs:
           catalog=json.loads((root/'catalog.json').read_text(encoding='utf-8'))
           ids=[str(p.get('id')) for p in catalog if isinstance(p,dict) and p.get('id')]
           assert len(ids)==len(set(ids)), 'IDs duplicados no catalog.json'
-          assert len(catalog) >= 229, f'Catálogo abaixo do mínimo esperado: {len(catalog)}'
-          required=['produto-202','futurologio-004','futurologio-006','futurologio-007','futurologio-008','futurologio-009','futurologio-010']
+          assert len(catalog) >= 244, f'Catálogo abaixo do mínimo esperado: {len(catalog)}'
+          required=['produto-202','futurologio-004','futurologio-006','futurologio-007','futurologio-008','futurologio-009','futurologio-010'] + [f'futurologio-{i:03d}' for i in range(11,26)]
           missing=[x for x in required if x not in ids]
           assert not missing, f'Novos produtos ausentes: {missing}'
           for i in range(156,202):
