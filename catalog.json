@@ -187,6 +187,23 @@
     "patent": "Patente negada (o examinador alegou que \"promessa eleitoral já é, por definição jurídica, papel sem valor, portanto não há inovação na destruição\")"
   },
   {
+    "id": "futurologio-004",
+    "name": "ABAJUR ANTI-SOGRA (MOTHER-IN-LAW DEFLECTOR™)",
+    "what": "Abajur de mesa que detecta o tom de voz da sogra em frequências de \"conselho não solicitado\" e emite onda sonora de cancelamento, transformando o som em zumbido agradável de \"aham, aham\". Possui compartimento secreto na base para substituir o vinho trazido pela sogra por suco de uva diluído. Botão de emergência toca \"Parabéns pra Você\" para mudar de assunto. Grava as frases da sogra e as reproduz em velocidade 2x para os amigos.",
+    "realTech": "Fones com cancelamento ativo de ruído (ANC). Microfones direcionais. Sensores de frequência de voz. Garrafas térmicas com compartimento secreto. Abajures de mesa com porta-objetos. Gravadores digitais.",
+    "specTech": "Inteligência artificial treinada para identificar padrões de fala passivo-agressivos (\"Quando é que vocês vão me dar um neto?\"; \"Essa carne ficou um pouco seca, né?\") e classificá-los em níveis de toxicidade materna, com relatório mensal de \"incidências\".",
+    "inventedTech": "O \"Filtro de Sogra\" — membrana de cristal líquido que vibra em frequência oposta à voz da sogra, cancelando o som e substituindo por versão dublada pela voz de uma apresentadora de TV dos anos 90 dizendo \"Muito bem, muito bem, continuem assim\".",
+    "build": "Abajur com cúpula de tecido bege. Base de cerâmica com compartimento secreto para garrafa de 750 ml. Microfone direcional embutido na cúpula. Alto-falante de 5W na base. Sensor de frequência de voz com alcance de 5 metros. Botão \"Modo Sogra\" que aciona o cancelamento. Botão \"Modo Emergência\" que toca \"Parabéns pra Você\" em volume máximo. Pesa 2,5 kg, dimensões 40x20x20 cm.",
+    "uses": "Sobreviver a almoço de domingo sem ouvir \"você está mais gordo\"; substituir vinho caro por suco de uva e guardar o original; cancelar \"eu avisei\" e transformar em \"eu te amo\"; usar botão de emergência quando a sogra fala de política; gravar frases da sogra e reproduzi-las em velocidade 2x para amigos; presentear o cunhado que também sofre com a sogra; ativar o modo \"sogra dormindo\" para cancelar roncos.",
+    "dangers": "Cancela a voz da própria esposa por engano e causa divórcio; compartimento de vinho vaza e mancha o tapete; botão de emergência toca \"Parabéns pra Você\" no funeral da sogra; sensor detecta a voz da mãe do usuário e cancela também, causando culpa eterna; membrana superaquece e derrete a cúpula, causando incêndio e a sogra dizer \"eu avisei\"; gravação das frases da sogra vaza no grupo da família.",
+    "curiosity": "Curiosidade real: Estudos de psicologia familiar mostram que conflitos entre noras/genros e sogras são uma das principais causas de estresse em casamentos, e piadas sobre sogras existem em praticamente todas as culturas, sendo a mais antiga registrada na Grécia Antiga (século IV a.C.). Nota do inventor: O primeiro protótipo foi testado no jantar de Natal da família do inventor, mas a sogra descobriu o compartimento de vinho e o aparelho foi jogado na piscina. O inventor afirma que \"a piscina ficou mais doce depois disso\". O segundo foi comprado por um genro desesperado que pagou o dobro e pediu \"entrega discreta\". O terceiro foi encomendado por uma sogra que queria cancelar a voz do genro.",
+    "tests": "Teste 1: Sogra falou sobre netos; aparelho cancelou e substituiu por \"Vocês são um casal lindo e eu respeito suas escolhas\". Resultado: sogra achou que estava sendo elogiada e parou de perguntar. Teste 2: Modo emergência tocou \"Parabéns pra Você\" durante discussão sobre política; sogra achou que era aniversário do genro e ficou confusa. Teste 3: Compartimento vazou e manchou o tapete; sogra disse \"eu avisei que esse tapete era ruim\".",
+    "category": "Casa & Vida Doméstica",
+    "readiness": "Pronto para produção",
+    "year": "2026",
+    "patent": "Patente solicitada — examinador pediu para testar no jantar de Natal dele."
+  },
+  {
     "id": "lote1-004",
     "name": "RADAR DE BANHEIRO LIMPO",
     "what": "Um chaveiro biométrico com um sensor de varredura molecular que analisa banheiros públicos antes de você entrar. Ele projeta na porta uma nota de 0 a 10 baseada na quantidade de DNA desconhecido na maçaneta, partículas suspensas no ar e a probabilidade matemática de a privada ter sido usada por um guaxinim raivoso nos últimos cinco minutos, poupando você de traumas visuais e olfativos incuráveis.",
@@ -289,6 +306,23 @@
     "patent": "Patente em análise (o examinador pediu um teste prático; voltou três dias depois com um recibo de 40 cm e aprovou sem perguntas)"
   },
   {
+    "id": "futurologio-006",
+    "name": "URNA ELETRÔNICA DE VOTO ÚTIL (USEFUL VOTE MACHINE™)",
+    "what": "Urna eletrônica que acessa pesquisas de intenção de voto em tempo real e só permite que o eleitor vote em candidatos com chance real de vitória. Se o eleitor digitar o número de um candidato com menos de 5% nas pesquisas, a urna emite um som de erro e exibe a mensagem \"Voto inútil. Escolha um candidato viável.\" Em seguida, sugere automaticamente o candidato mais bem colocado. Emite comprovante com o texto \"Seu voto foi útil para a democracia\" e um QR code para compartilhar a escolha racional nas redes sociais.",
+    "realTech": "Urnas eletrônicas com display, teclado numérico e impressora térmica. APIs de pesquisas eleitorais (Datafolha, Ibope) com atualização em tempo real. Sistemas de reconhecimento biométrico (digital) para identificar o eleitor.",
+    "specTech": "Integração com redes sociais para analisar menções e sentimento em tempo real, ajustando as chances dos candidatos a cada minuto. Bloqueio de votos em candidatos que não atingirem um mínimo de menções positivas.",
+    "inventedTech": "O \"Chip de Viabilidade Eleitoral\" — um processador que calcula, com base em algoritmos de teoria dos jogos, a probabilidade exata de um voto ser decisivo. Se a probabilidade for menor que 0,01%, a urna se recusa a computar o voto.",
+    "build": "Corpo semelhante ao da urna eletrônica brasileira, em plástico cinza, com tela de 10 polegadas sensível ao toque. Teclado numérico iluminado. Impressora térmica acoplada para emitir comprovantes. Alto-falante para mensagens de áudio. Módulo de comunicação 4G/5G para acessar APIs de pesquisas. Sensor biométrico de digital na lateral. Pesa 8 kg, dimensões 40x30x20 cm.",
+    "uses": "Votar sem culpa em quem vai perder; evitar desperdício de voto em candidatos ideológicos; receber sugestão automática do candidato mais viável; compartilhar o comprovante de voto útil no Instagram; usar em eleições municipais para garantir que o voto não seja jogado fora; treinar eleitores para o \"voto racional\"; bloquear o voto de quem insiste em candidato sem chance.",
+    "dangers": "Eleitores podem ser coagidos a votar no candidato sugerido pela máquina; a urna pode ser hackeada para favorecer um candidato específico; o sistema pode falhar e sugerir um candidato que já desistiu; a mensagem \"Voto inútil\" pode causar revolta e depredação da urna; o comprovante compartilhado pode revelar o voto do eleitor, quebrando o sigilo; a urna pode travar durante o segundo turno e não aceitar votos.",
+    "curiosity": "Curiosidade real: O voto útil é uma estratégia comum no Brasil, especialmente em eleições presidenciais, onde eleitores de candidatos com pouca intenção de voto migram para o candidato mais bem colocado contra o favorito, como ocorreu em 2018 e 2022. Nota do inventor: O primeiro protótipo foi testado em uma eleição interna de condomínio e foi destruído por um morador que tentou votar no síndico com 2% de intenção. O segundo protótipo foi apreendido pelo TSE antes mesmo de ser ligado, sob a alegação de \"interferência indevida no processo eleitoral\". O inventor alega que a urna era \"apenas uma ferramenta de educação cívica\".",
+    "tests": "Teste 1: Eleitor digitou o número de um candidato com 1% nas pesquisas; a urna emitiu som de erro e exibiu \"Voto inútil. Tente novamente.\" Resultado: eleitor ficou confuso e votou no candidato sugerido. Teste 2: Durante a votação, a urna travou e exibiu \"Erro 404: Democracia não encontrada\". Resultado: fila de 50 pessoas se formou enquanto técnicos reiniciavam o sistema. Teste 3: A urna sugeriu um candidato que havia desistido da corrida; eleitores protestaram e a urna foi depredada.",
+    "category": "Política",
+    "readiness": "Protótipo experimental",
+    "year": "2026",
+    "patent": "Patente negada — o TSE considerou o dispositivo \"incompatível com a soberania popular\"."
+  },
+  {
     "id": "lote1-006",
     "name": "DETECTOR DE COCEIRA INALCANÇÁVEL",
     "what": "Uma camiseta regata de alta tecnologia com uma matriz de micro-estimuladores térmicos e vibratórios nas costas. Ela serve para resolver aquele desespero neurológico de quando você sente uma coceira infernal exatamente no ponto cego das suas costas onde sua mão não chega, e nenhuma quina de parede parece anatômica o suficiente para resolver. O sistema localiza o ponto exato e envia um pulso de coceira reversa eletromagnética.",
@@ -321,6 +355,23 @@
     "readiness": "Não informado no lote",
     "year": "Não informado no lote",
     "patent": "Não informado no lote"
+  },
+  {
+    "id": "futurologio-007",
+    "name": "CARIMBO DE APROVAÇÃO INFINITA (INFINITE APPROVAL STAMP™)",
+    "what": "Carimbo de mesa que, ao ser pressionado sobre qualquer documento, imprime \"Aprovado condicionalmente, sujeito a parecer posterior\" e, em seguida, emite automaticamente uma nova folha de papel com uma exigência burocrática adicional. O processo se repete indefinidamente, criando uma cadeia infinita de aprovações. Possui um contador digital que registra quantas novas exigências foram geradas.",
+    "realTech": "Carimbos autoentintados com mecanismo de mola. Impressoras térmicas miniaturizadas. Sensores de pressão. Contadores digitais.",
+    "specTech": "Integração com sistemas de protocolo para gerar automaticamente novos formulários baseados em palavras-chave do documento original, criando exigências cada vez mais específicas e absurdas.",
+    "inventedTech": "A \"Tinta de Dilação Processual\" — uma tinta especial que nunca seca completamente, forçando o documento a ser carimbado novamente a cada 24 horas, sob pena de perder a validade.",
+    "build": "Carimbo de madeira com base de borracha e mecanismo de autoentintamento. Acoplado à base, uma mini impressora térmica com rolo de papel de 5 metros. Display LCD de 2 polegadas para contagem de exigências. Botão de \"Gerar Nova Exigência\". Alimentação por pilhas AAA. Pesa 500 g, dimensões 15x10x8 cm.",
+    "uses": "Atrasar processos de licitação indefinidamente; usar em repartições públicas para nunca aprovar nada; carimbar documentos de aposentadoria para que o requerente desista; gerar novas exigências para projetos de lei; usar em cartórios para enrolar clientes; colecionar os papéis gerados como prova de resistência burocrática.",
+    "dangers": "O carimbo pode entrar em loop infinito e gerar pilhas de papel que bloqueiam a saída da repartição; o contador pode chegar a números negativos e travar; a tinta pode vazar e manchar todo o processo; funcionários podem ser demitidos por produtividade zero; o carimbo pode ser confundido com um brinquedo e parar na mão de crianças, que carimbam tudo em casa.",
+    "curiosity": "Curiosidade real: No Brasil, um processo de aposentadoria pode levar anos para ser concluído, e a burocracia é frequentemente citada como um dos principais entraves para empresas, segundo o Banco Mundial. Nota do inventor: O primeiro protótipo foi usado em um cartório de São Paulo e gerou 4.000 novas exigências em uma semana, fazendo o cartório contratar dois funcionários extras só para carimbar. O inventor foi processado por \"formação de quadrilha burocrática\". O segundo protótipo foi apreendido pela Receita Federal como \"material de contrabando de papel\".",
+    "tests": "Teste 1: Documento de licença de funcionamento foi carimbado; o carimbo gerou 12 novas exigências, incluindo \"apresentar certidão de nascimento do proprietário\". Resultado: empresário desistiu de abrir o negócio. Teste 2: Carimbo foi deixado sobre a mesa e um estagiário o usou em 50 documentos; a repartição ficou sem papel em duas horas. Teste 3: O contador travou em 999 e o carimbo começou a emitir exigências em latim. Resultado: ninguém entendeu nada e o processo foi arquivado.",
+    "category": "Sociedade & Burocracia",
+    "readiness": "Protótipo funcional",
+    "year": "2027",
+    "patent": "Patente solicitada — o examinador pediu para carimbar o próprio pedido de patente e nunca mais respondeu."
   },
   {
     "id": "lote1-007",
@@ -374,6 +425,23 @@
     "patent": "Não informado no lote"
   },
   {
+    "id": "futurologio-008",
+    "name": "TERÇO ELETRÔNICO DE CONTAGEM DE PECADOS (SIN COUNTER ROSARY™)",
+    "what": "Terço com contas eletrônicas que funcionam como botões. Ao rezar, o usuário pode registrar pecados cometidos no dia, e o terço contabiliza automaticamente, exibindo o total em um pequeno display. O aparelho também possui um leitor de cartão de crédito para comprar indulgências diretamente, com valores proporcionais à gravidade do pecado. Vibra a cada pecado registrado e sugere uma oração de penitência com valor promocional.",
+    "realTech": "Terços convencionais com contas de madeira ou plástico. Sensores de toque capacitivos. Microcontroladores Arduino. Leitor de cartão de crédito magnético. Display OLED pequeno. Motor de vibração.",
+    "specTech": "Integração com um aplicativo de confissão que envia os pecados diretamente para um padre parceiro, que responde com a penitência e o valor da indulgência. Histórico de pecados armazenado na nuvem.",
+    "inventedTech": "O \"Chip de Absolvição Automática\" — um microprocessador que, segundo o fabricante, calcula a gravidade do pecado com base em tabelas de moralidade católica e emite uma absolvição provisória, válida até a próxima confissão.",
+    "build": "Terço com 59 contas, sendo que cada uma é um botão iluminado. No centro, um display OLED de 1,5 polegada e um leitor de cartão. Cruz de metal com compartimento para bateria. Alça de couro sintético. Vibração silenciosa. Pesa 200 g, comprimento 50 cm.",
+    "uses": "Contar pecados sem precisar de papel e caneta; comprar indulgências no ônibus; comparar o número de pecados com o dos amigos; usar como controle remoto para a TV (função extra); presentear o sobrinho que acabou de fazer a primeira comunhão; registrar pecados em tempo real durante o culto.",
+    "dangers": "O terço pode registrar pecados que não foram cometidos por erro de sensor; o leitor de cartão pode cobrar indulgências duplicadas; a vibração pode ser confundida com chamada telefônica; o display pode quebrar e exibir \"PECADO IMPERDOÁVEL\" causando pânico; a compra de indulgências pode levar à falência; o chip pode superaquecer e queimar a mão do usuário.",
+    "curiosity": "Curiosidade real: A venda de indulgências foi uma das principais causas da Reforma Protestante no século XVI, e a Igreja Católica proibiu a prática de vendê-las por dinheiro desde o Concílio de Trento (1563). Nota do inventor: O primeiro protótipo foi testado por um padre que registrou 3.000 pecados em uma semana e teve que fazer 3.000 missas para compensar. O inventor foi excomungado por três dioceses diferentes. O segundo protótipo foi comprado por um banco para oferecer como brinde a clientes que pagassem a fatura em dia.",
+    "tests": "Teste 1: Usuário registrou 10 pecados em um dia e o terço cobrou R$ 50 em indulgências. Resultado: ele teve que vender o terço para pagar a fatura. Teste 2: O terço vibrou durante a consagração e o padre achou que era o celular de um fiel; a missa foi interrompida. Teste 3: O display travou em \"PECADO IMPERDOÁVEL\" e o usuário correu para a igreja mais próxima; o padre disse que era só um bug.",
+    "category": "Mitologia & Crenças",
+    "readiness": "Protótipo experimental",
+    "year": "2028",
+    "patent": "Patente negada — o INPI alegou que \"não se pode patentear a salvação\"."
+  },
+  {
     "id": "lote1-008",
     "name": "SIMULADOR DE DOR DE PARTO PARA HOMENS (VERSÃO CHURRASCO)",
     "what": "Um cinto de eletroestimulação abdominal disfarçado de avental de churrasqueiro. Ele monitora quando um homem começa a dar palpites errados sobre como as mulheres devem agir, parir ou sentir cólicas, ou quando ele reclama que \"uma dor de garganta quase o matou\". O cinto calibra instantaneamente os eletrodos para simular as contrações de um parto de trigêmeos direto nos músculos abdominais dele, mantendo a intensidade proporcional ao tamanho do palpite que ele deu.",
@@ -425,6 +493,23 @@
     "patent": "Não informado no lote"
   },
   {
+    "id": "futurologio-009",
+    "name": "CADEIRA DE ESCRITÓRIO QUE EJETA O FUNCIONÁRIO OCIOSO (EJECT-OFFICE CHAIR™)",
+    "what": "Cadeira de escritório com sensores de pressão e movimento que detectam quando o funcionário está parado há mais de 5 minutos sem digitar ou mexer o mouse. Após esse tempo, a cadeira inclina o assento para frente e ejeta o ocupante no chão. Também envia um relatório automático para o RH com o tempo de ociosidade e uma foto do funcionário caído. Possui um sistema de recompensa: se o funcionário trabalhar por 2 horas sem parar, a cadeira massageia as costas.",
+    "realTech": "Cadeiras de escritório com ajuste de altura e inclinação motorizada. Sensores de pressão em assentos. Sensores de movimento (acelerômetros). Conexão Wi-Fi. Câmeras miniaturizadas. Atuadores lineares.",
+    "specTech": "Integração com o computador do funcionário para monitorar teclas digitadas e movimentos do mouse em tempo real. Inteligência artificial que distingue pausas produtivas (pensar) de pausas improdutivas (rolar o feed).",
+    "inventedTech": "O \"Sensor de Ociosidade Culpada\" — um chip que detecta ondas cerebrais de devaneio e tédio, e ativa o mecanismo de ejeção antes mesmo que o funcionário perceba que está procrastinando.",
+    "build": "Cadeira ergonômica preta com encosto de tela e assento estofado. Motores elétricos na base do assento para inclinação abrupta. Sensores de pressão distribuídos pelo assento. Câmera na parte de trás do encosto. Display LCD no braço da cadeira mostrando o tempo de ociosidade. Alto-falante que emite um som de \"tchau\" antes da ejeção. Conectividade Wi-Fi e Bluetooth. Pesa 15 kg.",
+    "uses": "Aumentar a produtividade à força; impedir cochilos no horário de trabalho; gerar relatórios automáticos para o RH; usar em escritórios de tecnologia para \"cultura de alta performance\"; presentear o colega que passa o dia no celular; treinar estagiários para não perder tempo.",
+    "dangers": "Funcionários podem cair de mau jeito e quebrar um braço; a cadeira pode ejetar durante uma reunião importante e o funcionário passar vergonha; o sensor pode detectar ociosidade enquanto o funcionário está pensando em uma solução e ejetá-lo injustamente; a câmera pode capturar imagens comprometedoras; o RH pode usar os relatórios para demitir funcionários; a cadeira pode ser sabotada por colegas.",
+    "curiosity": "Curiosidade real: Softwares de monitoramento de produtividade, como o Time Doctor e o Hubstaff, são usados por empresas para rastrear o tempo de atividade dos funcionários, e há casos de demissão por baixa produtividade monitorada. Nota do inventor: O primeiro protótipo foi testado em uma startup de São Paulo e ejetou 12 funcionários em um único dia, incluindo o CEO, que estava pensando na estratégia da empresa. O inventor foi demitido. O segundo protótipo foi comprado por uma multinacional que instalou as cadeiras em todas as filiais; o índice de turnover aumentou 300%.",
+    "tests": "Teste 1: Funcionário ficou 6 minutos sem digitar; a cadeira inclinou e o jogou no chão; o RH recebeu a foto e ele foi advertido. Resultado: passou a digitar aleatoriamente para enganar os sensores. Teste 2: A cadeira ejetou uma funcionária grávida; ela processou a empresa e ganhou indenização. Teste 3: O sistema travou e ejetou o funcionário a cada 30 segundos; ele desistiu e pediu demissão.",
+    "category": "Trabalho & Escritório",
+    "readiness": "Pronto para produção",
+    "year": "2026",
+    "patent": "Patente concedida — o examinador do INPI era chefe de RH e achou a ideia \"revolucionária\"."
+  },
+  {
     "id": "lote1-009",
     "name": "DETECTOR DE BOQUEJO SOCIAL",
     "what": "Um pequeno monóculo invisível (uma lente de contato descartável) que analisa a retina das pessoas com quem você está conversando. O dispositivo monitora os micro-movimentos oculares e a dilatação da pupila dos outros para avisar exatamente quando a pessoa entrou em coma cerebral de tédio enquanto você fala por duas horas sobre o seu jogo de videogame favorito ou sobre a árvore genealógica do seu cachorro.",
@@ -474,6 +559,23 @@
     "readiness": "Não informado no lote",
     "year": "Não informado no lote",
     "patent": "Não informado no lote"
+  },
+  {
+    "id": "futurologio-010",
+    "name": "CONTROLE DE VIDEOGAME QUE PAUSA O JOGO QUANDO VOCÊ XINGA (CUSS-FREE CONTROLLER™)",
+    "what": "Controle de videogame com microfone embutido que detecta palavrões e xingamentos. Ao identificar um termo proibido, o controle pausa o jogo automaticamente por 30 segundos, exibe a mensagem \"Respire fundo, cidadão\" e desconta moedas virtuais do jogador como multa. O valor da multa varia conforme a gravidade do palavrão. O controle também possui um botão de \"Modo Calmo\" que ativa uma respiração guiada.",
+    "realTech": "Controles de videogame com microfone (como o DualSense do PS5). Reconhecimento de voz por software. Sistemas de moedas virtuais em jogos. Botões de pressão. Alto-falantes.",
+    "specTech": "Integração com o jogo para pausar e descontar moedas automaticamente. Inteligência artificial que aprende os palavrões mais usados pelo jogador e adapta a multa. Envio de relatório semanal de \"nível de estresse\" para os pais.",
+    "inventedTech": "O \"Chip de Serenidade Forçada\" — um componente que, segundo o fabricante, emite ondas de baixa frequência para acalmar o jogador após o xingamento, evitando que ele quebre o controle.",
+    "build": "Controle sem fio no formato tradicional, com botões analógicos e direcionais. Microfone na parte inferior. Alto-falante na parte superior. Display LCD de 2 polegadas no centro para exibir mensagens e multas. Botão \"Modo Calmo\" em destaque. Bateria recarregável de 10 horas. Pesa 300 g, dimensões 15x10x6 cm.",
+    "uses": "Jogar online sem xingar os adversários; evitar que crianças aprendam palavrões; controlar o estresse em partidas competitivas; usar em streamings para não ser banido; presentear o amigo que quebra controles de raiva; treinar e-sports para manter a calma.",
+    "dangers": "O controle pode pausar o jogo no meio de uma partida decisiva e fazer o jogador perder; a multa em moedas virtuais pode deixar o jogador sem dinheiro no jogo; o microfone pode capturar palavrões de outras pessoas e multar o jogador injustamente; o \"Modo Calmo\" pode ser ativado por engano e travar o controle; o jogador pode xingar em outro idioma para burlar o sistema; o chip pode superaquecer e queimar a mão do jogador.",
+    "curiosity": "Curiosidade real: Estudos mostram que xingar durante videogames pode aliviar o estresse e aumentar a sensação de prazer, mas também pode levar a comportamentos agressivos, e empresas como a Riot Games já aplicam multas e suspensões por toxicidade em jogos como League of Legends. Nota do inventor: O primeiro protótipo foi testado com um jogador profissional de FPS que xingou 47 vezes em 10 minutos e teve o controle bloqueado por 23 minutos; ele perdeu a partida e jogou o controle na parede. O inventor processou o jogador por danos morais. O segundo protótipo foi comprado por uma mãe que queria que o filho parasse de xingar; o filho aprendeu a xingar em libras.",
+    "tests": "Teste 1: Jogador xingou após morrer no jogo; o controle pausou por 30 segundos e descontou 100 moedas. Resultado: ele xingou de novo e perdeu mais 100 moedas. Teste 2: O controle confundiu \"caramba\" com palavrão e pausou o jogo injustamente; o jogador quase perdeu a partida. Teste 3: O \"Modo Calmo\" travou e o controle começou a exibir \"RESPIRE\" a cada 10 segundos; o jogador desistiu e foi ler um livro.",
+    "category": "Cultura Pop",
+    "readiness": "Protótipo experimental",
+    "year": "2027",
+    "patent": "Patente solicitada — o examinador pediu para testar com o filho adolescente e nunca mais deu notícias."
   },
   {
     "id": "lote1-010",
@@ -3639,5 +3741,22 @@
     "tests": "O usuário impostor, 35 anos, gerente de marketing, usou o dispositivo numa degustação de vinhos de R$ 4.000 a garrafa. Falou sobre a dialética da levedura e a angústia do engarrafamento com expressões de filósofo existencialista. O sommelier ficou impressionado e trouxe uma garrafa experimental. O usuário achou horrível, mas sustentou a expressão de aprovação e ganhou o respeito da elite.",
     "category": "Tecnologia do futuro",
     "id": "produto-201"
+  },
+  {
+    "name": "URNA DE CONFISSÃO CARBÔNICA (CARBON CONFESSIONAL™)",
+    "what": "Urna portátil em formato de confessionário que o usuário carrega a tiracolo para compensar emissões de carbono da rotina diária. A cada ação poluente — peidar, usar canudo plástico, comer carne vermelha, banho longo — o usuário insere uma moeda de \"indulgência verde\" que financia projetos de reflorestamento. Emite recibo de absolvição carbônica para postagem em redes sociais, com selo de \"Cidadão Carbônico Neutro\" e contador de perdões restantes no mês.",
+    "realTech": "Calculadoras de pegada de carbono baseadas em algoritmos de emissão por atividade. Sensores de CO2 de baixo custo (MH-Z19). Sistemas de créditos de carbono voluntários. Impressoras térmicas Bluetooth. Sensores vestíveis de batimentos e respiração.",
+    "specTech": "Integração com sensores vestíveis que monitoram batimentos e respiração para calcular emissão em tempo real, incluindo suspiros, bocejos e flatulências, com relatório semanal de \"pegada emocional\".",
+    "inventedTech": "O \"Pecadômetro Ambiental\" — chip que detecta a intenção antes da ação, baseado em leitura de ondas cerebrais, e emite alerta sonoro de \"Pecado Ecológico Iminente\" antes de a pessoa abrir a geladeira por tédio.",
+    "build": "Formato de confessionário portátil (20x15x8 cm) com janelinha de acrílico fumê e cortina de veludo verde reciclado. Corpo em plástico reciclado de garrafas PET. Visor LCD com \"perdões carbônicos\" restantes. Fenda para moedas de indulgência. Impressora térmica interna. Sensor de CO2 acoplado. Alça de couro vegano sintético. Adesivo de \"salve o planeta\" na tampa.",
+    "uses": "Compensar peido potente em reunião de condomínio; postar recibo de absolvição no LinkedIn como prova de virtude; usar como argumento contra vizinho com SUV; presentear cunhado que come picanha todo domingo; colecionar recibos para trocar por selo de \"Cidadão Carbônico Neutro\" da prefeitura; cobrar compensação dos convidados que chegam de carro na festa.",
+    "dangers": "Usuários desenvolvem TOC ecológico e compensam até a respiração; aparelho superaquece e derrete o plástico reciclado, liberando os gases que deveria compensar; impressora falha e imprime \"ABSOLVIDO\" em vez de \"ABSOLVIDO\"; sensor detecta flatulência do vizinho e cobra do usuário errado; créditos comprados são de projetos fantasma na Amazônia; usuário entra em depressão ao descobrir que sua pegada é maior que a de um caminhão.",
+    "curiosity": "Curiosidade real: O mercado voluntário de créditos de carbono movimentou cerca de US$ 2 bilhões em 2021, mas investigações revelaram que mais de 90% dos créditos de reflorestamento da Verra não representavam reduções reais de emissões. Nota do inventor: O primeiro protótipo foi vaiado na COP-27 por ativistas que descobriram que o aparelho era feito de plástico virgem. O inventor rebateu: \"O plástico é reciclado de garrafas que eu mesmo bebi na feira\". O segundo foi destruído por um vegano que descobriu que os recibos não eram biodegradáveis. O terceiro foi comprado por uma empresa de petróleo para distribuir aos funcionários como brinde de fim de ano.",
+    "tests": "Teste 1: Voluntário comeu churrasco completo e inseriu 15 moedas; aparelho imprimiu recibo de 2 metros com \"Você precisa de mais 47 moedas para compensar a picanha\". Resultado: desistiu e foi comer salada. Teste 2: Aparelho no banheiro detectou flatulência de 8 pessoas em uma hora; RH recebeu 8 pedidos de compensação no mesmo dia. Teste 3: Impressora travou e imprimiu \"ABSOLVIDO\" 200 vezes; usuário teve crise de ansiedade achando que estava condenado.",
+    "category": "Mente & Comportamento",
+    "readiness": "Protótipo experimental",
+    "year": "2028",
+    "patent": "Patente em análise — examinador pediu para \"compensar as emissões do processo de patenteamento\".",
+    "id": "produto-202"
   }
 ]

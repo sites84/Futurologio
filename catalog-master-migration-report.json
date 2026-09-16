@@ -1,8 +1,8 @@
 {
   "base_records": 155,
   "new_records_seen": 167,
-  "new_records_selected": 67,
-  "final_records": 222,
+  "new_records_selected": 74,
+  "final_records": 229,
   "new_id_range": [
     156,
     201
@@ -120,5 +120,15 @@
     "frontend/catalog-recovery-175.json",
     "frontend/catalog-recovery-lote4-001-005.json",
     "frontend/catalog-recovery-lote4-011-015.json"
-  ]
+  ],
+  "required_new_ids": [
+    "produto-202",
+    "futurologio-004",
+    "futurologio-006",
+    "futurologio-007",
+    "futurologio-008",
+    "futurologio-009",
+    "futurologio-010"
+  ],
+  "missing_required_new_ids": []
 }
