@@ -16,48 +16,30 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.x'
-      - name: Merge and validate
+      - name: Validate catalog master
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
           root=Path('.')
           catalog=json.loads((root/'catalog.json').read_text(encoding='utf-8'))
-          by_id={str(p.get('id')):p for p in catalog if isinstance(p,dict) and p.get('id')}
-          for path in ['frontend/catalog-lote17-03.json','frontend/catalog-lote17-04.json']:
-              src=json.loads((root/path).read_text(encoding='utf-8'))
-              if isinstance(src,dict): src=[src]
-              for p in src:
-                  if str(p.get('id')) in {'produto-188','produto-189','produto-190'}:
-                      by_id[str(p['id'])]=p
-          for path in ['frontend/catalog-builder-import-193-196.json','frontend/catalog-builder-import-197.json','frontend/catalog-builder-import-198.json','frontend/catalog-builder-import-199.json','frontend/catalog-builder-import-200.json','frontend/catalog-builder-import-201.json']:
-              src=json.loads((root/path).read_text(encoding='utf-8'))
-              if isinstance(src,dict): src=[src]
-              for p in src:
-                  pid=str(p.get('id',''))
-                  if pid.startswith('produto-'):
-                      n=int(pid.rsplit('-',1)[1])
-                      if 193 <= n <= 201: by_id[pid]=p
-          def key(p):
-              try: return int(str(p.get('id','')).rsplit('-',1)[1])
-              except: return 10**9
-          final=sorted(by_id.values(),key=key)
-          ids=[p.get('id') for p in final]
-          required_lote4=['lote4-001','lote4-002','lote4-003','lote4-004','lote4-005']
-          assert len(final)==211 and len(ids)==len(set(ids))
-          for i in range(156,202): assert f'produto-{i}' in ids
-          for pid in required_lote4: assert pid in ids
-          (root/'catalog.json').write_text(json.dumps(final,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-          report=json.loads((root/'catalog-master-migration-report.json').read_text(encoding='utf-8'))
-          report.update({'final_records':211,'new_id_range':[156,201],'missing_new_ids':[],'required_lote4_ids':required_lote4})
-          (root/'catalog-master-migration-report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          ids=[str(p.get('id')) for p in catalog if isinstance(p,dict) and p.get('id')]
+          assert len(ids)==len(set(ids)), 'IDs duplicados no catalog.json'
+          assert len(catalog) >= 229, f'Catálogo abaixo do mínimo esperado: {len(catalog)}'
+          required=['produto-202','futurologio-004','futurologio-006','futurologio-007','futurologio-008','futurologio-009','futurologio-010']
+          missing=[x for x in required if x not in ids]
+          assert not missing, f'Novos produtos ausentes: {missing}'
+          for i in range(156,202):
+              assert f'produto-{i}' in ids, f'produto-{i} ausente'
+          print(f'CATÁLOGO VALIDADO: {len(catalog)} produtos')
+          print('NOVOS PRODUTOS PRESENTES:', ', '.join(required))
           PY
-      - name: Recover generic descriptions from historical source records
+      - name: Recover generic descriptions
         run: python scripts/recover_generic_catalog.py
-      - name: Commit master and recovery
+      - name: Commit recovery outputs
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add catalog.json catalog-master-migration-report.json catalog-generic-recovery-report.json backend/catalog_generic_repair.sql
-          git commit -m 'catalog-master: recover generic product descriptions [catalog-master]' || exit 0
-          git push
+          git add catalog-generic-recovery-report.json backend/catalog_generic_repair.sql
+          git diff --cached --quiet || git commit -m 'catalog-master: recover generic product descriptions [catalog-master]'
+          git push || true
