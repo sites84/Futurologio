@@ -1,8 +1,8 @@
 {
   "base_records": 155,
-  "new_records_seen": 182,
-  "new_records_selected": 89,
-  "final_records": 244,
+  "new_records_seen": 192,
+  "new_records_selected": 99,
+  "final_records": 254,
   "new_id_range": [
     156,
     201
@@ -60,6 +60,7 @@
     "frontend/catalog-import-futurologio-009.json",
     "frontend/catalog-import-futurologio-010.json",
     "frontend/catalog-import-futurologio-011-025.json",
+    "frontend/catalog-import-futurologio-026-035.json",
     "frontend/catalog-import-produto-202.json",
     "frontend/catalog-lote10.json",
     "frontend/catalog-lote11.json",
