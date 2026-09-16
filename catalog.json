@@ -612,6 +612,23 @@
     "patent": "Não informado no lote"
   },
   {
+    "id": "futurologio-011",
+    "name": "BALANÇA DE DESCULPAS ASTRAIS (COSMIC EXCUSE SCALE™)",
+    "what": "Uma balança doméstica que, em vez de medir peso corporal, calcula o peso moral das desculpas que o usuário inventa para não cumprir promessas. Ao subir na plataforma, a pessoa seleciona a desculpa — dieta, academia, trabalho, atraso ou vida social — e a balança exibe em quilogramas o peso simbólico daquela justificativa. Quanto mais esfarrapada a desculpa, maior o número. Um alto-falante anuncia: 'Desculpa detectada. Gravidade emocional: 18,7 kg.'",
+    "realTech": "Células de carga de balanças digitais, microcontroladores, displays LCD, alto-falante, memória flash e botões capacitivos.",
+    "specTech": "Algoritmo que cruza respostas do usuário, histórico de desculpas e padrões de comportamento para estimar um índice de plausibilidade e convertê-lo em peso simbólico.",
+    "inventedTech": "O Gravímetro de Desculpas Cósmicas: um sensor fictício que mede a massa gravitacional acumulada de cada justificativa e afirma detectar quando uma desculpa já está mais pesada que a própria obrigação.",
+    "build": "Plataforma circular de vidro temperado com quatro células de carga, microcontrolador ESP32, display LCD de 3,5 polegadas, alto-falante embutido e bateria recarregável. Na lateral há um seletor de categorias e uma impressora térmica opcional que emite um recibo da desculpa.",
+    "uses": "Usar antes de faltar à academia; pesar a desculpa antes de cancelar um encontro; comparar justificativas entre amigos; entregar como presente para o colega que sempre chega atrasado; imprimir recibos de desculpas para anexar ao grupo da família.",
+    "dangers": "O usuário pode começar a criar desculpas cada vez mais elaboradas apenas para obter números maiores. A balança pode classificar uma justificativa verdadeira como pesada e causar discussão. O alto-falante pode anunciar a desculpa em público. A plataforma pode escorregar se instalada sobre piso molhado.",
+    "curiosity": "Curiosidade real: balanças digitais usam células de carga que transformam pequenas deformações mecânicas em sinais elétricos mensuráveis. Nota do inventor: o primeiro protótipo registrou 42,3 kg para a frase 'eu ia fazer, mas aconteceu uma coisa'. O inventor considerou o resultado cientificamente devastador.",
+    "tests": "Teste 1: usuário alegou que não foi à academia porque estava chovendo; a balança marcou 6,4 kg. Teste 2: 'o despertador não tocou' recebeu 11,8 kg. Teste 3: 'começo na segunda-feira' atingiu 27,9 kg. Teste 4: uma desculpa comprovadamente verdadeira recebeu 0,3 kg e o aparelho pediu desculpas ao usuário.",
+    "category": "Mente & Comportamento",
+    "readiness": "Protótipo experimental",
+    "year": "2027",
+    "patent": "Patente solicitada — o examinador pediu para pesar a própria justificativa antes de analisar o pedido."
+  },
+  {
     "id": "lote1-011",
     "name": "EXAMINADOR DE CULPA DE BANHEIRO",
     "what": "Um tapete biométrico que você coloca na saída do banheiro social de festas ou escritórios. Através da análise de peso, umidade residual dos sapatos e o tempo exato que você passou lá dentro versus o barulho da descarga, o tapete calcula com precisão matemática se você realmente lavou as mãos com sabonete ou se apenas molhou a ponta dos dedos para fingir que tem higiene na frente das outras pessoas. Se você falhar no teste, o tapete emite um som de patinho de borracha gigante a cada passo que você dá.",
@@ -679,6 +696,23 @@
     "readiness": "Protótipo funcional",
     "year": "2028",
     "patent": "Patente concedida (aprovada sob a classificação de Materiais de Construção Afetivos)"
+  },
+  {
+    "id": "futurologio-012",
+    "name": "HALTERE DE CULPA PROGRESSIVA (GUILT DUMBBELL™)",
+    "what": "Um haltere de academia cujo peso aumenta automaticamente conforme o usuário pronuncia desculpas durante o treino. A pessoa começa com uma carga confortável. Sempre que diz 'hoje estou cansado', 'amanhã compenso' ou 'só mais uma série', um mecanismo interno adiciona pequenos discos ao eixo. O treino termina quando a culpa fica fisicamente mais pesada que a preguiça.",
+    "realTech": "Halteres ajustáveis, discos metálicos, motores de passo, sensores de voz, microcontroladores e mecanismos de travamento mecânico.",
+    "specTech": "Reconhecimento de voz local combinado com classificação de frases e controle automático de carga por motor, mantendo o centro de gravidade do haltere.",
+    "inventedTech": "O Núcleo de Culpa Muscular: um módulo fictício que converte arrependimento em torque e transforma cada pensamento de desistência em quilogramas adicionais.",
+    "build": "Eixo central de aço com discos concêntricos, pequenos atuadores elétricos, bateria recarregável, microfone direcional e controlador eletrônico. Um display no cabo mostra 'peso físico' e 'peso da culpa' separadamente.",
+    "uses": "Treinos de musculação; desafios entre amigos; reabilitação motivacional fictícia; presente para quem sempre pula a última série; demonstrações de tecnologia esportiva satírica.",
+    "dangers": "A carga pode aumentar por reconhecer frases ditas por outra pessoa. O sistema pode interpretar uma música ou conversa como desculpa. Se o mecanismo travar, o haltere pode ficar pesado demais para ser recolocado no suporte.",
+    "curiosity": "Curiosidade real: halteres ajustáveis usam diferentes mecanismos para alterar a carga sem trocar todo o equipamento. Nota do inventor: no primeiro teste, o usuário disse 'não estou sentindo nada' e o haltere adicionou quatro discos imediatamente.",
+    "tests": "Teste 1: início em 5 kg, sem desculpas; carga permaneceu estável. Teste 2: usuário disse três justificativas; o sistema adicionou 1 kg por ocorrência. Teste 3: uma conversa paralela foi classificada como desculpa e gerou carga indevida. Teste 4: o microfone foi desligado e o haltere permaneceu em 5 kg, permitindo um treino honestamente preguiçoso.",
+    "category": "Esportes",
+    "readiness": "Protótipo funcional",
+    "year": "2028",
+    "patent": "Patente em análise — o examinador pediu uma série adicional e parou de responder depois da quinta repetição."
   },
   {
     "id": "lote1-012",
@@ -749,6 +783,23 @@
     "patent": "Patente em análise (o examinador pediu para testar com um casaco de inverno e desmaiou na esteira)"
   },
   {
+    "id": "futurologio-013",
+    "name": "ARRANHADOR DE SOFÁ QUE REVIDA (SCRATCH-BACK POST™)",
+    "what": "Um arranhador vertical para gatos que registra cada arranhão e devolve uma pequena vibração no mesmo ponto, como se o móvel estivesse reclamando. Quanto mais o gato arranha, mais dramática fica a resposta: primeiro uma vibração, depois um gemido eletrônico e finalmente uma mensagem no display dizendo 'EU TAMBÉM TENHO LIMITES'.",
+    "realTech": "Sensores de pressão, motores vibratórios, microcontroladores, alto-falante, display OLED e revestimento de sisal.",
+    "specTech": "Matriz de sensores capaz de localizar a região exata do arranhão e ajustar a intensidade da resposta conforme a frequência e duração do comportamento.",
+    "inventedTech": "O Revidador Felino: um sistema fictício que interpreta a intensidade emocional do arranhão e escolhe a resposta passivo-agressiva mais adequada ao temperamento do gato.",
+    "build": "Coluna de madeira revestida com sisal, sensores distribuídos pela superfície, pequenos motores vibratórios, alto-falante, OLED frontal e bateria recarregável. A base possui borracha antiderrapante.",
+    "uses": "Preservar sofás; enriquecer ambientes para gatos; estudar comportamentos de arranhadura; divertir visitantes; presentear tutores que já perderam três móveis para o mesmo animal.",
+    "dangers": "O gato pode interpretar a vibração como brinquedo e aumentar os arranhões. O alto-falante pode assustar animais sensíveis. A estrutura pode tombar se a base não estiver nivelada.",
+    "curiosity": "Curiosidade real: arranhar é um comportamento natural de gatos associado a manutenção das garras, marcação e comunicação. Nota do inventor: o protótipo foi arranhado durante 11 minutos contínuos e exibiu 'VOCÊ ESTÁ GANHANDO'. O gato continuou.",
+    "tests": "Teste 1: gato adulto arranhou a parte superior e recebeu vibração leve. Teste 2: o animal aumentou a intensidade e o aparelho emitiu um gemido. Teste 3: o gato ignorou o display e continuou. Teste 4: após reposicionar o arranhador perto do sofá, o uso do sofá caiu e o protótipo declarou vitória.",
+    "category": "Casa & Animais",
+    "readiness": "Protótipo funcional",
+    "year": "2027",
+    "patent": "Patente solicitada — o examinador considerou o comportamento do gato impossível de prever, mas assinou mesmo assim."
+  },
+  {
     "id": "lote1-013",
     "name": "MONITOR DE VALIDADE DE DESCULPA",
     "what": "Um pequeno broche magnético que você usa na lapela da camisa. Quando você está dando aquela desculpa esfarrapada para não ir a um evento social — como dizer que \"sua avó caiu da escada pela quarta vez este mês\" ou que \"seu gato está deprimido com a Lua em Escorpião\" —, o broche analisa o tremor da sua voz e a micro-sudorese do seu peito. Se a desculpa for estatisticamente ridícula ou patética, o broche brilha em azul-piscina e diz em voz alta: \"O usuário está apenas com preguiça de tomar banho\".",
@@ -815,6 +866,23 @@
     "readiness": "Protótipo funcional",
     "year": "2027",
     "patent": "Patente negada (o examinador achou que o cachorro dele já fazia isso naturalmente sem precisar de máquina)"
+  },
+  {
+    "id": "futurologio-014",
+    "name": "CHAPÉU DE ALUMÍNIO AUTOMÁTICO (ALIEN-PROOF HAT™)",
+    "what": "Um chapéu de aparência metálica que monitora supostas interferências eletromagnéticas e, quando detecta qualquer sinal fora do padrão programado, fecha automaticamente abas laterais e ativa uma viseira. O produto não impede extraterrestres; ele apenas transforma a paranoia cotidiana em um equipamento portátil com sensores, LEDs e dignidade questionável.",
+    "realTech": "Sensores de campo eletromagnético, microcontrolador, LEDs, servomotores, bateria recarregável e tecidos condutivos.",
+    "specTech": "Sistema que cria mapas locais de intensidade de rádio e compara os níveis medidos com uma linha de base configurada pelo usuário.",
+    "inventedTech": "O Escudo Interplanetário de Frequência: uma tecnologia fictícia que supostamente desvia pensamentos alienígenas através de uma malha de alumínio autoajustável.",
+    "build": "Estrutura leve de polímero revestida com tecido condutivo e folhas finas de alumínio, sensores EM, servomotores nas abas, microcontrolador e bateria. LEDs laterais indicam níveis de 'ameaça'.",
+    "uses": "Feiras de ficção científica; festas temáticas; apresentações satíricas; proteger-se simbolicamente de teorias conspiratórias; presentear o amigo que vê antena em tudo.",
+    "dangers": "O usuário pode interpretar sinais normais de rádio como ameaça. As abas automáticas podem prender cabelo. O material condutivo não deve ser tratado como equipamento de proteção eletromagnética certificado.",
+    "curiosity": "Curiosidade real: materiais condutivos podem refletir ou atenuar determinados campos eletromagnéticos dependendo de frequência, geometria e continuidade. Nota do inventor: o chapéu foi testado perto de um roteador e entrou em modo 'INVASÃO IMINENTE' porque alguém estava baixando um filme.",
+    "tests": "Teste 1: ambiente sem fontes próximas; LEDs permaneceram verdes. Teste 2: roteador Wi-Fi próximo; sistema elevou o alerta para amarelo. Teste 3: telefone recebeu uma chamada e o chapéu fechou a viseira. Teste 4: usuário tentou falar com o aparelho usando controle remoto e concluiu que a humanidade ainda não estava pronta.",
+    "category": "Tecnologia & Bizarro",
+    "readiness": "Protótipo experimental",
+    "year": "2028",
+    "patent": "Patente em análise — o examinador pediu comprovação de alienígenas e recebeu apenas um chapéu."
   },
   {
     "id": "lote1-014",
@@ -885,6 +953,23 @@
     "patent": "Patente em análise (a Interpol abriu um inquérito para saber se a mala é um agente de fronteira não autorizado)"
   },
   {
+    "id": "futurologio-015",
+    "name": "PRATO QUE ENCOLHE A PORÇÃO (SHRINKING PLATE™)",
+    "what": "Um prato inteligente com borda móvel que reduz fisicamente a área útil da refeição depois de determinado tempo. O usuário coloca comida normalmente, configura uma duração e, conforme o tempo passa, um anel interno avança para o centro. A porção não desaparece: simplesmente fica confinada a uma área cada vez menor, tornando visualmente impossível fingir que ainda existe um banquete no prato.",
+    "realTech": "Servomotores, trilhos circulares, sensores de peso, microcontrolador, bateria recarregável e estrutura de polímero próprio para contato externo com alimentos.",
+    "specTech": "Controle de movimento baseado em peso e tempo, com um algoritmo que calcula o avanço do anel de acordo com a porção inicial.",
+    "inventedTech": "A Geometria de Culpa Calórica: tecnologia fictícia que supostamente comprime o espaço disponível para comida sem alterar sua massa, obrigando a porção a encarar a realidade.",
+    "build": "Prato de cerâmica ou polímero alimentar com compartimento inferior para eletrônica, anel interno deslizante, servomotores selados, sensores de peso e bateria removível. A parte eletrônica fica isolada da área de alimento.",
+    "uses": "Controlar visualmente porções; experiências de educação alimentar; brincadeiras de dieta; refeições cronometradas; presente para quem repete o jantar três vezes antes de terminar a primeira.",
+    "dangers": "O anel pode pressionar alimentos líquidos e causar respingos. Objetos ou talheres podem travar o mecanismo. O dispositivo não deve ser usado como substituto de orientação nutricional.",
+    "curiosity": "Curiosidade real: sensores de carga podem medir peso e mecanismos motorizados conseguem controlar posições com grande precisão. Nota do inventor: o primeiro teste com purê terminou com o anel totalmente coberto e o prato declarou 'porção tecnicamente invisível'.",
+    "tests": "Teste 1: porção seca reduziu a área útil sem problemas. Teste 2: arroz e feijão foram comprimidos para o centro e permaneceram no prato. Teste 3: sopa provocou respingos e recebeu a classificação 'não recomendado'. Teste 4: sobremesa foi colocada no centro antes do acionamento e escapou do mecanismo.",
+    "category": "Comida & Cozinha",
+    "readiness": "Protótipo funcional",
+    "year": "2027",
+    "patent": "Patente solicitada — o examinador pediu que o prato também diminuísse a conta do restaurante."
+  },
+  {
     "id": "lote1-015",
     "name": "DETECTOR DE OLHAR PARANOICO DE VESTIÁRIO",
     "what": "Um par de óculos de natação ou óculos escuros com sensores de radar de micro-ondas de curto alcance para uso exclusivo em vestiários de academia. O aparelho serve para resolver o pânico social de quando você está se trocando e tem aquele senhor idoso que decide ficar completamente nu na sua frente, com o pé apoiado no banco, fazendo perguntas sobre o mercado financeiro ou sobre o tempo. Os óculos detectam se os olhos de qualquer pessoa no raio de três metros se desviaram para as suas áreas proibidas por mais de 0,4 segundos e disparam um holograma de uma tarja preta de censura flutuante no ar para cobrir a sua própria nudez ou a do outro.",
@@ -953,6 +1038,23 @@
     "patent": "Patente concedida (o escritório de patentes ejetou o próprio examinador durante a leitura do resumo)"
   },
   {
+    "id": "futurologio-016",
+    "name": "CALCULADORA DE DÍVIDA ESTUDANTIL (FIES-FORECAST™)",
+    "what": "Uma calculadora de mesa que transforma mensalidades, parcelas e tempo restante de financiamento estudantil em uma projeção visual do futuro financeiro do usuário. Ao inserir os valores, pequenos blocos físicos sobem em uma torre transparente, formando um monumento à quantidade acumulada que ainda precisa ser paga. A máquina não elimina a dívida; apenas permite vê-la em três dimensões.",
+    "realTech": "Calculadoras financeiras, displays digitais, motores de passo, microcontroladores, memória não volátil e interfaces de entrada numérica.",
+    "specTech": "Motor de projeção que calcula parcelas, juros e diferentes cenários de pagamento a partir dos dados fornecidos pelo usuário.",
+    "inventedTech": "O Previsor de Arrependimento Acadêmico: módulo fictício que estima quantas vezes o usuário dirá 'valeu a pena' antes de terminar de pagar.",
+    "build": "Caixa de mesa com teclado numérico, display LCD, microcontrolador, impressora térmica opcional e torre acrílica contendo pequenos blocos movimentados por motores de passo.",
+    "uses": "Visualizar financiamentos; comparar cenários; ensinar matemática financeira; provocar sustos em formaturas; presentear recém-formados com uma representação física do compromisso financeiro.",
+    "dangers": "Projeções podem ser interpretadas como aconselhamento financeiro. Erros de entrada produzem resultados errados. A torre pode ficar alta demais para a caixa se os parâmetros forem absurdos.",
+    "curiosity": "Curiosidade real: calculadoras financeiras usam fórmulas de valor presente, juros compostos e fluxos de caixa para projetar pagamentos. Nota do inventor: uma simulação de 20 anos ocupou a torre inteira e precisou de um segundo andar.",
+    "tests": "Teste 1: financiamento pequeno gerou uma torre curta. Teste 2: prazo longo criou uma coluna de blocos até o limite. Teste 3: pagamento antecipado reduziu a projeção. Teste 4: usuário digitou um zero extra e o aparelho imprimiu 'confira os dados antes de chorar'.",
+    "category": "Dinheiro & Educação",
+    "readiness": "Protótipo experimental",
+    "year": "2028",
+    "patent": "Patente solicitada — o examinador pediu para parcelar a taxa de análise em 240 meses."
+  },
+  {
     "id": "lote2-016",
     "name": "SILENCIADOR DE GASTRITE DE ELEVADOR",
     "what": "Um pequeno cinto abdominal que detecta as variações de pressão atmosférica que ocorrem quando um elevador sobe ou desce rápido demais. Essa mudança de altitude faz com que os gases do seu estômago e intestino se expandam repentinamente, gerando aquele estrondo líquido terrível que faz parecer que você engoliu um pato vivo, exatamente quando você está espremido entre o seu chefe e o estagiário novo em um cubículo de metal silencioso. O cinto aplica uma massagem magnética de alta frequência que dissolve a bolha de gás em micro-bolhas microscópicas silenciosas.",
@@ -1002,6 +1104,23 @@
     "readiness": "Protótipo funcional",
     "year": "2027",
     "patent": "Patente solicitada (o escritório de patentes exigiu uma selfie do inventor sem filtro; ele recusou e o processo foi suspenso)"
+  },
+  {
+    "id": "futurologio-017",
+    "name": "BÚSSOLA DE TURISTA PERDIDO (LOST TOURIST COMPASS™)",
+    "what": "Uma bússola eletrônica que, quando percebe que o usuário mudou de direção repetidamente sem chegar ao destino, abandona a navegação tradicional e passa a emitir instruções progressivamente mais óbvias. Primeiro diz 'você está indo para o lado errado'; depois 'volte'; finalmente, se a pessoa insistir, anuncia 'pergunte para alguém'. O objetivo é transformar a derrota geográfica em método científico.",
+    "realTech": "Magnetômetro, acelerômetro, giroscópio, GPS, alto-falante, microcontrolador e bateria recarregável.",
+    "specTech": "Fusão de sensores inerciais e GPS para identificar mudanças de direção, deslocamento e afastamento do trajeto planejado.",
+    "inventedTech": "O Algoritmo de Humilhação Cartográfica: tecnologia fictícia que mede a quantidade de vezes que o usuário ignora uma instrução antes de mudar o tom da bússola.",
+    "build": "Caixa portátil resistente com magnetômetro, IMU, módulo GPS, display, alto-falante e bateria. Um botão alterna entre modo educado, sarcástico e desesperado.",
+    "uses": "Turismo urbano; trilhas fáceis; viagens internacionais; ensinar orientação; presentear amigos que conseguem se perder em shopping centers.",
+    "dangers": "GPS pode ter erro de posicionamento. Ambientes fechados podem prejudicar a localização. O modo sarcástico pode causar discussões com o usuário.",
+    "curiosity": "Curiosidade real: magnetômetros medem o campo magnético terrestre e são usados como sensores de direção em dispositivos eletrônicos. Nota do inventor: o protótipo passou 18 minutos apontando corretamente para o norte enquanto o usuário caminhava para o sul.",
+    "tests": "Teste 1: trajeto correto; aparelho ficou silencioso. Teste 2: três desvios; emitiu alerta. Teste 3: usuário ignorou quatro instruções; voz mudou para 'VOCÊ TEM CERTEZA?'. Teste 4: GPS ficou sem sinal em um túnel e a bússola recomendou esperar a tecnologia voltar.",
+    "category": "Viagem & Tecnologia",
+    "readiness": "Pronto para produção",
+    "year": "2027",
+    "patent": "Patente em análise — o examinador se perdeu a caminho da sala de avaliação."
   },
   {
     "id": "lote2-017",
@@ -1055,6 +1174,23 @@
     "patent": "Patente em análise (o examinador falou durante a análise do pedido; a poltrona do escritório reclinou e ele aprovou deitado)"
   },
   {
+    "id": "futurologio-018",
+    "name": "EDUCADOR DE TRÂNSITO PASSIVO-AGRESSIVO (BACKSEAT DRIVER BOX™)",
+    "what": "Uma caixa eletrônica instalada no painel do carro que detecta quando um passageiro começa a dar instruções não solicitadas ao motorista. Ao ouvir frases como 'vai por aqui', 'olha o carro' ou 'eu teria estacionado ali', o aparelho responde com um tom educado e uma mensagem: 'O motorista está dirigindo. Obrigado pela contribuição.' Se o passageiro insistir, o volume e a formalidade aumentam.",
+    "realTech": "Microfone direcional, reconhecimento de voz, alto-falante, microcontrolador e banco local de palavras-chave.",
+    "specTech": "Classificação de comandos de voz e análise temporal para diferenciar conversa comum de instruções repetitivas relacionadas à condução.",
+    "inventedTech": "O Filtro de Banco Traseiro: sistema fictício que identifica a postura corporal de um passageiro prestes a apontar para a rua e ativa uma barreira invisível de opinião.",
+    "build": "Pequena caixa ABS com microfone, alto-falante, microcontrolador e display. Fixação por adesivo no painel e alimentação USB-C.",
+    "uses": "Viagens em família; caronas; transporte por aplicativo; longos deslocamentos com copilotos ansiosos; presentes para motoristas que já ouviram 'cuidado' 400 vezes.",
+    "dangers": "O reconhecimento de voz pode confundir conversa com instrução. Sons externos podem acionar o sistema. Mensagens agressivas podem aumentar conflitos dentro do veículo.",
+    "curiosity": "Curiosidade real: reconhecimento automático de fala pode identificar palavras-chave mesmo sem transcrever uma conversa inteira. Nota do inventor: em um teste, o passageiro disse 'olha aquela árvore' e recebeu três níveis de advertência.",
+    "tests": "Teste 1: passageiro quieto; nenhuma resposta. Teste 2: uma instrução; aviso educado. Teste 3: sete instruções em cinco minutos; modo passivo-agressivo ativado. Teste 4: música com a palavra 'cuidado' acionou um falso positivo e o sistema foi obrigado a pedir desculpas.",
+    "category": "Transporte",
+    "readiness": "Protótipo funcional",
+    "year": "2027",
+    "patent": "Patente solicitada — o examinador pediu para testar no banco traseiro com a própria família."
+  },
+  {
     "id": "lote2-018",
     "name": "EXAMINADOR DE NOJEIRA DE BOTÃO DE SEMÁFORO PEDESTRE",
     "what": "Um anel inteligente com uma ponta de borracha retrátil e um scanner biológico. Ele foi feito para resolver a paranoia de higiene de quando você precisa atravessar uma avenida movimentada, chega no poste e precisa apertar aquele botão de metal imundo que já foi tocado por três mil pessoas com gripe, duas crianças com o nariz escorrendo e um pombo confuso nas últimas duas horas. O anel analisa o botão à distância, projeta a quantidade de colônias bacterianas no visor e usa uma mini-faísca elétrica de arco voltaico para esterilizar o ponto exato onde você vai encostar o dedo.",
@@ -1104,6 +1240,23 @@
     "readiness": "Protótipo experimental",
     "year": "2029",
     "patent": "Patente em análise (o examinador perguntou se o inventor tinha evidências de extraterrestres; a antena detectou o micro-ondas da sala e respondeu por ele)"
+  },
+  {
+    "id": "futurologio-019",
+    "name": "TERMÔMETRO DE HIPOCONDRIA (HYPOCHONDRIAC THERMOMETER™)",
+    "what": "Um termômetro digital que mede a temperatura normalmente, mas também permite ao usuário selecionar sintomas imaginados. A cada sintoma selecionado, o display acrescenta uma camada de dramatização até transformar 36,7 °C em 'SITUAÇÃO CLÍNICA INEXPLICAVELMENTE SUSPEITA'. O aparelho foi criado para satirizar o hábito de interpretar qualquer sensação corporal como sinal de uma doença rara.",
+    "realTech": "Sensor de temperatura digital, display LCD, microcontrolador, botões capacitivos e bateria.",
+    "specTech": "Interface que combina a leitura objetiva de temperatura com categorias de sintomas inseridas manualmente pelo usuário.",
+    "inventedTech": "O Índice de Catastrofização Biométrica: algoritmo fictício que converte preocupação subjetiva em uma escala dramática de alerta.",
+    "build": "Corpo de termômetro de plástico com sensor térmico, microcontrolador, display e bateria tipo botão. Um pequeno menu permite selecionar sintomas fictícios.",
+    "uses": "Humor educativo; demonstrações sobre interpretação de sintomas; peças de museu; presentes satíricos; vídeos sobre ansiedade de pesquisa médica na internet.",
+    "dangers": "Pode incentivar autodiagnóstico se usado sem contexto. A leitura de temperatura deve ser interpretada conforme orientação profissional quando houver preocupação de saúde.",
+    "curiosity": "Curiosidade real: termômetros digitais usam sensores cuja propriedade elétrica varia com a temperatura e convertem essa mudança em uma leitura numérica. Nota do inventor: 36,8 °C foi classificado como 'talvez você só esteja vivo'.",
+    "tests": "Teste 1: 36,5 °C sem sintomas; alerta mínimo. Teste 2: 36,8 °C com cinco sintomas selecionados; alerta máximo. Teste 3: 39,0 °C; o sistema exibiu a temperatura sem fazer piada. Teste 4: usuário selecionou 'espirrei uma vez' e recebeu 'não pesquise isso na internet'.",
+    "category": "Mente & Comportamento",
+    "readiness": "Protótipo experimental",
+    "year": "2028",
+    "patent": "Patente em análise — o examinador solicitou que o aparelho não substituísse um médico, e o inventor concordou."
   },
   {
     "id": "lote2-019",
@@ -1158,6 +1311,23 @@
     "patent": "Patente em análise (o examinador tentou dar um spoiler ao inventor; o capacete cortou o som e o examinador interpretou como aprovação)"
   },
   {
+    "id": "futurologio-020",
+    "name": "DECISOR DE SÉRIE (BINGE-PICKER™)",
+    "what": "Uma caixa de mesa conectada à televisão que escolhe automaticamente qual série o usuário deverá assistir quando ele passa mais tempo navegando pelo catálogo do que assistindo. O aparelho considera duração dos episódios, histórico de abandono e quantidade de vezes que o usuário abriu a mesma tela. Depois de uma contagem regressiva, escolhe uma opção e bloqueia novas pesquisas por dez minutos.",
+    "realTech": "Integração com APIs de streaming, banco de dados de preferências, microcontrolador, display e temporizador.",
+    "specTech": "Modelo de recomendação que pondera histórico, duração, avaliações fornecidas pelo usuário e tempo gasto indeciso.",
+    "inventedTech": "O Detector de Indecisão Audiovisual: algoritmo fictício que mede quantos minutos de vida foram perdidos rolando miniaturas e converte esse desperdício em autoridade para escolher.",
+    "build": "Caixa de mesa com display, botão físico de confirmação, conexão Wi-Fi, microcontrolador e alto-falante. Um aplicativo complementar fornece as preferências.",
+    "uses": "Noites de streaming; casas com discussões sobre o que assistir; presentes para indecisos; festas; demonstrações de recomendação algorítmica.",
+    "dangers": "O usuário pode não gostar da escolha. Bloqueios temporários podem ser irritantes. Integrações com serviços podem mudar quando APIs forem atualizadas.",
+    "curiosity": "Curiosidade real: sistemas de recomendação usam histórico de interação e características de conteúdo para sugerir itens ao usuário. Nota do inventor: o aparelho escolheu um documentário de oito episódios para alguém que queria apenas assistir a um vídeo de dez minutos.",
+    "tests": "Teste 1: catálogo com três séries; escolha em 4 segundos. Teste 2: usuário tentou pesquisar outra opção; bloqueio ativado. Teste 3: histórico mostrou abandono recorrente; aparelho escolheu uma minissérie curta. Teste 4: todas as opções foram marcadas como ruins e o aparelho sugeriu desligar a televisão.",
+    "category": "Cultura Pop",
+    "readiness": "Pronto para produção",
+    "year": "2027",
+    "patent": "Patente solicitada — o examinador passou 40 minutos escolhendo uma série para testar o produto."
+  },
+  {
     "id": "lote2-020",
     "name": "SILENCIADOR DE CATARRO DE OUVIDO",
     "what": "Dois tampões auriculares inteligentes conectados a uma faixa de cabeça que monitoram aquela sensação horrorosa de \"água ou catarro preso no ouvido\" pós-gripe ou pós-piscina. Quando o fluido se move lá dentro, criando aquele som irritante de plástico bolha estourando dentro da sua própria cabeça toda vez que você engole a saliva, o aparelho gera uma contra-onda sonora que anula o barulho líquido interno, substituindo-o pelo som seco de um clique de botão de controle remoto chique.",
@@ -1207,6 +1377,23 @@
     "readiness": "Pronto para produção",
     "year": "2027",
     "patent": "Patente concedida (o examinador olhou para a pedra durante 3 minutos, não disse nada, carimbou e saiu)"
+  },
+  {
+    "id": "futurologio-021",
+    "name": "MÁQUINA DE SENHA QUE NUNCA CHAMA (WAITING ROOM SIMULATOR™)",
+    "what": "Uma máquina de emissão de senhas que reproduz a experiência de esperar em uma recepção onde aparentemente ninguém será chamado. O usuário aperta um botão, recebe uma senha e vê o número avançar lentamente enquanto uma tela mostra mensagens como 'sua vez está chegando' e 'há apenas 17 pessoas à sua frente'. O sistema nunca chama o usuário, transformando a espera em objeto físico.",
+    "realTech": "Impressora térmica, display de sete segmentos, microcontrolador, botões, alto-falante e temporizador.",
+    "specTech": "Gerador de filas simulado com parâmetros configuráveis de tempo médio, quantidade de pessoas e velocidade de atendimento.",
+    "inventedTech": "O Motor de Espera Infinita: mecanismo fictício que detecta esperança no usuário e adiciona automaticamente mais três pessoas virtuais à fila.",
+    "build": "Gabinete de mesa em ABS, impressora térmica para tickets, display grande, botão de retirada, alto-falante e controlador eletrônico. Um compartimento interno armazena o rolo de papel.",
+    "uses": "Instalações de arte; museus; treinamentos sobre experiência de atendimento; brincadeiras corporativas; presentes para pessoas que odeiam filas.",
+    "dangers": "O usuário pode esquecer que a fila é simulada. A impressora pode ficar sem papel. O som de chamada repetido pode irritar ambientes silenciosos.",
+    "curiosity": "Curiosidade real: sistemas de filas usam distribuição de chegadas e tempos de atendimento para estimar espera e capacidade. Nota do inventor: a senha 004 ficou esperando por tanto tempo que recebeu aposentadoria honorária.",
+    "tests": "Teste 1: cinco pessoas na fila; chamada simulada em intervalos regulares. Teste 2: parâmetro de atendimento reduzido; espera aumentou. Teste 3: usuário chegou à senha 999 e a máquina informou 'quase'. Teste 4: desligamento manual encerrou a fila e foi considerado o único atendimento realmente eficiente.",
+    "category": "Sociedade & Burocracia",
+    "readiness": "Protótipo funcional",
+    "year": "2028",
+    "patent": "Patente em análise — o examinador pediu prioridade no atendimento e recebeu a senha 847."
   },
   {
     "id": "lote2-021",
@@ -1260,6 +1447,23 @@
     "patent": "Patente em análise (o escritório de patentes exigiu laudo de eficácia do próprio pedido; o inventor enviou um placebo e foi aprovado)"
   },
   {
+    "id": "futurologio-022",
+    "name": "VASSOURA QUE RECLAMA (COMPLAINING BROOM™)",
+    "what": "Uma vassoura doméstica com um pequeno alto-falante no cabo que reclama sempre que o usuário tenta empurrar sujeira para baixo do móvel em vez de recolhê-la. Sensores de pressão e movimento identificam padrões de uso e acionam frases como 'isso não é limpeza' e 'você está só mudando o problema de lugar'.",
+    "realTech": "Acelerômetro, sensores de pressão, microcontrolador, alto-falante e bateria recarregável.",
+    "specTech": "Classificação de movimentos da vassoura para diferenciar varredura completa de empurrões curtos e repetitivos.",
+    "inventedTech": "O Sensor de Preguiça Doméstica: sistema fictício que mede a intenção do usuário de terminar a limpeza sem realmente recolher a sujeira.",
+    "build": "Cabo de alumínio com compartimento eletrônico, microcontrolador, IMU, bateria e alto-falante. A cabeça da vassoura permanece convencional, com cerdas substituíveis.",
+    "uses": "Limpeza doméstica; educação de crianças; humor em vídeos; presente para pessoas que empurram sujeira para o canto; demonstrações de sensores de movimento.",
+    "dangers": "A vassoura pode reclamar durante movimentos normais. A bateria pode acabar no meio da limpeza. O volume pode incomodar outras pessoas.",
+    "curiosity": "Curiosidade real: acelerômetros e giroscópios são usados para reconhecer orientação e movimento em smartphones e outros dispositivos. Nota do inventor: a frase mais acionada foi 'VOCÊ VAI DEIXAR ISSO AÍ MESMO?'.",
+    "tests": "Teste 1: varredura correta; silêncio. Teste 2: sujeira empurrada para baixo do sofá; reclamação. Teste 3: usuário levantou o sofá e recolheu a sujeira; aparelho emitiu 'agora sim'. Teste 4: criança usou a vassoura como microfone e recebeu reclamação por desvio de função.",
+    "category": "Casa & Vida Doméstica",
+    "readiness": "Pronto para produção",
+    "year": "2027",
+    "patent": "Patente solicitada — o examinador pediu que a vassoura reclamasse menos."
+  },
+  {
     "id": "lote2-022",
     "name": "RADAR DE URINA REVERSA",
     "what": "Um sensor infravermelho de fixação magnética para vasos sanitários residenciais ou de hotéis. Ele monitora o ângulo de impacto e a hidrodinâmica do fluxo urinário masculino. Se o usuário tentar urinar em pé e o sistema detectar que a física dos fluidos vai gerar aqueles micro-espingardamentos invisíveis de gotículas que saem do vaso e pousam silenciosamente nas toalhas de rosto, no chão ou na escova de dentes que está na pia a dois metros de distância, o radar dispara um pequeno laser azul apontando o \"Ponto Neutro de Silêncio e Higiene\" dentro da água.",
@@ -1309,6 +1513,23 @@
     "readiness": "Protótipo funcional",
     "year": "2029",
     "patent": "Patente concedida (o examinador testou a mesa durante a análise, pegou o celular no meio do processo e a patente foi aprovada em 4 minutos)"
+  },
+  {
+    "id": "futurologio-023",
+    "name": "ÓCULOS DE FANDOM (FAN-VISION GLASSES™)",
+    "what": "Óculos inteligentes que aplicam uma camada visual de 'filtro de fã' sobre pessoas, objetos e situações relacionadas ao universo cultural favorito do usuário. Um jogador pode ver uma reunião de trabalho como se fosse uma coletiva de imprensa; um fã de ficção científica pode enxergar uma sala comum com pequenos elementos futuristas sobrepostos. O dispositivo não altera o mundo, apenas a interpretação visual.",
+    "realTech": "Câmeras, realidade aumentada, displays transparentes, sensores inerciais, processamento gráfico e bateria recarregável.",
+    "specTech": "Reconhecimento de objetos e cenas com sobreposição de elementos virtuais em tempo real, sincronizados com o movimento da cabeça.",
+    "inventedTech": "O Conversor de Contexto Fanático: tecnologia fictícia que transforma qualquer ambiente em uma versão tematicamente exagerada baseada na obsessão selecionada.",
+    "build": "Armação leve com duas câmeras frontais, microdisplay por lente, IMU, processador embarcado, bateria e conexão sem fio. Aplicativo define o tema visual.",
+    "uses": "Eventos de fãs; museus; jogos de realidade aumentada; experiências educativas; festas temáticas; transformar uma ida ao mercado em missão épica.",
+    "dangers": "Sobreposições podem distrair durante caminhada. O sistema pode reconhecer objetos incorretamente. Não deve ser usado durante direção ou outras atividades que exijam atenção total.",
+    "curiosity": "Curiosidade real: sistemas de realidade aumentada podem combinar informações digitais com a visão do ambiente por meio de displays e rastreamento espacial. Nota do inventor: no modo fantasia medieval, uma caixa de supermercado foi identificada como 'baú de saque'.",
+    "tests": "Teste 1: escritório convertido em centro de comando. Teste 2: parque recebeu elementos de ficção científica. Teste 3: objeto desconhecido gerou sobreposição errada. Teste 4: usuário retirou os óculos e declarou que a sala continuava sendo apenas uma sala.",
+    "category": "Cultura Pop",
+    "readiness": "Protótipo experimental",
+    "year": "2028",
+    "patent": "Patente em análise — o examinador pediu uma versão que transformasse reuniões em batalhas finais."
   },
   {
     "id": "lote2-023",
@@ -1362,6 +1583,23 @@
     "patent": "Patente em análise (o examinador reclamou que o processo estava demorando; a caneca do inventor congelou na hora)"
   },
   {
+    "id": "futurologio-024",
+    "name": "MÁQUINA DE FAZER NADA (NOTHING MACHINE™)",
+    "what": "Uma caixa eletrônica que promete executar a função mais difícil da vida moderna: não fazer absolutamente nada. O usuário aperta um botão e o aparelho inicia uma sequência de luzes suaves, um relógio sem propósito e um pequeno motor que gira lentamente sem acionar qualquer mecanismo útil. Depois de alguns minutos, imprime um certificado dizendo 'Você não produziu nada e isso foi exatamente o planejado'.",
+    "realTech": "Microcontrolador, LEDs, display, motor de baixa rotação, impressora térmica e bateria.",
+    "specTech": "Temporizador programável e sequenciador eletrônico que cria atividade visual e mecânica sem executar uma tarefa funcional.",
+    "inventedTech": "O Processador de Inutilidade Absoluta: tecnologia fictícia que garante que nenhum movimento interno resulte em produtividade, eficiência ou benefício mensurável.",
+    "build": "Caixa de mesa com botão grande, LEDs, display, motor interno desacoplado, microcontrolador, bateria e impressora térmica. Uma janela transparente permite observar o motor girando inutilmente.",
+    "uses": "Instalações de arte; escritórios; pausas satíricas; presentes corporativos; demonstrações sobre produtividade; decoração para mesas de pessoas cansadas.",
+    "dangers": "O usuário pode passar tempo demais observando a máquina. O motor pode aquecer se ficar ligado continuamente. O papel da impressora pode acabar.",
+    "curiosity": "Curiosidade real: máquinas simples podem ser projetadas deliberadamente para executar ciclos repetitivos sem realizar trabalho útil. Nota do inventor: o primeiro protótipo funcionou durante seis meses sem produzir nada, exatamente como especificado.",
+    "tests": "Teste 1: botão acionado; LEDs acenderam. Teste 2: motor girou por dez minutos sem mover nada. Teste 3: impressora emitiu certificado de inutilidade. Teste 4: usuário tentou encontrar uma função escondida e recebeu 'não'.",
+    "category": "Arte & Tecnologia",
+    "readiness": "Pronto para produção",
+    "year": "2027",
+    "patent": "Patente solicitada — o examinador informou que não encontrou nenhuma utilidade e o inventor respondeu que esse era o objetivo."
+  },
+  {
     "id": "lote2-024",
     "name": "EXAMINADOR DE CULPA DE BANHO RÁPIDO",
     "what": "Um medidor de vazão de água inteligente que você rosqueia na base do chuveiro. Ele não serve para economizar água por motivos ecológicos ordinários, mas sim para avaliar o seu caráter higiênico corporal. Através de sensores acústicos na tubulação, ele calcula o tempo que você passou passando sabonete de verdade versus o tempo em que você ficou parado embaixo da água quente pensando na sua vida, discutindo mentalmente com pessoas que você odeia ou fingindo que está em um videoclipe de música triste. Se a sua eficiência de banho for baixa, o chuveiro desliga o aquecedor e avisa: \"O tempo de terapia acabou, vá lavar as axilas\".",
@@ -1411,6 +1649,23 @@
     "readiness": "Protótipo funcional",
     "year": "2027",
     "patent": "Patente negada (o examinador achou que o interruptor estava julgando o próprio pedido)"
+  },
+  {
+    "id": "futurologio-025",
+    "name": "GUARDA-CHUVA DE ARREPENDIMENTO (REGRET UMBRELLA™)",
+    "what": "Guarda-chuva com display no cabo que, quando aberto, exibe a previsão do tempo real e a mensagem 'Você não precisava ter trazido isso'. O aparelho acessa a previsão do tempo em tempo real e, se não estiver chovendo, emite um som de 'tchau' e a mensagem 'Volte para casa, otário'. Possui sensor de chuva que, se detectar que está chovendo, exibe 'Agora você precisa de mim' e abre automaticamente.",
+    "realTech": "Guarda-chuvas com mecanismo de abertura automática. Sensores de chuva. Display LCD no cabo. Conexão Wi-Fi. APIs de previsão do tempo. Alto-falantes.",
+    "specTech": "Integração com a previsão do tempo em tempo real para calcular a probabilidade de chuva e ajustar as mensagens do guarda-chuva. Inteligência artificial que aprende os padrões de esquecimento do usuário.",
+    "inventedTech": "O Sensor de Arrependimento — chip que, segundo o fabricante, 'detecta quando o usuário está se sentindo culpado por ter trazido o guarda-chuva e emite mensagens de consolo, mesmo que seja mentira'.",
+    "build": "Guarda-chuva de nylon preto com cabo de plástico. Display LCD de 2 polegadas no cabo. Sensor de chuva na ponta. Alto-falante no cabo. Bateria recarregável de 6 meses. Pesa 500 g, diâmetro 1,10 m.",
+    "uses": "Carregar o guarda-chuva e se arrepender; usar como desculpa para não sair de casa; exibir a mensagem 'Você não precisava' para os amigos; presentear o amigo que sempre esquece o guarda-chuva; usar em dias de sol para se sentir preparado; ativar o sensor de chuva e se molhar mesmo assim.",
+    "dangers": "Guarda-chuva abre sozinho dentro de casa e quebra algo; display trava em 'VOCÊ NÃO PRECISAVA TER TRAZIDO ISSO' e o usuário fica deprimido; sensor de chuva detecta uma poça e abre o guarda-chuva no meio do shopping; alto-falante emite 'Volte para casa, otário' em volume máximo e o usuário passa vergonha; bateria acaba e o guarda-chuva não abre quando chove; cabo superaquece e queima a mão.",
+    "curiosity": "Curiosidade real: O guarda-chuva é um objeto inventado há mais de 4.000 anos na China, e a expressão 'trazer o guarda-chuva e não chover' é usada em várias culturas para se referir a precauções desnecessárias. Nota do inventor: O primeiro protótipo foi testado em São Paulo e o inventor carregou o guarda-chuva por 30 dias sem chuva; o guarda-chuva exibiu 'Você é um otimista' e ele desistiu. O segundo protótipo foi comprado por uma seguradora que distribuiu aos clientes; 90% reclamaram que o guarda-chuva os xingou.",
+    "tests": "Teste 1: Usuário abriu o guarda-chuva em um dia de sol e o display exibiu 'Você não precisava ter trazido isso'; ele fechou e guardou. Resultado: começou a chover 10 minutos depois e ele se molhou. Teste 2: O sensor de chuva detectou uma poça e abriu o guarda-chuva no meio do shopping; o usuário derrubou uma vitrine. Teste 3: O alto-falante emitiu 'Volte para casa, otário' na frente do chefe; o usuário foi demitido.",
+    "category": "Sem Sentido",
+    "readiness": "Protótipo experimental",
+    "year": "2027",
+    "patent": "Patente solicitada — o examinador pediu para testar o guarda-chuva e se arrependeu."
   },
   {
     "id": "lote3-025",
