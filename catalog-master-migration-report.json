@@ -1,6 +1,6 @@
 {
   "base_records": 155,
-  "new_records_seen": 160,
+  "new_records_seen": 167,
   "new_records_selected": 67,
   "final_records": 222,
   "new_id_range": [
@@ -52,6 +52,7 @@
     "frontend/catalog-builder-import-201.json",
     "frontend/catalog-builder-import-lote4-016-020.json",
     "frontend/catalog-builder-import-lote4-021-026.json",
+    "frontend/catalog-builder-import-produto-202-futurologio-004-010.json",
     "frontend/catalog-canonical-161-169.json",
     "frontend/catalog-lote10.json",
     "frontend/catalog-lote11.json",
